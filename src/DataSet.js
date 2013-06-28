@@ -154,6 +154,28 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
         this._dataTypes[columnIndex] = dataType;
     };
 
+    this.addDataRow = function(dataRow) {
+        if(typeof dataRow === 'undefined' || !(dataRow instanceof Array)) {
+            throw new Error('dataRow is undefined or is not an array');
+        }
+        if(dataRow.length <= 0) {
+            throw new Error('You must provide at least one element');
+        }
+        if(this._dataRange === -1) {
+            this._data = [];
+            this._data.push(dataRow);
+            this._dataRange = getDataRange(this._headers,
+                                           this._dataTypes,
+                                           this._data);
+        }
+        else if(dataRow.length === this._dataRange) {
+            this._data.push(dataRow);
+        }
+        else {
+            throw new Error('Can not add this data row - width does not match the data range');
+        }
+    };
+
     // "Pure" Setter methods, e.g. Change the entire variable
     this.setPrimaryColumn = function(primaryColumn) {
         if(primaryColumn < 0 || primaryColumn >= this._dataRange) {

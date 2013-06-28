@@ -230,6 +230,47 @@ describe('DataSet', function() {
         });
     });
 
+    describe('#addDataRow()', function() {
+        it('should add a data row to the DataSet', function() {
+            dataset.getData().length.should.equal(2);
+            dataset.addDataRow([ "value", "value", 0, 0 ]);
+            dataset.getData().length.should.equal(3);
+            dataset.getData()[2].should.eql([
+                "value", "value", 0, 0
+            ]);
+        });
+        it('should adjust the data range in an empty DataSet', function() {
+            dataset = new DataSet();
+            dataset.getDataRange().should.equal(-1);
+
+            dataset.addDataRow([ "value", "value", 0, 0 ]);
+            dataset.getData().length.should.equal(1);
+            dataset.getData()[0].should.eql([
+                "value", "value", 0, 0
+            ]);
+            //
+            dataset.getDataRange().should.equal(4);
+        });
+        it('should throw an error (invalid type)', function() {
+            (function() {
+                dataset.addDataRow(undefined);
+            }).should.throwError('dataRow is undefined or is not an array');
+            (function() {
+                dataset.addDataRow('hello');
+            }).should.throwError('dataRow is undefined or is not an array');
+        });
+        it('should throw an error (not enough data in array)', function() {
+            (function() {
+                dataset.addDataRow([]);
+            }).should.throwError('You must provide at least one element');
+        });
+        it('should throw an error (data width does not match)', function() {
+            (function() {
+                dataset.addDataRow([ 1, 2, 3, 4, 5 ]);
+            }).should.throwError('Can not add this data row - width does not match the data range');
+        });
+    });
+
     describe('#testColumnByIndex', function() {
         it('should throw an error stating that there is not a callback', function() {
             (function() {
