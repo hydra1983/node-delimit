@@ -1,0 +1,10 @@
+{
+  "name": "delimit",
+  "description": "Specialized in anything delimited",
+  "version": "0.0.1",
+  "keywords": [],
+  "maintainers": [],
+  "dependencies": {
+    "line-reader": "*"
+  }
+}

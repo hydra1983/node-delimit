@@ -71,11 +71,6 @@ function getDataRange(headers, dataTypes, data) {
     return -1;
 }
 
-DataSet.INTEGER = 0;
-DataSet.BOOLEAN = 1;
-DataSet.TEXT    = 2;
-DataSet.NUMERIC = 3;
-
 function DataSet(headers, dataTypes, data, primaryColumn, name) {
 
     //{{{-- INIT
@@ -104,11 +99,10 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
         }
 
         var row, item, total=0, totalMiss=0;
-        for(var index in data) {
-            row = data[index];
-            item_in_column = row[columnIndex];
-            if(!callback(item_in_column)) {
-                // If we don't care about match precision get out of here
+        for(var index in this._data) {
+            row = this._data[index];
+            item = row[columnIndex];
+            if(!callback(item)) {
                 if(!match_precision) {
                     return false;
                 }
@@ -126,8 +120,8 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 
     this.getColumnByIndex = function(columnIndex) {
         var row, column = [];
-        for(var index in data) {
-            row = data[index];
+        for(var index in this._data) {
+            row = this._data[index];
             column.push(row[columnIndex]);
         }
         return column;
