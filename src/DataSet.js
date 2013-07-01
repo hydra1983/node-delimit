@@ -161,8 +161,12 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
         if(dataRow.length <= 0) {
             throw new Error('You must provide at least one element');
         }
-        if(this._dataRange === -1) {
+
+        if(typeof this._data === 'undefined') {
             this._data = [];
+        }
+
+        if(this._dataRange === -1) {
             this._data.push(dataRow);
             this._dataRange = getDataRange(this._headers,
                                            this._dataTypes,

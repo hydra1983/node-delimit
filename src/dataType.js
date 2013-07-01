@@ -1,4 +1,7 @@
-var DataType = require('./DataType.js');
+var transformers = require('./transformers.js');
+var defines = require('./defines.js');
+
+//-----
 
 exports.isStringInteger = function(string, kickLeadingZeros) {
     var isInt = string.match(/^\d+$/) ? true : false;
@@ -19,17 +22,11 @@ exports.isStringNumber = function(string) {
            exports.isStringNumeric(string);
 };
 
-exports.isStringBoolean = function(string) {
+exports.isStringBoolean = function(transformer, string) {
     var booleanTypes =
-        DataType.BOOLEAN_VALUES.isTrue.concat(DataType.BOOLEAN_VALUES.isFalse);
+        transformer.booleanValues.isTrue + transformer.booleanValues.isFalse;
 
-    for(var i = 0, len = booleanTypes.length; i < len; ++i) {
-        if(string === booleanTypes[i]) {
-            return true;
-        }
-    }
-
-    return false;
+    return (booleanTypes.indexOf(string) !== -1);
 };
 
 exports.isStringEmpty = function(string) {
@@ -37,19 +34,19 @@ exports.isStringEmpty = function(string) {
     return string === '';
 };
 
-exports.getNewDataType = function(oldDataType, newString) {
+exports.getNewDataType = function(transformer, oldDataType, newString) {
 
     var isEmpty = exports.isStringEmpty(newString);
 
     // Boolean
     //
     // Can convert to Integer or Text if not a Boolean
-    if(oldDataType == DataType.BOOLEAN) {
-        if(!isEmpty && !exports.isStringBoolean(newString)) {
+    if(oldDataType == defines.BOOLEAN) {
+        if(!isEmpty && !exports.isStringBoolean(transformer, newString)) {
             if(exports.isStringInteger(newString)) {
-                return DataType.INTEGER;
+                return defines.INTEGER;
             } else {
-                return DataType.TEXT;
+                return defines.TEXT;
             }
         }
         return oldDataType;
@@ -58,12 +55,12 @@ exports.getNewDataType = function(oldDataType, newString) {
     // Integer
     //
     // Can convert to Numeric or Text if not an Integer
-    if(oldDataType == DataType.INTEGER) {
+    if(oldDataType == defines.INTEGER) {
         if(!isEmpty && !exports.isStringInteger(newString)) {
             if(exports.isStringNumeric(newString)) {
-                return DataType.NUMERIC;
+                return defines.NUMERIC;
             } else {
-                return DataType.TEXT;
+                return defines.TEXT;
             }
         }
         return oldDataType;
@@ -72,9 +69,9 @@ exports.getNewDataType = function(oldDataType, newString) {
     // Numeric
     //
     // Can only convert to Text if it is not a number
-    if(oldDataType == DataType.NUMERIC) {
+    if(oldDataType == defines.NUMERIC) {
         if(!isEmpty && !exports.isStringNumber(newString)) {
-            return DataType.TEXT;
+            return defines.TEXT;
         }
         return oldDataType;
     }
@@ -82,7 +79,7 @@ exports.getNewDataType = function(oldDataType, newString) {
     // Text
     //
     // Can't convert to anything else but itself!
-    if(oldDataType == DataType.TEXT) {
+    if(oldDataType == defines.TEXT) {
         return oldDataType;
     }
 
@@ -91,27 +88,46 @@ exports.getNewDataType = function(oldDataType, newString) {
     // Order of preference: Unknown, Boolean, Integer, Numeric, Default to Text
 
     if(isEmpty) {
-        return DataType.UNKNOWN;
+        return defines.UNKNOWN;
     }
-    if(exports.isStringBoolean(newString)) {
-        return DataType.BOOLEAN;
+    if(exports.isStringBoolean(transformer, newString)) {
+        return defines.BOOLEAN;
     }
     if(exports.isStringInteger(newString)) {
-        return DataType.INTEGER;
+        return defines.INTEGER;
     }
     if(exports.isStringNumeric(newString)) {
-        return DataType.NUMERIC;
+        return defines.NUMERIC;
     }
 
-    return DataType.TEXT;
+    return defines.TEXT;
 };
 
-exports.getNewDataTypes = function(oldDataTypes, newStrings) {
+exports.getNewDataTypes = function(transformer, oldDataTypes, newStrings) {
     var string;
     var newDataTypes = [];
     for(var i = 0, len = newStrings.length; i < len; ++i) {
         string = newStrings[i];
-        newDataTypes[i] = exports.getNewDataType(oldDataTypes[i], string);
+        newDataTypes[i] = exports.getNewDataType(transformer, oldDataTypes[i], string);
     }
     return newDataTypes;
+};
+
+exports.getAdjustedDataRow = function(transformer, dataTypes, dataRow) {
+
+    var newDataRow = [];
+
+    var value, type;
+    for(var i = 0, len = dataRow.length; i < len; ++i) {
+        value = dataRow[i];
+        type = dataTypes[i];
+
+        if(exports.isStringEmpty(value)) {
+            newDataRow.push(transformer.nullValue);
+        } else {
+            newDataRow.push(transformer.output(type, value));
+        }
+    }
+
+    return newDataRow;
 };

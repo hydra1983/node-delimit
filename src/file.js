@@ -1,3 +1,6 @@
+var reader = require('line-reader'),
+    dataType = require('./dataType.js');
+
 exports.mapFilePaths = function(filePaths, callback) {
     if(typeof filePaths !== 'object') {
         throw new Error('You must specify filePaths to mapFilePaths');
@@ -14,4 +17,49 @@ exports.mapFilePaths = function(filePaths, callback) {
     for(var i = 0, len = filePaths.length; i < len; ++i) {
         callback(filePaths[i]);
     }
+};
+
+exports.fileToDataRows = function(filePath, loader, rowCallback, doneCallback) {
+    if(typeof filePath !== 'string') {
+        throw new Error('You must specify a filePath to fileToDataRows');
+    }
+
+    if(typeof loader !== 'object') {
+        throw new Error('You must provide a loader');
+    }
+
+    if(typeof rowCallback !== 'function') {
+        throw new Error('You must provide a rowCallback to fileToDataRows');
+    }
+
+    if(typeof doneCallback !== 'function') {
+        throw new Error('You must provide a doneCallback to fileToDataRows');
+    }
+
+    reader.eachLine(filePath, function(line) {
+        rowCallback(loader.toDataRow(line));
+    }).then(function () {
+        doneCallback();
+    });
+};
+
+exports.fileToHooks = function(filePath, headerRow, loader, transformer, rowHook, doneHook) {
+    var dataTypes = [];
+    var headers = [];
+
+    var row = 0;
+
+    exports.fileToDataRows(filePath, loader,
+        function dataRowCallback(dataRow) {
+            if(headerRow == row) {
+                headers = dataRow;
+            } else {
+                dataTypes = dataType.getNewDataTypes(transformer, dataTypes, dataRow);
+                rowHook(dataRow);
+            }
+            ++row;
+        },
+        function doneCallback() {
+            doneHook(headers, dataTypes);
+        });
 };

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-var DataSet = require('../src/DataSet.js');
-var DataType = require('../src/DataType.js');
-var should  = require('should');
+var should  = require('should'),
+    DataSet = require('../src/DataSet.js'),
+    defines = require('../src/defines.js');
 
 describe('DataSet', function() {
 
@@ -13,7 +13,7 @@ describe('DataSet', function() {
         var headers =
             ["Integer", "Numeric", "Text", "Boolean"];
         var dataTypes =
-            [DataType.INTEGER, DataType.NUMERIC, DataType.TEXT, DataType.BOOLEAN];
+            [defines.INTEGER, defines.NUMERIC, defines.TEXT, defines.BOOLEAN];
         var data = [
             [9001, 5.5, "Hello World", true],
             [5555555, 9.1, "foo bar", false]
@@ -47,10 +47,10 @@ describe('DataSet', function() {
             dataset = new DataSet([], [], []);
             dataset.getDataRange().should.equal(0);
 
-            dataset = new DataSet(['header'], [DataType.INTEGER], undefined);
+            dataset = new DataSet(['header'], [defines.INTEGER], undefined);
             dataset.getDataRange().should.equal(1);
 
-            dataset = new DataSet(undefined, [DataType.INTEGER], [['some data']]);
+            dataset = new DataSet(undefined, [defines.INTEGER], [['some data']]);
             dataset.getDataRange().should.equal(1);
 
             dataset = new DataSet(['header'], undefined, [['some data']]);
@@ -58,14 +58,14 @@ describe('DataSet', function() {
         });
         it('should error due to different data ranges', function() {
             (function() {
-                dataset = new DataSet(['header'], [DataType.INTEGER, DataType.TEXT], []);
+                dataset = new DataSet(['header'], [defines.INTEGER, defines.TEXT], []);
             }).should.throwError('The data provided has mis-matched ranges');
         });
         it('should store values properly', function() {
             dataset.getHeaders().should.eql(
                 ["Integer", "Numeric", "Text", "Boolean"]);
             dataset.getDataTypes().should.eql(
-                [DataType.INTEGER, DataType.NUMERIC, DataType.TEXT, DataType.BOOLEAN]);
+                [defines.INTEGER, defines.NUMERIC, defines.TEXT, defines.BOOLEAN]);
             dataset.getData().should.eql([
                 [9001, 5.5, "Hello World", true],
                 [5555555, 9.1, "foo bar", false]
@@ -113,40 +113,40 @@ describe('DataSet', function() {
         it('should fail to change the dataTypes (out of range)', function () {
             (function() {
                 dataset.setDataTypes([
-                    DataType.TEXT,
-                    DataType.TEXT,
-                    DataType.TEXT,
-                    DataType.TEXT,
-                    DataType.TEXT
+                    defines.TEXT,
+                    defines.TEXT,
+                    defines.TEXT,
+                    defines.TEXT,
+                    defines.TEXT
                 ]);
             }).should.throwError('Invalid dataTypes length. It does not match the data range');
 
             (function() {
-                dataset.setDataTypes([DataType.TEXT]);
+                dataset.setDataTypes([defines.TEXT]);
             }).should.throwError('Invalid dataTypes length. It does not match the data range');
         });
         it('should change the dataTypes just fine', function() {
             dataset.setDataTypes([
-                DataType.TEXT,
-                DataType.TEXT,
-                DataType.TEXT,
-                DataType.TEXT
+                defines.TEXT,
+                defines.TEXT,
+                defines.TEXT,
+                defines.TEXT
             ]);
             dataset.getDataTypes().should.eql([
-                DataType.TEXT,
-                DataType.TEXT,
-                DataType.TEXT,
-                DataType.TEXT
+                defines.TEXT,
+                defines.TEXT,
+                defines.TEXT,
+                defines.TEXT
             ]);
         });
         it('should change the data range (because it is the first thing in this DataSet)', function() {
             dataset = new DataSet();
             dataset.getDataRange().should.equal(-1);
             dataset.setDataTypes([
-                DataType.TEXT,
-                DataType.TEXT,
-                DataType.TEXT,
-                DataType.TEXT
+                defines.TEXT,
+                defines.TEXT,
+                defines.TEXT,
+                defines.TEXT
             ]);
             dataset.getDataRange().should.equal(4);
         });
@@ -210,16 +210,16 @@ describe('DataSet', function() {
 
     describe('#setSingleDataType', function() {
         it('should change a value of a DataSet data type', function() {
-            dataset.setSingleDataType(0, DataType.TEXT);
-            dataset.getDataTypes()[0].should.equal(DataType.TEXT);
+            dataset.setSingleDataType(0, defines.TEXT);
+            dataset.getDataTypes()[0].should.equal(defines.TEXT);
         });
         it('should not change the value of a DataSet data type (out of range)', function() {
             (function() {
-                dataset.setSingleDataType(100, DataType.TEXT);
+                dataset.setSingleDataType(100, defines.TEXT);
             }).should.throwError('Can not change data type, column index out of range');
 
             (function() {
-                dataset.setSingleDataType(-1, DataType.TEXT);
+                dataset.setSingleDataType(-1, defines.TEXT);
             }).should.throwError('Can not change data type, column index out of range');
         });
         it('should not change the value, does not exist', function() {
@@ -250,6 +250,18 @@ describe('DataSet', function() {
             ]);
             //
             dataset.getDataRange().should.equal(4);
+        });
+        it('should handle cases where the dataset is undefined (range has already been set)', function() {
+            dataset = new DataSet();
+            dataset.getDataRange().should.equal(-1);
+            dataset.setHeaders(['testHeader']);
+            dataset.getDataRange().should.equal(1);
+
+            dataset.addDataRow([1]);
+
+            dataset.getData().should.eql([
+                [1]
+            ]);
         });
         it('should throw an error (invalid type)', function() {
             (function() {
@@ -289,7 +301,7 @@ describe('DataSet', function() {
         it('should run a function successfully on a column', function() {
             var headers, dataTypes, data, dataset;
             headers = [0];
-            dataTypes = [DataType.INTEGER];
+            dataTypes = [defines.INTEGER];
             data = [
                 [ 100 ],
                 [ 200 ],
@@ -308,7 +320,7 @@ describe('DataSet', function() {
         it('should fail to run a function successfully on a column', function() {
             var headers, dataTypes, data, dataset;
             headers = [0];
-            dataTypes = [DataType.INTEGER];
+            dataTypes = [defines.INTEGER];
             data = [
                 [ -100 ],
                 [ -200 ],
@@ -327,7 +339,7 @@ describe('DataSet', function() {
         it('should run a function successfully on a column (majority matched function criteria)', function() {
             var headers, dataTypes, data, dataset;
             headers = [0];
-            dataTypes = [DataType.INTEGER];
+            dataTypes = [defines.INTEGER];
             data = [
                 [ 100 ],
                 [ 100 ],
@@ -347,7 +359,7 @@ describe('DataSet', function() {
         it('should fail to run a function successfully on a column (majority failed to match function criteria)', function() {
             var headers, dataTypes, data, dataset;
             headers = [0];
-            dataTypes = [DataType.INTEGER];
+            dataTypes = [defines.INTEGER];
             data = [
                 [ 100 ],
                 [ -500 ],
@@ -369,7 +381,7 @@ describe('DataSet', function() {
     describe('#getColumnByIndex()', function() {
         it('should return array of a columns contents (by column index)', function() {
             var headers = ["Column 1", "Column 2", "Column 3"];
-            var dataTypes = [DataType.TEXT, DataType.NUMERIC, DataType.INTEGER];
+            var dataTypes = [defines.TEXT, defines.NUMERIC, defines.INTEGER];
             var data = [
                 ["Sample Data", 5.5, 96],
                 ["More Data!!", 6.6, 12]
@@ -385,7 +397,7 @@ describe('DataSet', function() {
     describe('#getColumnByName()', function() {
         it('should return array of a columns contents (by column name)', function() {
             var headers = ["Column 1", "Column 2", "Column 3"];
-            var dataTypes = [DataType.TEXT, DataType.NUMERIC, DataType.INTEGER];
+            var dataTypes = [defines.TEXT, defines.NUMERIC, defines.INTEGER];
             var data = [
                 ["Sample Data", 5.5, 96],
                 ["More Data!!", 6.6, 12]
