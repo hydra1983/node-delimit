@@ -1,0 +1,10 @@
+{
+  "name": "bin-delimit",
+  "description": "BIN - Specialized in anything delimited",
+  "version": "0.0.1",
+  "keywords": [],
+  "maintainers": [],
+  "dependencies": {
+    "optimist": "*"
+  }
+}

@@ -7,44 +7,36 @@ var defines = require('../src/defines.js');
 describe('file', function() {
 
     var simpleTsv;
+    var emptyRow;
     var filePaths = [];
     var tsvLoader;
     var datasetTransformer;
 
     before(function() {
         simpleTsv = __dirname + '/files/simple.tsv';
+        emptyRow = __dirname + '/files/emptyRow.tsv';
         filePaths = [ simpleTsv ];
         tsvLoader = loaders.getTsvLoader();
         datasetTransformer = transformers.getDataSetTransformer();
     });
 
-    describe('#mapFilePaths', function() {
-        it('should perform a fn on each filePath', function(done) {
-            file.mapFilePaths(filePaths, function(filePath) {
-                should.exist(filePath);
-                done();
-            });
+    describe('#isDataRowEmpty()', function() {
+        it('should detect that the data row is empty', function() {
+            var dataRow = [' ', '#REF!:emptyRange', '', '   #REF!:emptyRange '];
+            file.isDataRowEmpty(datasetTransformer, dataRow).should.be.true;
         });
-        it('should throw an error (no filePaths specified)', function() {
-            (function() {
-                file.mapFilePaths(undefined, function() {});
-            }).should.throwError('You must specify filePaths to mapFilePaths');
-        });
-        it('should throw an error (no callback function)', function() {
-            (function() {
-                file.mapFilePaths(['A "filePath"']);
-            }).should.throwError('You must provide a callback to mapFilePaths');
-        });
-        it('should throw an error (no filePaths in array)', function() {
-            (function() {
-                file.mapFilePaths([], function() {});
-            }).should.throwError('There were not any filePaths provided in the array');
+        it('should not detect that the data row is empty', function() {
+            var dataRow = ['   ', '', '', 'not empty after all!'];
+            file.isDataRowEmpty(datasetTransformer, dataRow).should.be.false;
         });
     });
 
     describe('#fileToDataRows()', function() {
         it('should take in a tsv file path, and spit back the rows it contains', function(done) {
-            file.fileToDataRows(simpleTsv, tsvLoader,
+            var options = {
+                ignoreEmptyHeaders: true
+            };
+            file.fileToDataRows(simpleTsv, tsvLoader, options,
                 function rowCallback(singleRow) {
                     should.exist(singleRow);
                     singleRow.should.be.instanceOf(Array);
@@ -55,32 +47,30 @@ describe('file', function() {
                 }
             );
         });
-        it('should throw an error (no filePath specified)', function() {
-            (function() {
-                file.fileToDataRows(undefined, tsvLoader, function() {});
-            }).should.throwError('You must specify a filePath to fileToDataRows');
+        it('should take in a tsv file path, and spit back the rows it contains ignoring columns that done contain names', function(done) {
+            var options = {
+                ignoreEmptyHeaders: false
+            };
+            file.fileToDataRows(simpleTsv, tsvLoader, options,
+                function rowCallback(singleRow) {
+                    should.exist(singleRow);
+                    singleRow.should.be.instanceOf(Array);
+                    singleRow.length.should.equal(8);
+                },
+                function doneCallback() {
+                    done();
+                }
+            );
         });
-        it('should throw an error (no rowCallback function)', function() {
-            (function() {
-                file.fileToDataRows('fakeFilePath', tsvLoader, undefined, function() {});
-            }).should.throwError('You must provide a rowCallback to fileToDataRows');
-        });
-        it('should throw an error (no doneCallback function)', function() {
-            (function() {
-                file.fileToDataRows('fakeFilePath', tsvLoader, function() {});
-            }).should.throwError('You must provide a doneCallback to fileToDataRows');
-        });
-        it('should throw an error (no loader)', function() {
-            (function() {
-                file.fileToDataRows('fakeFilePath', undefined);
-            }).should.throwError('You must provide a loader');
-        });
+
     });
 
-    describe('#fileToHooks()', function() {
+    describe('#getFileAttributes()', function() {
         it('should get the proper headers & data types back', function(done) {
-            file.fileToHooks(simpleTsv, 0, tsvLoader, datasetTransformer,
-                function rowHook(dataRow) {},
+            var options = {
+                    headerRow: 0
+                };
+            file.getFileAttributes(simpleTsv, tsvLoader, datasetTransformer, options,
                 function doneHook(headers, dataTypes) {
                     headers.should.eql([
                         'Simple_Text', 'Simple_Int', 'Simple_Numeric',
@@ -92,6 +82,71 @@ describe('file', function() {
                         defines.BOOLEAN, defines.LAT, defines.LONG,
                         defines.PRIMARY_INTEGER, defines.ZIP
                     ]);
+                    done();
+                });
+        });
+    });
+
+    describe('#getFileData()', function() {
+        it('should loop through the dataset entirely and not skip anything', function(done) {
+            var rowHits = 0,
+                options = {
+                    headerRow: 0
+                };
+            file.getFileData(simpleTsv, tsvLoader, datasetTransformer, options,
+                function dataRowHook(dataRow) {
+                    dataRow.length.should.equal(8);
+                    ++rowHits;
+                },
+                function doneHook() {
+                    rowHits.should.eql(4);
+                    done();
+                });
+        });
+        it('should skip empty data rows', function(done) {
+            var rowHits = 0,
+                options = {
+                    headerRow: 0
+                };
+            file.getFileData(emptyRow, tsvLoader, datasetTransformer, options,
+                function dataRowHook(dataRow) {
+                    dataRow.length.should.equal(2);
+                    ++rowHits;
+                },
+                function doneHook() {
+                    rowHits.should.eql(2);
+                    done();
+                });
+        });
+        it('should NOT skip empty data rows', function(done) {
+            var rowHits = 0,
+                options = {
+                    headerRow: 0,
+                    skipEmptyRows: false
+                };
+            file.getFileData(emptyRow, tsvLoader, datasetTransformer, options,
+                function dataRowHook(dataRow) {
+                    dataRow.length.should.equal(2);
+                    ++rowHits;
+                },
+                function doneHook() {
+                    rowHits.should.eql(4);
+                    done();
+                });
+        });
+        it('should skip over specified columns', function(done) {
+            var rowHits = 0,
+                options = {
+                    headerRow: 0,
+                    ignoreColumns: [0, 1, 2, 3, 4, 5]
+                };
+            file.getFileData(simpleTsv, tsvLoader, datasetTransformer, options,
+                function dataRowHook(dataRow) {
+                    dataRow.length.should.equal(2);
+                    ++rowHits;
+                },
+                function doneHook() {
+                    rowHits.should.eql(4);
                     done();
                 });
         });

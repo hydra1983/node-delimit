@@ -17,6 +17,9 @@ describe('dataType', function() {
 			dataType.isStringInteger("01").should.be.true;
 			dataType.isStringInteger("-1").should.be.true;
 			dataType.isStringInteger("-9").should.be.true;
+			// Handle cases where excel appends .0 to the end of integers
+			dataType.isStringInteger("1.0").should.be.true;
+			dataType.isStringInteger("-1.0").should.be.true;
 		});
 		it('should fail to find integers', function() {
 			dataType.isStringInteger("hello").should.be.false;
@@ -93,13 +96,18 @@ describe('dataType', function() {
 
 	describe('#isStringEmpty()', function() {
 		it('should detect empty strings', function() {
-			dataType.isStringEmpty('   ').should.be.true;
-			dataType.isStringEmpty('').should.be.true;
-			dataType.isStringEmpty("\n").should.be.true;
-			dataType.isStringEmpty(" \n ").should.be.true;
+			dataType.isStringEmpty(datasetTransformer, '   ').should.be.true;
+			dataType.isStringEmpty(datasetTransformer, '').should.be.true;
+			dataType.isStringEmpty(datasetTransformer, "\n").should.be.true;
+			dataType.isStringEmpty(datasetTransformer, " \n ").should.be.true;
 		});
 		it('should fail to detect empty strings', function() {
-			dataType.isStringEmpty("   hello   ").should.be.false;
+			dataType.isStringEmpty(datasetTransformer, "   hello   ")
+				.should.be.false;
+		});
+		it('should detect weird Google Doc strings', function() {
+			dataType.isStringEmpty(datasetTransformer, "#REF!:emptyRange")
+				.should.be.true;
 		});
 	});
 
@@ -185,7 +193,7 @@ describe('dataType', function() {
 		it('should return type LONG (empty)', function() {
 			dataType.getNewDataType(datasetTransformer, undefined, '179.99')
 				.should.eql(defines.LONG);
-			dataType.getNewDataType(datasetTransformer, defines.UNKNOWN, '-179.0')
+			dataType.getNewDataType(datasetTransformer, defines.UNKNOWN, '-179.99')
 				.should.eql(defines.LONG);
 		});
 		// Can't test this anymore due to adding in PRIMARY_INT
@@ -225,9 +233,9 @@ describe('dataType', function() {
 				.should.eql(defines.INTEGER);
 		});
 		it('should return type NUMERIC (empty)', function() {
-			dataType.getNewDataType(datasetTransformer, undefined, '1000.0')
+			dataType.getNewDataType(datasetTransformer, undefined, '1000.1')
 				.should.eql(defines.NUMERIC);
-			dataType.getNewDataType(datasetTransformer, defines.UNKNOWN, '1000.0')
+			dataType.getNewDataType(datasetTransformer, defines.UNKNOWN, '1000.2')
 				.should.eql(defines.NUMERIC);
 		});
 		it('should return type BOOLEAN (empty)', function() {
@@ -286,8 +294,16 @@ describe('dataType', function() {
 				.should.eql(defines.BIGINTEGER);
 		});
 		it('should convert INTEGER to NUMERIC', function() {
-			dataType.getNewDataType(datasetTransformer, defines.INTEGER, '10.0')
+			dataType.getNewDataType(datasetTransformer, defines.INTEGER, '1550.1')
 				.should.eql(defines.NUMERIC);
+		});
+		it('should convert INTEGER to LAT', function() {
+			dataType.getNewDataType(datasetTransformer, defines.INTEGER, '85.1')
+				.should.eql(defines.LAT);
+		});
+		it('should convert INTEGER to LONG', function() {
+			dataType.getNewDataType(datasetTransformer, defines.INTEGER, '179.1')
+				.should.eql(defines.LONG);
 		});
 		it('should convert INTEGER to TEXT', function() {
 			dataType.getNewDataType(datasetTransformer, defines.INTEGER, 'hello')
@@ -309,7 +325,7 @@ describe('dataType', function() {
 				.should.eql(defines.BIGINTEGER);
 		});
 		it('should convert BIGINTEGER to NUMERIC', function() {
-			dataType.getNewDataType(datasetTransformer, defines.BIGINTEGER, '10.0')
+			dataType.getNewDataType(datasetTransformer, defines.BIGINTEGER, '10.1')
 				.should.eql(defines.NUMERIC);
 		});
 		it('should convert BIGINTEGER to TEXT', function() {
@@ -496,6 +512,8 @@ describe('dataType', function() {
 
 	describe('#getAdjustedDataRow()', function() {
 		it('should change values based on the output type (BOOLEAN)', function() {
+			dataType.getAdjustedDataRow(datasetTransformer,
+				[defines.BOOLEAN], ['false']).should.eql([ false ]);
 			dataType.getAdjustedDataRow(
 				datasetTransformer,
 				[defines.BOOLEAN, defines.BOOLEAN,

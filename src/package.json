@@ -5,6 +5,7 @@
   "keywords": [],
   "maintainers": [],
   "dependencies": {
-    "line-reader": "*"
+    "line-reader": "*",
+    "async": "*"
   }
 }

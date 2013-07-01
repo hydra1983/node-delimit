@@ -3,21 +3,47 @@ var defines = require('./defines.js');
 
 //-----
 
-exports.isStringEmpty = function(string) {
-    string = string.replace(/\s/g, '');
-    return string === '';
+exports.isStringEmpty = function(transformer, string) {
+    // remove surrounding white space, keep spaces in between words
+    string = string.replace(/\n/g, '');
+    string = string.replace(/\r/g, '');
+    string = string.trim();
+
+    var i, len = transformer.emptyValues.length;
+    for(i = 0; i < len; ++i) {
+        if(transformer.emptyValues[i].toUpperCase() == string.toUpperCase()) {
+            return true;
+        }
+    }
+
+    return false;
 };
 
 exports.isStringBoolean = function(transformer, string) {
-    var booleanTypes =
-        transformer.booleanValues.isTrue + transformer.booleanValues.isFalse;
+    var i, len;
 
-    return (booleanTypes.indexOf(string.toUpperCase()) !== -1);
+    len = transformer.booleanValues.isTrue.length;
+    for(i = 0; i < len; ++i) {
+        if(transformer.booleanValues.isTrue[i].toUpperCase() ==
+            string.toUpperCase()) {
+            return true;
+        }
+    }
+
+    len = transformer.booleanValues.isFalse.length;
+    for(i = 0; i < len; ++i) {
+        if(transformer.booleanValues.isFalse[i].toUpperCase() ==
+            string.toUpperCase()) {
+            return true;
+        }
+    }
+
+    return false;
 };
 
 exports.isStringBigInteger = function(string, kickLeadingZeros) {
 
-    var isInt = string.match(/^-?\d+$/) ? true : false;
+    var isInt = string.match(/^-?\d+(?:\.0+)?$/) ? true : false;
 
     if(isInt && kickLeadingZeros && string.match(/^0/)) {
         return false;
@@ -35,7 +61,7 @@ exports.isStringBigInteger = function(string, kickLeadingZeros) {
 
 
 exports.isStringInteger = function(string, kickLeadingZeros) {
-    var isInt = string.match(/^-?\d+$/) ? true : false;
+    var isInt = string.match(/^-?\d+(?:\.0+)?$/) ? true : false;
 
     if(isInt && kickLeadingZeros && string.match(/^0/)) {
         return false;
@@ -102,7 +128,7 @@ exports.isStringLong = function(string) {
 
 exports.getNewDataType = function(transformer, oldDataType, newString, oldString) {
 
-    var isEmpty = exports.isStringEmpty(newString);
+    var isEmpty = exports.isStringEmpty(transformer, newString);
 
     // Primary Integer
     //
@@ -205,11 +231,15 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
 
     // Integer
     //
-    // Can convert to Big Integer, Numeric or Text if not an Integer
+    // Can convert to Big Integer, Lat, Long, Numeric or Text if not an Integer
     if(oldDataType == defines.INTEGER) {
         if(!isEmpty && !exports.isStringInteger(newString)) {
             if(exports.isStringBigInteger(newString)) {
                 return defines.BIGINTEGER;
+            } else if(exports.isStringLat(newString)) {
+                return defines.LAT;
+            } else if(exports.isStringLong(newString)) {
+                return defines.LONG;
             } else if(exports.isStringNumeric(newString)) {
                 return defines.NUMERIC;
             } else {
@@ -239,8 +269,8 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // If we get down here, oldDataType was undefined or unknown
     //
     // Order of preference:
-    //     Unknown, Primary Integer, Zip, Lat, Long, Boolean, Big Integer,
-    //     Integer, Numeric, Text
+    //     Unknown, Primary Integer, Zip, Boolean, Big Integer,
+    //     Integer, Lat, Long, Numeric, Text
     //
     if(isEmpty) {
         return defines.UNKNOWN;
@@ -251,12 +281,6 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     if(exports.isStringZip(newString)) {
         return defines.ZIP;
     }
-    if(exports.isStringLat(newString)) {
-        return defines.LAT;
-    }
-    if(exports.isStringLong(newString)) {
-        return defines.LONG;
-    }
     if(exports.isStringBoolean(transformer, newString)) {
         return defines.BOOLEAN;
     }
@@ -265,6 +289,12 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     }
     if(exports.isStringInteger(newString)) {
         return defines.INTEGER;
+    }
+    if(exports.isStringLat(newString)) {
+        return defines.LAT;
+    }
+    if(exports.isStringLong(newString)) {
+        return defines.LONG;
     }
     if(exports.isStringNumeric(newString)) {
         return defines.NUMERIC;
@@ -330,7 +360,7 @@ exports.getAdjustedDataRow = function(transformer, dataTypes, dataRow) {
         value = dataRow[i];
         type = dataTypes[i];
 
-        if(exports.isStringEmpty(value)) {
+        if(exports.isStringEmpty(transformer, value)) {
             newDataRow.push(transformer.nullValue);
         } else {
             newDataRow.push(transformer.output(type, value));

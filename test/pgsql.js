@@ -92,97 +92,49 @@ describe('pgsql', function() {
             pgsql.getCreateTableSql(tablename, headers, dataTypes)
                 .should.equal(shouldBe);
         });
-        it.skip('should find the primary key (simple case)', function() {
-            var tablename = 'trevor.test';
+        it('should add the primary key (one)', function() {
             var headers, dataTypes, data, dataset;
             headers = ["column_1"];
-            dataTypes = ["integer"];
-            data = {
-                0: [1],
-                1: [2],
-                2: [3]
-            };
-            dataset = new utilClass.DataSet(headers, dataTypes, data);
-            dataset = new datasetModifier.modifyPrimaryColumn(dataset);
-
-            var shouldBe =
-            "create table trevor.test (\n" +
-                "\tcolumn_1 integer primary key\n" +
-            ");\n";
-
-            pgsql.getCreateTableSql(tablename, dataset).should.equal(shouldBe);
-        });
-        it.skip('should find the primary key (complex case)', function() {
-            var tablename = 'trevor.test';
-            var headers, dataTypes, data, dataset;
-            headers = ["column_1", "column_2"];
-            dataTypes = ["integer", "integer"];
-            data = {
-                0: [4, 1],
-                1: [5, 2],
-                2: [7, 3]
-            };
-            dataset = new utilClass.DataSet(headers, dataTypes, data);
-            dataset = new datasetModifier.modifyPrimaryColumn(dataset);
+            dataTypes = [defines.PRIMARY_INTEGER];
 
             var shouldBe =
             "create table trevor.test (\n" +
                 "\tcolumn_1 integer,\n" +
-                "\tcolumn_2 integer primary key\n" +
+                "\tprimary key (column_1)\n" +
             ");\n";
 
-            pgsql.getCreateTableSql(tablename, dataset).should.equal(shouldBe);
+            pgsql.getCreateTableSql(tablename, headers, dataTypes)
+                .should.equal(shouldBe);
         });
-        it.skip('should find the primary key (another complex case)', function() {
-            var tablename = 'trevor.test';
+        it('should add the primary key (multiple)', function() {
             var headers, dataTypes, data, dataset;
             headers = ["column_1", "column_2", "column_3"];
-            dataTypes = ["integer", "integer", "integer"];
-            data = {
-                0: [4, 1, 3],
-                1: [5, 2, 2],
-                2: [7, 3, 1]
-            };
-            dataset = new utilClass.DataSet(headers, dataTypes, data);
-            dataset = new datasetModifier.modifyPrimaryColumn(dataset);
+            dataTypes = [
+                defines.PRIMARY_INTEGER, defines.TEXT, defines.PRIMARY_INTEGER];
 
             var shouldBe =
             "create table trevor.test (\n" +
                 "\tcolumn_1 integer,\n" +
-                "\tcolumn_2 integer primary key,\n" +
-                "\tcolumn_3 integer\n" +
+                "\tcolumn_2 text,\n" +
+                "\tcolumn_3 integer,\n" +
+                "\tprimary key (column_1, column_3)\n" +
             ");\n";
 
-            pgsql.getCreateTableSql(tablename, dataset).should.equal(shouldBe);
-        });
-        it.skip('should find the primary key (another complex case)', function() {
-            var tablename = 'trevor.test';
-            var headers, dataTypes, data, dataset;
-            headers = ["column_1", "column_2", "column_3"];
-            dataTypes = ["integer", "integer", "integer"];
-            data = {
-                0: [-5, -1000, -999],
-                1: [0, -990, -998],
-                2: [10, -980, -997]
-            };
-            dataset = new utilClass.DataSet(headers, dataTypes, data);
-            dataset = new datasetModifier.modifyPrimaryColumn(dataset);
-
-            var shouldBe =
-            "create table trevor.test (\n" +
-                "\tcolumn_1 integer,\n" +
-                "\tcolumn_2 integer,\n" +
-                "\tcolumn_3 integer primary key\n" +
-            ");\n";
-
-            pgsql.getCreateTableSql(tablename, dataset).should.equal(shouldBe);
+            pgsql.getCreateTableSql(tablename, headers, dataTypes)
+                .should.equal(shouldBe);
         });
     });
 
     describe('#getCopyHeaderSql()', function() {
         it('should create the insert dump statement (simple case)', function() {
             var shouldBe = "copy trevor.test (column_1) from stdin;\n";
-            pgsql.getCopyHeaderSql(tablename, headers).should.equal(shouldBe);
+            pgsql.getCopyHeaderSql(tablename, headers, dataTypes).should.equal(shouldBe);
+        });
+        it('should create the insert dump statement (adjusted names)', function() {
+            dataTypes = [ defines.LAT, defines.LONG, defines.ZIP ];
+            headers = ["one", "two", "three"];
+            var shouldBe = "copy trevor.test (lat, lng, zip) from stdin;\n";
+            pgsql.getCopyHeaderSql(tablename, headers, dataTypes).should.equal(shouldBe);
         });
     });
 

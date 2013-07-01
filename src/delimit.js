@@ -1,66 +1,113 @@
 #!/usr/bin/env node
 
 var DataSet = require('./DataSet.js');
-
+var pgsql = require('./pgsql.js');
 var file = require('./file.js');
 var loaders = require('./loaders.js');
 var transformers = require('./transformers.js');
 var dataType = require('./dataType.js');
+var xls2tsv = require('./xls2tsv.js');
+var async = require('async');
 
-exports.tsvToDataSet = function(fileName, headerRow, callback) {
+exports.tsvToDataSet = function(filePath, options, callback) {
 
-    var tsvLoader = loaders.getTsvLoader();
-    var datasetTransformer = transformers.getDataSetTransformer();
+    options = options || {};
+    var
+        headerRow = (typeof options.headerRow === 'undefined') ?
+            -1 : options.headerRow;
+    //
+    var
+        tsvLoader = loaders.getTsvLoader(),
+        datasetTransformer = transformers.getDataSetTransformer();
 
-    // First iteration is to get the correct data types.
-    file.fileToHooks(fileName, headerRow, tsvLoader, datasetTransformer,
-        function dataRowCb(dataRow) {},
-        // Once done with the first iteration, we have accurate data types
-        // and can use them to adjust the data as necessary
-        function doneCb(headers, dataTypes) {
-
+    file.getFileAttributes(filePath, tsvLoader, datasetTransformer, options,
+        function doneHook(headers, dataTypes) {
             var dataset = new DataSet();
             dataset.setHeaders(headers);
             dataset.setDataTypes(dataTypes);
-            var adjustedDataRow;
 
-            file.fileToHooks(fileName, headerRow, tsvLoader, datasetTransformer,
-                function dataRowCb2(dataRow) {
+            var adjustedDataRow;
+            file.getFileData(filePath, tsvLoader, datasetTransformer, options,
+                function dataRowHook(dataRow) {
                     adjustedDataRow = dataType.getAdjustedDataRow(
                         datasetTransformer, dataTypes, dataRow);
                     dataset.addDataRow(adjustedDataRow);
                 },
-                function doneCb2() {
+                function doneHook() {
                     callback(dataset);
                 });
         });
 };
 
-exports.tsvToPgSql = function(fileName, headerRow, writeStream) {
+exports.tsvToPgSql = function(filePath, writeStream, options, callback) {
 
-    var tsvLoader = loaders.getTsvLoader();
-    var pgSqlTransformer = transformers.getDataSetTransformer();
+    options = options || {};
+    var
+        tablename = options.tablename || "default",
+        headerRow = (typeof options.headerRow === 'undefined') ?
+            -1 : options.headerRow;
+    //
+    var
+        tsvLoader = loaders.getTsvLoader(),
+        pgSqlTransformer = transformers.getPgSqlTransformer();
 
-    // First iteration is to get the correct data types.
-    file.fileToHooks(fileName, headerRow, tsvLoader, pgSqlTransformer,
-        function dataRowCb(dataRow) {},
-        // Once done with the first iteration, we have accurate data types
-        // and can use them to adjust the data as necessary
-        function doneCb(headers, dataTypes) {
+    file.getFileAttributes(filePath, tsvLoader, pgSqlTransformer, options,
+        function doneHook(headers, dataTypes) {
+            var statements =
+                pgsql.getHeaderSql(tablename) +
+                pgsql.getCreateTableSql(tablename, headers, dataTypes) +
+                pgsql.getCopyHeaderSql(tablename, headers, dataTypes);
+            writeStream.write(statements);
 
-            var dataset = new DataSet();
-            dataset.setHeaders(headers);
-            dataset.setDataTypes(dataTypes);
             var adjustedDataRow;
-
-            file.fileToHooks(fileName, headerRow, tsvLoader, pgSqlTransformer,
-                function dataRowCb2(dataRow) {
+            file.getFileData(filePath, tsvLoader, pgSqlTransformer, options,
+                function dataRowHook(dataRow) {
                     adjustedDataRow = dataType.getAdjustedDataRow(
                         pgSqlTransformer, dataTypes, dataRow);
-                    dataset.addDataRow(adjustedDataRow);
+                    writeStream.write(pgsql.getCopyDataRowSql(adjustedDataRow));
                 },
-                function doneCb2() {
-                    callback(dataset);
+                function doneHook() {
+                    writeStream.write(pgsql.getCopyFooterSql());
+                    writeStream.write(pgsql.getFooterSql(tablename), undefined,
+                        function sucessfullyWrittenCb() {
+                            if(typeof callback === 'function') {
+                               callback();
+                            }
+                        });
                 });
+
         });
+};
+
+exports.xlsToPgSql = function(filePath, writeStream, options, callback) {
+
+    var tablename = options.tablename || "default";
+    var headerRow = (typeof options.headerRow === 'undefined') ? 0 : options.headerRow;
+
+    xls2tsv.process(filePath, function(error, info) {
+        if(error) { throw error; }
+        var toProcess = [];
+
+        var singleApply;
+        for(var i = 0, len = info.files.length; i < len; ++i) {
+            singleApply = async.apply(exports.tsvToPgSql,
+                info.files[i].path,
+                writeStream,
+                {
+                    tablename: tablename + "_" + transformers.normalizeString(info.files[i].sheetName),
+                    headerRow: headerRow
+                }
+            );
+            toProcess.push(singleApply);
+        }
+
+        async.series(toProcess, function(error, results) {
+            if(error) {
+                throw error;
+            }
+            if(typeof callback === 'function') {
+                callback();
+            }
+        });
+    });
 };

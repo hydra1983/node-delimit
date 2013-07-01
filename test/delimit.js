@@ -1,20 +1,27 @@
 var should = require('should'),
     delimit = require('../src/delimit.js'),
-    defines = require('../src/defines.js');
+    defines = require('../src/defines.js'),
+    fs = require('fs');
 
 describe('delimit', function() {
 
-    var simpleTsv;
-    var simple1100Lines;
-
-    before(function() {
-        simpleTsv = __dirname + '/files/simple.tsv';
-        simple1100Lines = __dirname + '/files/simple1100Lines.tsv';
-    });
-
     describe('#tsvToDataSet()', function() {
+
+        var simpleTsv;
+        var simple1100Lines;
+        var options;
+
+        before(function() {
+            options = {
+                tablename: 'trevor.test',
+                headerRow: 0
+            };
+            simpleTsv = __dirname + '/files/simple.tsv';
+            simple1100Lines = __dirname + '/files/simple1100Lines.tsv';
+        });
+
         it('should convert a TSV file into a DataSet (simple)', function(done) {
-            delimit.tsvToDataSet(simpleTsv, 0, function datasetCb(dataset) {
+            delimit.tsvToDataSet(simpleTsv, options, function datasetCb(dataset) {
                 should.exist(dataset);
                 dataset.getHeaders().should.eql([
                    'Simple_Text', 'Simple_Int', 'Simple_Numeric',
@@ -36,7 +43,7 @@ describe('delimit', function() {
             });
         });
         it('should convert a TSV file into a DataSet (simple1100Lines)', function(done) {
-            delimit.tsvToDataSet(simple1100Lines, 0, function datasetCb(dataset) {
+            delimit.tsvToDataSet(simple1100Lines, options, function datasetCb(dataset) {
                 should.exist(dataset);
                 dataset.getHeaders().should.eql([
                    'Simple_Text', 'Simple_Int',
@@ -52,7 +59,74 @@ describe('delimit', function() {
         });
     });
 
-    describe.skip('#tsvToPgSql()', function() {
+    describe('#tsvToPgSql()', function() {
 
+        var simpleTsv;
+        var simple1100Lines;
+        var options;
+
+        before(function() {
+            options = {
+                tablename: 'trevor.test',
+                headerRow: 0
+            };
+            simpleTsv = __dirname + '/files/simple.tsv';
+            simple1100Lines = __dirname + '/files/simple1100Lines.tsv';
+        });
+
+        it('should convert a TSV file into PGSQL (simple)', function(done) {
+            var ws = fs.createWriteStream('out_0.sql');
+            delimit.tsvToPgSql(simpleTsv, ws, options, function doneCb() {
+                ws.end();
+
+                fs.readFile('out_0.sql', {encoding: 'UTF8'}, function(error, data) {
+                    if(error) { throw error; }
+                    data.should.be.ok;
+                    fs.unlink('out_0.sql', function() { done(); });
+                });
+
+            });
+        });
+    });
+
+    describe('#xlsToPgSql()', function() {
+
+        var simpleXls,
+            twosheets,
+            options;
+
+        before(function() {
+            options = {
+                tablename: 'trevor.test'
+            };
+            simpleXls = __dirname + '/files/simple.xls';
+            twosheets = __dirname + '/files/twosheets.xls';
+        });
+
+        it('should convert an XLS file into PGSQL (one sheet)', function(done) {
+            var ws = fs.createWriteStream('out_1.sql');
+            delimit.xlsToPgSql(simpleXls, ws, options, function doneCb() {
+                ws.end();
+                fs.readFile('out_1.sql', {encoding: 'UTF8'}, function(error, data) {
+                    if(error) { throw error; }
+                    data.should.be.ok;
+                    fs.unlink('out_1.sql', function() {
+                        done();
+                    });
+                });
+            });
+        });
+
+        it('should convert an XLS file into PGSQL (two sheets)', function(done) {
+            var ws = fs.createWriteStream('out_2.sql');
+            delimit.xlsToPgSql(twosheets, ws, options, function doneCb() {
+                ws.end();
+                fs.readFile('out_2.sql', {encoding: 'UTF8'}, function(error, data) {
+                    if(error) { throw error; }
+                    data.should.be.ok;
+                    fs.unlink('out_2.sql', function() { done(); });
+                });
+            });
+        });
     });
 });
