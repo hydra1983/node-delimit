@@ -1,3 +1,5 @@
-Simple_Text	Simple_Int	Simple_Numeric	Simple_Boolean
-Hello	1	1.1	TRUE
-World	2	2.2	FALSE
+Simple_Text	Simple_Int	Simple_Numeric	Simple_Boolean	Simple_LAT	Simple_Lng	Simple_Primary	Simple_Zip
+Hello	5	1.1	TRUE	89.9	23.56	1	12345
+World	4	2.2	FALSE	55.5	45.5	2	00000
+Foo	3	3.3	Yes	23.2	179.9	3	12345-6789
+Bar	2	4.4	No	45.44	67.22	4	00000-0000

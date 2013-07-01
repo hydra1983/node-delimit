@@ -48,7 +48,7 @@ describe('file', function() {
                 function rowCallback(singleRow) {
                     should.exist(singleRow);
                     singleRow.should.be.instanceOf(Array);
-                    singleRow.length.should.equal(4);
+                    singleRow.length.should.equal(8);
                 },
                 function doneCallback() {
                     done();
@@ -83,12 +83,14 @@ describe('file', function() {
                 function rowHook(dataRow) {},
                 function doneHook(headers, dataTypes) {
                     headers.should.eql([
-                        'Simple_Text', 'Simple_Int',
-                        'Simple_Numeric', 'Simple_Boolean'
+                        'Simple_Text', 'Simple_Int', 'Simple_Numeric',
+                        'Simple_Boolean', 'Simple_LAT', 'Simple_Lng',
+                        'Simple_Primary', 'Simple_Zip'
                     ]);
                     dataTypes.should.eql([
-                        defines.TEXT, defines.INTEGER,
-                        defines.NUMERIC, defines.BOOLEAN
+                        defines.TEXT, defines.INTEGER, defines.NUMERIC,
+                        defines.BOOLEAN, defines.LAT, defines.LONG,
+                        defines.PRIMARY_INTEGER, defines.ZIP
                     ]);
                     done();
                 });

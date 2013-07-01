@@ -4,3 +4,7 @@ exports.INTEGER    = 1;
 exports.BIGINTEGER = 2;
 exports.TEXT       = 3;
 exports.NUMERIC    = 4;
+exports.ZIP        = 5;
+exports.LAT        = 6;
+exports.LONG       = 7;
+exports.PRIMARY_INTEGER = 8;

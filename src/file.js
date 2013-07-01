@@ -44,18 +44,17 @@ exports.fileToDataRows = function(filePath, loader, rowCallback, doneCallback) {
 };
 
 exports.fileToHooks = function(filePath, headerRow, loader, transformer, rowHook, doneHook) {
-    var dataTypes = [];
-    var headers = [];
-
-    var row = 0;
+    var dataTypes = [], headers = [], row = 0;
+    var previousDataRow = [];
 
     exports.fileToDataRows(filePath, loader,
         function dataRowCallback(dataRow) {
             if(headerRow == row) {
                 headers = dataRow;
             } else {
-                dataTypes = dataType.getNewDataTypes(transformer, dataTypes, dataRow);
+                dataTypes = dataType.getNewDataTypes(transformer, dataTypes, dataRow, previousDataRow);
                 rowHook(dataRow);
+                previousDataRow = dataRow;
             }
             ++row;
         },
