@@ -38,41 +38,76 @@ describe('file', function() {
         });
     });
 
-    describe('#fileToDataRows()', function() {
+    describe('#fileToRows()', function() {
         it('should take in a tsv file path, and spit back the rows it contains', function(done) {
-            options = { ignoreEmptyHeaders: true };
-            file.fileToDataRows(tsvSimple, tsvLoader, options,
-                function rowCallback(singleRow) {
-                    should.exist(singleRow);
-                    singleRow.should.be.instanceOf(Array);
-                    singleRow.length.should.equal(8);
+            options = {
+                headerRow: 0,
+                forceType: false
+            };
+            var headerCount = 0, dataRowCount = 0;
+            file.fileToRows(tsvSimple, tsvLoader, options,
+                function headerRowCallback(dataRow) {
+                    should.exist(dataRow);
+                    dataRow.should.be.instanceOf(Array);
+                    dataRow.length.should.equal(8);
+                    ++headerCount;
+                },
+                function dataRowCallback(dataRow) {
+                    should.exist(dataRow);
+                    dataRow.should.be.instanceOf(Array);
+                    dataRow.length.should.equal(8);
+                    ++dataRowCount;
                 },
                 function doneCallback() {
-                    done();
-                }
-            );
-        });
-        it('should take in a tsv file path, and spit back the rows it contains ignoring columns that done contain names', function(done) {
-            options = { ignoreEmptyHeaders: false };
-            file.fileToDataRows(tsvSimple, tsvLoader, options,
-                function rowCallback(singleRow) {
-                    should.exist(singleRow);
-                    singleRow.should.be.instanceOf(Array);
-                    singleRow.length.should.equal(8);
-                },
-                function doneCallback() {
+                    headerCount.should.equal(1);
+                    dataRowCount.should.equal(4);
                     done();
                 }
             );
         });
 
+        it('should find no header rows', function(done) {
+            options = {
+                headerRow: -1,
+                forceType: false
+            };
+            var headerCount = 0, dataRowCount = 0;
+            file.fileToRows(tsvSimple, tsvLoader, options,
+                function headerRowCallback(dataRow) { ++headerCount; },
+                function dataRowCallback(dataRow) { ++dataRowCount; },
+                function doneCallback() {
+                    headerCount.should.equal(0);
+                    dataRowCount.should.equal(5);
+                    done();
+                }
+            );
+        });
+
+        it('should skip once it finds the header (forceType is defined)', function(done) {
+            options = {
+                headerRow: 0,
+                forceType: defines.TEXT
+            };
+            var headerCount = 0, dataRowCount = 0;
+            file.fileToRows(tsvSimple, tsvLoader, options,
+                function headerRowCallback(dataRow) { ++headerCount; },
+                function dataRowCallback(dataRow) { ++dataRowCount; },
+                function doneCallback() {
+                    headerCount.should.equal(1);
+                    dataRowCount.should.equal(0);
+                    done();
+                }
+            );
+        });
     });
 
     describe('#getFileAttributes()', function() {
         it('should get the proper headers & data types back', function(done) {
-            options = { headerRow: 0 };
+            options = {
+                headerRow: 0
+            };
             file.getFileAttributes(tsvSimple, tsvLoader, datasetTransformer, options,
-                function doneHook(headers, dataTypes) {
+                function doneHook(headers, dataTypes, ignoreColumns) {
                     headers.should.eql([
                         'Simple_Text', 'Simple_Int', 'Simple_Numeric',
                         'Simple_Boolean', 'Simple_LAT', 'Simple_Lng',
@@ -83,13 +118,17 @@ describe('file', function() {
                         defines.BOOLEAN, defines.LAT, defines.LONG,
                         defines.PRIMARY_INTEGER, defines.ZIP
                     ]);
+                    ignoreColumns.length.should.equal(0);
                     done();
                 });
         });
-        it('should force a particular data type (String)', function(done) {
-            options = { headerRow: 0, forceType: 'TEXT' };
+        it('should force a particular data type', function(done) {
+            options = {
+                headerRow: 0,
+                forceType: defines.TEXT
+            };
             file.getFileAttributes(tsvSimple, tsvLoader, datasetTransformer, options,
-                function doneHook(headers, dataTypes) {
+                function doneHook(headers, dataTypes, ignoreColumns) {
                     headers.should.eql([
                         'Simple_Text', 'Simple_Int', 'Simple_Numeric',
                         'Simple_Boolean', 'Simple_LAT', 'Simple_Lng',
@@ -100,6 +139,37 @@ describe('file', function() {
                         defines.TEXT, defines.TEXT, defines.TEXT,
                         defines.TEXT, defines.TEXT
                     ]);
+                    ignoreColumns.length.should.equal(0);
+                    done();
+                });
+        });
+        it('should ignore empty headers', function(done) {
+            options = {
+                headerRow: 0,
+                ignoreEmptyHeaders: true
+            };
+            file.getFileAttributes(tsvMissingHeaders, tsvLoader, datasetTransformer, options,
+                function doneHook(headers, dataTypes, ignoreColumns) {
+                    headers.should.eql([ 'test_1', 'test_3' ]);
+                    dataTypes.should.eql([ defines.TEXT, defines.NUMERIC ]);
+                    ignoreColumns.length.should.equal(1);
+                    ignoreColumns.should.eql([
+                        1
+                    ]);
+                    done();
+                });
+        });
+        it('should not ignore empty headers', function(done) {
+            options = {
+                headerRow: 0
+            };
+            file.getFileAttributes(tsvMissingHeaders, tsvLoader, datasetTransformer, options,
+                function doneHook(headers, dataTypes, ignoreColumns) {
+                    headers.should.eql([ 'test_1', 'column_2', 'test_3' ]);
+                    dataTypes.should.eql([
+                        defines.TEXT, defines.PRIMARY_INTEGER, defines.NUMERIC
+                    ]);
+                    ignoreColumns.length.should.equal(0);
                     done();
                 });
         });
@@ -107,58 +177,46 @@ describe('file', function() {
 
     describe('#getFileData()', function() {
         it('should loop through the dataset entirely and not skip anything', function(done) {
-            options = { headerRow: 0 };
-            var rowHits = 0;
+            options = {
+                headerRow: 0
+            };
+            var dataRowCount = 0;
 
             file.getFileData(tsvSimple, tsvLoader, datasetTransformer, options,
-                function dataRowHook(dataRow) {
-                    dataRow.length.should.equal(8);
-                    ++rowHits;
-                },
-                function doneHook() {
-                    rowHits.should.eql(4);
+                false,
+                function dataRowCallback(dataRow) { ++dataRowCount; },
+                function doneCallback() {
+                    dataRowCount.should.equal(4);
                     done();
                 });
         });
         it('should skip empty data rows', function(done) {
+            options = {
+                headerRow: 0
+            };
+            var dataRowCount = 0;
+
+            file.getFileData(tsvEmptyRow, tsvLoader, datasetTransformer, options,
+                false,
+                function dataRowCallback(dataRow) { ++dataRowCount; },
+                function doneCallback() {
+                    dataRowCount.should.equal(2);
+                    done();
+                });
+        });
+        it('should skip over ignored headers', function(done) {
             options = { headerRow: 0 };
-            var rowHits = 0;
-
-            file.getFileData(tsvEmptyRow, tsvLoader, datasetTransformer, options,
-                function dataRowHook(dataRow) {
-                    dataRow.length.should.equal(2);
-                    ++rowHits;
-                },
-                function doneHook() {
-                    rowHits.should.eql(2);
-                    done();
-                });
-        });
-        it('should NOT skip empty data rows', function(done) {
-            options = { headerRow: 0, skipEmptyRows: false };
-            var rowHits = 0;
-
-            file.getFileData(tsvEmptyRow, tsvLoader, datasetTransformer, options,
-                function dataRowHook(dataRow) {
-                    dataRow.length.should.equal(2);
-                    ++rowHits;
-                },
-                function doneHook() {
-                    rowHits.should.eql(4);
-                    done();
-                });
-        });
-        it('should skip over specified columns', function(done) {
-            options = {  headerRow: 0, ignoreColumns: [0, 1, 2, 3, 4, 5] };
-            var rowHits = 0;
+            var dataRowCount = 0;
 
             file.getFileData(tsvSimple, tsvLoader, datasetTransformer, options,
-                function dataRowHook(dataRow) {
-                    dataRow.length.should.equal(2);
-                    ++rowHits;
+                [0, 1, 2, 3, 4, 5, 6],
+                function dataRowCallback(dataRow) {
+                    should.exist(dataRow);
+                    dataRow.length.should.equal(1);
+                    ++dataRowCount;
                 },
-                function doneHook() {
-                    rowHits.should.eql(4);
+                function doneCallback() {
+                    dataRowCount.should.equal(4);
                     done();
                 });
         });

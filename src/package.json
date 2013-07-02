@@ -6,6 +6,7 @@
   "maintainers": [],
   "dependencies": {
     "line-reader": "*",
-    "async": "*"
+    "async": "*",
+    "underscore": "*"
   }
 }

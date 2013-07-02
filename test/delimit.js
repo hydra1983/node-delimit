@@ -22,28 +22,38 @@ describe('delimit', function() {
 
     describe('#tsvToDataSet()', function() {
         beforeEach(function() {
-            options = { tablename: 'trevor.test', headerRow: 0 };
+            options = {
+                tablename: 'trevor.test',
+                headerRow: 0
+            };
         });
 
         it('should convert a TSV file into a DataSet (simple)', function(done) {
             delimit.tsvToDataSet(tsvSimple, options, function datasetCb(dataset) {
                 should.exist(dataset);
+
+                should.exist(dataset.getHeaders());
                 dataset.getHeaders().should.eql([
                    'Simple_Text', 'Simple_Int', 'Simple_Numeric',
                    'Simple_Boolean', 'Simple_LAT', 'Simple_Lng',
                    'Simple_Primary', 'Simple_Zip'
                 ]);
+
+                should.exist(dataset.getDataTypes());
                 dataset.getDataTypes().should.eql([
                    defines.TEXT, defines.INTEGER, defines.NUMERIC,
                    defines.BOOLEAN, defines.LAT, defines.LONG,
                    defines.PRIMARY_INTEGER, defines.ZIP
                 ]);
+
+                should.exist(dataset.getData());
                 dataset.getData().should.eql([
                     ['Hello', 5, 1.1, true, 89.9, 23.56, 1, '12345'],
                     ['World', 4, 2.2, false, 55.5, 45.5, 2, '00000'],
                     ['Foo', 3, 3.3, true, 23.2, 179.9, 3, '12345-6789'],
                     ['Bar', 2, 4.4, false, 45.44, 67.22, 4, '00000-0000']
                 ]);
+
                 done();
             });
         });
@@ -100,16 +110,19 @@ describe('delimit', function() {
             });
         });
         it('should convert a TSV file into a DataSet (force type text)', function(done) {
-            options.forceType = 'text';
+            options.forceType = defines.TEXT;
             delimit.tsvToDataSet(tsvMissingHeaders, options, function datasetCb(dataset) {
                 should.exist(dataset);
+
                 dataset.getHeaders().should.eql([
                    'test_1', 'column_2', 'test_3'
                 ]);
+
                 dataset.getDataTypes().should.eql([
                    defines.TEXT, defines.TEXT, defines.TEXT
                 ]);
-                dataset.getData().length.should.eql(3);
+
+                should.exist(dataset.getData());
                 dataset.getData().should.eql([
                     ['one', '1', '4.4'],
                     ['two', '2', '5.5'],
@@ -122,7 +135,10 @@ describe('delimit', function() {
 
     describe('#tsvToPgSql()', function() {
         beforeEach(function() {
-            options = { tablename: 'trevor.test', headerRow: 0 };
+            options = {
+                tablename: 'trevor.test',
+                headerRow: 0
+            };
         });
 
         it('should convert a TSV file into PGSQL (simple)', function(done) {

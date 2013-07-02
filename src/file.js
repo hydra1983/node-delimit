@@ -1,4 +1,4 @@
-var reader = require('line-reader'),
+var lineReader = require('line-reader'),
     dataType = require('./dataType.js'),
     transformers = require('./transformers.js');
     defines = require('./defines.js');
@@ -23,120 +23,112 @@ exports.getIgnoreColumns = function(transformer, headers) {
     return ignoreColumns;
 };
 
-exports.fileToDataRows = function(filePath, loader, options, rowCallback, doneCallback) {
-    options = options || {};
-    var
-        ignoreEmptyHeaders = options.ignoreEmptyHeaders || false;
-    //
+exports.fileToRows = function(filePath, loader, options, headerRowHook, dataRowHook, doneCallback) {
 
-    if(typeof filePath !== 'string') {
-        throw new Error('You must specify a filePath to fileToDataRows');
-    }
+    lineReader.open(filePath, function(reader) {
 
-    if(typeof loader !== 'object') {
-        throw new Error('You must provide a loader');
-    }
+        var exitReader = function() {
+            reader.close();
+            doneCallback();
+        };
 
-    if(typeof rowCallback !== 'function') {
-        throw new Error('You must provide a rowCallback to fileToDataRows');
-    }
+        var handleLine = function(line, row) {
+            var dataRow = loader.toDataRow(line);
+            if(options.headerRow == row) {
+                if(typeof headerRowHook === 'function') {
+                    headerRowHook(dataRow);
+                    if(options.forceType && options.forceType !== false) {
+                        return false;
+                    }
+                }
+            } else {
+                dataRowHook(dataRow);
+            }
+            return true;
+        };
 
-    if(typeof doneCallback !== 'function') {
-        throw new Error('You must provide a doneCallback to fileToDataRows');
-    }
+        var row = 0;
+        var cycle = function() {
+            if(reader.hasNextLine()) {
+                reader.nextLine(function(line) {
+                    if(handleLine(line, row)) {
+                        ++row;
+                        cycle();
+                    } else {
+                        exitReader();
+                    }
+                });
+            } else {
+                exitReader();
+            }
+        };
 
-    reader.eachLine(filePath, function(line) {
-        rowCallback(loader.toDataRow(line));
-    }).then(function () {
-        doneCallback();
+        cycle();
     });
 };
 
 exports.getFileAttributes = function(filePath, loader, transformer, options, callback) {
-    options = options || {};
     var
-        headerRow = (typeof options.headerRow === 'undefined') ?
-            -1 : options.headerRow,
-        ignoreEmptyHeaders = typeof options.ignoreEmptyHeaders === 'undefined' ?
-            false : true,
-        forceType = options.forceType || false;
-        if(typeof forceType === 'string') {
-            forceType = defines[forceType.toUpperCase()];
-        }
-    //
-    var
-        dataTypes = [],
-        headers = [],
-        row = 0,
+        dataTypes = [], headers = [],
         previousDataRow = [],
-        i, len;
+        i, dataLength;
 
-    exports.fileToDataRows(filePath, loader, options,
+    exports.fileToRows(filePath, loader, options,
+        function headerRowCallback(dataRow) {
+            dataLength = dataRow.length;
+            headers = dataRow;
+        },
         function dataRowCallback(dataRow) {
-            if(headerRow == row) {
-                headers = dataRow;
-            } else if(!forceType) {
-                dataTypes = dataType.getNewDataTypes(
-                    transformer,
-                    dataTypes,
-                    dataRow,
-                    previousDataRow);
-                previousDataRow = dataRow;
-            } else if(dataTypes.length === 0 && forceType) {
-                for(i = 0, len = dataRow.length; i < len; ++i) {
-                    dataTypes.push(forceType);
-                }
-            }
-            ++row;
+            dataLength = dataRow.length;
+            dataTypes = dataType.getNewDataTypes(transformer, dataTypes,
+                dataRow, previousDataRow);
+            previousDataRow = dataRow;
         },
         function doneCallback() {
-            if(ignoreEmptyHeaders) {
-                options.ignoreColumns =
-                    exports.getIgnoreColumns(transformer, headers);
-                headers = transformers.removeIndexes(
-                    options.ignoreColumns, headers);
-                dataTypes = transformers.removeIndexes(
-                    options.ignoreColumns, dataTypes);
+            var ignoreColumns = [];
+
+            // Adjust headers
+            if(options.ignoreEmptyHeaders) {
+                ignoreColumns = exports.getIgnoreColumns(transformer, headers);
+                headers = transformers.removeIndexes(ignoreColumns, headers);
+                dataTypes = transformers.removeIndexes(ignoreColumns, dataTypes);
             } else {
-                for(var i = 0, len = headers.length; i < len; ++i) {
+                for(i = 0; i < dataLength; ++i) {
                     if(dataType.isStringEmpty(transformer, headers[i])) {
                         headers[i] = "column_" + (i+1);
                     }
                 }
             }
-            callback(headers, dataTypes);
+
+            // Adjust Data Types
+            if(options.forceType && options.forceType !== false) {
+                dataTypes = [];
+                for(i = 0; i < dataLength; ++i) {
+                    dataTypes.push(options.forceType);
+                }
+            }
+
+            callback(headers, dataTypes, ignoreColumns);
         });
 };
 
-exports.getFileData = function(filePath, loader, transformer, options, dataRowHook, callback) {
-    options = options || {};
-    var
-        headerRow = (typeof options.headerRow === 'undefined') ?
-            -1 : options.headerRow,
-        skipEmptyRows = (typeof options.skipEmptyRows === 'undefined') ?
-            true : options.skipEmptyRows,
-        ignoreColumns = options.ignoreColumns || [];
-        ignoreColumns.sort();
-    //
-    var
-        i, len,
-        ignoreColumnsLen = ignoreColumns.length,
-        row = 0;
+exports.getFileData = function(filePath, loader, transformer, options, ignoreColumns, dataRowHook, callback) {
+    var i, len;
 
-    exports.fileToDataRows(filePath, loader, options,
+    exports.fileToRows(filePath, loader, options, false,
         function dataRowCallback(dataRow) {
-            if(skipEmptyRows && exports.isDataRowEmpty(transformer, dataRow)) {
+
+            if(exports.isDataRowEmpty(transformer, dataRow)) {
                 return;
             }
-            if(ignoreColumnsLen > 0) {
-                for(i = 0; i < ignoreColumnsLen; ++i) {
+
+            if(ignoreColumns) {
+                for(i = 0, len = ignoreColumns.length; i < len; ++i) {
                     dataRow.splice(ignoreColumns[i] - i, 1);
                 }
             }
-            if(headerRow != row) {
-                dataRowHook(dataRow);
-            }
-            ++row;
+
+            dataRowHook(dataRow);
         },
         function doneCallback() {
             callback();
