@@ -1,17 +1,15 @@
-var fs = require('fs');
-var should = require('should');
-var xls2tsv = require('../src/xls2tsv.js');
+var fs = require('fs'),
+    should = require('should'),
+    xls2tsv = require('../../../src/convert/xls/xls2tsv.js');
 
 describe('xls2tsv', function() {
 
-    var xlsTwoSheets, xlsSimple, xlsInvalid,
-        tempDir = '';
-
-    before(function(done) {
-        xlsTwoSheets = __dirname + '/files/xlsTwoSheets.xls';
-        xlsSimple = __dirname + '/files/xlsSimple.xls';
+    var tempDir = '',
+        xlsTwoSheets = __dirname + '/files/xlsTwoSheets.xls',
+        xlsSimple = __dirname + '/files/xlsSimple.xls',
         xlsInvalid = __dirname + '/files/xlsInvalid.xls';
 
+    before(function(done) {
         xls2tsv.xls2tsv(xlsSimple, function xls2tsvCbk(error, _tempDir) {
 
             tempDir = _tempDir;

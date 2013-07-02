@@ -8,6 +8,6 @@
   "maintainers": [],
   "dependencies": {
     "should": "*",
-    "mocha":  "1.11.0"
+    "mocha":  "1.12.0"
   }
 }

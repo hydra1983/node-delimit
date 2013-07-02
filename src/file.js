@@ -24,7 +24,6 @@ exports.getIgnoreColumns = function(transformer, headers) {
 };
 
 exports.fileToRows = function(filePath, loader, options, headerRowHook, dataRowHook, doneCallback) {
-
     lineReader.open(filePath, function(reader) {
 
         var exitReader = function() {

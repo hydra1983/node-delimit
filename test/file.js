@@ -14,14 +14,14 @@ describe('file', function() {
     beforeEach(function() {
         options = {};
 
-        tsvSimple = __dirname + '/files/tsvSimple.tsv';
-        tsvSimple1100 = __dirname + '/files/tsvSimple1100.tsv';
-        tsvMissingHeaders = __dirname + '/files/tsvMissingHeaders.tsv';
-        tsvTwoSheets = __dirname + '/files/tsvTwoSheets.tsv';
-        tsvEmptyRow = __dirname + '/files/tsvEmptyRow.tsv';
-        xlsTwoSheets = __dirname + '/files/xlsTwoSheets.xls';
-        xlsSimple = __dirname + '/files/xlsSimple.xls';
-        xlsInvalid = __dirname + '/files/xlsInvalid.xls';
+        tsvSimple = __dirname + '/convert/tsv/files/tsvSimple.tsv';
+        tsvSimple1100 = __dirname + '/convert/tsv/files/tsvSimple1100.tsv';
+        tsvMissingHeaders = __dirname + '/convert/tsv/files/tsvMissingHeaders.tsv';
+        tsvTwoSheets = __dirname + '/convert/tsv/files/tsvTwoSheets.tsv';
+        tsvEmptyRow = __dirname + '/convert/tsv/files/tsvEmptyRow.tsv';
+        xlsTwoSheets = __dirname + '/convert/xls/files/xlsTwoSheets.xls';
+        xlsSimple = __dirname + '/convert/xls/files/xlsSimple.xls';
+        xlsInvalid = __dirname + '/convert/xls/files/xlsInvalid.xls';
 
         tsvLoader = loaders.getTsvLoader();
         datasetTransformer = transformers.getDataSetTransformer();

@@ -26,7 +26,7 @@ var extension = argv.file.split(".");
 extension = extension[extension.length - 1];
 
 var options = {
-    header: (typeof(argv.header === 'undefined') ? -1 : argv.header),
+    headerRow: typeof argv.header === 'undefined' ? -1 : argv.header,
     name: argv.name || "default",
     ignoreEmptyHeaders: argv.igEmHead || false,
     forceType: (function(forceType) {
