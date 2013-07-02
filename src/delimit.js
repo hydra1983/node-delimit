@@ -13,8 +13,7 @@ exports.tsvToDataSet = function(filePath, options, callback) {
 
     options = options || {};
     var
-        headerRow = (typeof options.headerRow === 'undefined') ?
-            -1 : options.headerRow;
+        tablename = options.tablename || "default";
     //
     var
         tsvLoader = loaders.getTsvLoader(),
@@ -22,6 +21,7 @@ exports.tsvToDataSet = function(filePath, options, callback) {
 
     file.getFileAttributes(filePath, tsvLoader, datasetTransformer, options,
         function doneHook(headers, dataTypes) {
+
             var dataset = new DataSet();
             dataset.setHeaders(headers);
             dataset.setDataTypes(dataTypes);
@@ -44,10 +44,11 @@ exports.tsvToPgSql = function(filePath, writeStream, options, callback) {
     options = options || {};
     var
         tablename = options.tablename || "default",
-        headerRow = (typeof options.headerRow === 'undefined') ?
-            -1 : options.headerRow;
+        ignoreEmptyHeaders = typeof options.ignoreEmptyHeaders === 'undefined' ?
+            false : true;
     //
     var
+        i, len,
         tsvLoader = loaders.getTsvLoader(),
         pgSqlTransformer = transformers.getPgSqlTransformer();
 
@@ -81,8 +82,12 @@ exports.tsvToPgSql = function(filePath, writeStream, options, callback) {
 
 exports.xlsToPgSql = function(filePath, writeStream, options, callback) {
 
-    var tablename = options.tablename || "default";
-    var headerRow = (typeof options.headerRow === 'undefined') ? 0 : options.headerRow;
+    options = options || {};
+    var
+        tablename = options.tablename || "default",
+        headerRow = (typeof options.headerRow === 'undefined') ?
+            0 : options.headerRow;
+    //
 
     xls2tsv.process(filePath, function(error, info) {
         if(error) { throw error; }
@@ -90,7 +95,8 @@ exports.xlsToPgSql = function(filePath, writeStream, options, callback) {
 
         var singleApply;
         for(var i = 0, len = info.files.length; i < len; ++i) {
-            singleApply = async.apply(exports.tsvToPgSql,
+            singleApply = async.apply(
+                exports.tsvToPgSql,
                 info.files[i].path,
                 writeStream,
                 {

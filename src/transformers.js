@@ -1,5 +1,14 @@
 var defines = require('./defines.js');
 
+exports.removeIndexes = function(indexes, arr) {
+    var _indexes = indexes.slice().sort(),
+        _arr = arr.slice();
+    for(var i = 0, len = _indexes.length; i < len; ++i) {
+        _arr.splice(_indexes[i] - i, 1);
+    }
+    return _arr;
+};
+
 exports.normalizeString = function(string) {
     string = "" + string; // turn into a string
     // Remove surrounding spaces

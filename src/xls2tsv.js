@@ -8,6 +8,7 @@ exports.xls2tsv = function(filePath, callback) {
             callback(new Error('File ' + filePath + ' does not exist'));
             return;
         }
+
         var call = 'python ' + __dirname + '/xls2tsv.py ' + filePath;
         exec(call, function(error, stdout, stderr) {
             if(error === null) {
@@ -57,6 +58,7 @@ exports.getTsvFilePaths = function(tempDir, callback) {
 exports.process = function(filePath, callback) {
     var info = {};
     exports.xls2tsv(filePath, function(error, tempDir) {
+
         if(error) {
             throw error;
         }

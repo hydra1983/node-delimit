@@ -1,5 +1,6 @@
 var reader = require('line-reader'),
-    dataType = require('./dataType.js');
+    dataType = require('./dataType.js'),
+    transformers = require('./transformers.js');
 
 exports.isDataRowEmpty = function(transformer, dataRow) {
     var emptyCount = 0;
@@ -9,6 +10,16 @@ exports.isDataRowEmpty = function(transformer, dataRow) {
         }
     }
     return emptyCount === dataRow.length;
+};
+
+exports.getIgnoreColumns = function(transformer, headers) {
+    var i = 0, len = headers.length, ignoreColumns = [];
+    for(; i < len; ++i) {
+        if(dataType.isStringEmpty(transformer, headers[i])) {
+            ignoreColumns.push(i);
+        }
+    }
+    return ignoreColumns;
 };
 
 exports.fileToDataRows = function(filePath, loader, options, rowCallback, doneCallback) {
@@ -44,7 +55,9 @@ exports.getFileAttributes = function(filePath, loader, transformer, options, cal
     options = options || {};
     var
         headerRow = (typeof options.headerRow === 'undefined') ?
-            -1 : options.headerRow;
+            -1 : options.headerRow,
+        ignoreEmptyHeaders = typeof options.ignoreEmptyHeaders === 'undefined' ?
+            false : true;
     //
     var
         dataTypes = [],
@@ -67,6 +80,20 @@ exports.getFileAttributes = function(filePath, loader, transformer, options, cal
             ++row;
         },
         function doneCallback() {
+            if(ignoreEmptyHeaders) {
+                options.ignoreColumns =
+                    exports.getIgnoreColumns(transformer, headers);
+                headers = transformers.removeIndexes(
+                    options.ignoreColumns, headers);
+                dataTypes = transformers.removeIndexes(
+                    options.ignoreColumns, dataTypes);
+            } else {
+                for(var i = 0, len = headers.length; i < len; ++i) {
+                    if(dataType.isStringEmpty(transformer, headers[i])) {
+                        headers[i] = "column_" + (i+1);
+                    }
+                }
+            }
             callback(headers, dataTypes);
         });
 };

@@ -23,4 +23,19 @@ describe('transformers', function() {
             transformers.normalizeHeader(headers).should.eql("column_88");
         });
     });
+
+    describe('#removeIndicies()', function() {
+        it('should remove the indexes provided from the array', function() {
+            transformers.removeIndexes([0, 1, 2], ['0', '1', '2', '3'])
+                .should.eql(['3']);
+        });
+        it('should not remove any indexes', function() {
+            transformers.removeIndexes([], ['0', '1', '2', '3'])
+                .should.eql(['0', '1', '2', '3']);
+            (function() {
+                transformers.removeIndexes(undefined, ['0', '1', '2', '3'])
+                    .should.eql(['0', '1', '2', '3']);
+            }).should.throwError();
+        });
+    });
 });

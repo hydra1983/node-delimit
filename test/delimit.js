@@ -5,23 +5,28 @@ var should = require('should'),
 
 describe('delimit', function() {
 
+    var options,
+        tsvSimple, tsvSimple1100, tsvMissingHeaders, tsvEmptyRow,
+        xlsTwoSheets, xlsSimple, xlsInvalid;
+
+    before(function() {
+        tsvSimple = __dirname + '/files/tsvSimple.tsv';
+        tsvSimple1100 = __dirname + '/files/tsvSimple1100.tsv';
+        tsvMissingHeaders = __dirname + '/files/tsvMissingHeaders.tsv';
+        tsvTwoSheets = __dirname + '/files/tsvTwoSheets.tsv';
+        tsvEmptyRow = __dirname + '/files/tsvEmptyRow.tsv';
+        xlsTwoSheets = __dirname + '/files/xlsTwoSheets.xls';
+        xlsSimple = __dirname + '/files/xlsSimple.xls';
+        xlsInvalid = __dirname + '/files/xlsInvalid.xls';
+    });
+
     describe('#tsvToDataSet()', function() {
-
-        var simpleTsv;
-        var simple1100Lines;
-        var options;
-
-        before(function() {
-            options = {
-                tablename: 'trevor.test',
-                headerRow: 0
-            };
-            simpleTsv = __dirname + '/files/simple.tsv';
-            simple1100Lines = __dirname + '/files/simple1100Lines.tsv';
+        beforeEach(function() {
+            options = { tablename: 'trevor.test', headerRow: 0 };
         });
 
         it('should convert a TSV file into a DataSet (simple)', function(done) {
-            delimit.tsvToDataSet(simpleTsv, options, function datasetCb(dataset) {
+            delimit.tsvToDataSet(tsvSimple, options, function datasetCb(dataset) {
                 should.exist(dataset);
                 dataset.getHeaders().should.eql([
                    'Simple_Text', 'Simple_Int', 'Simple_Numeric',
@@ -43,7 +48,7 @@ describe('delimit', function() {
             });
         });
         it('should convert a TSV file into a DataSet (simple1100Lines)', function(done) {
-            delimit.tsvToDataSet(simple1100Lines, options, function datasetCb(dataset) {
+            delimit.tsvToDataSet(tsvSimple1100, options, function datasetCb(dataset) {
                 should.exist(dataset);
                 dataset.getHeaders().should.eql([
                    'Simple_Text', 'Simple_Int',
@@ -57,26 +62,53 @@ describe('delimit', function() {
                 done();
             });
         });
+        it('should convert a TSV file into a DataSet (skip empty header names)', function(done) {
+            options.ignoreEmptyHeaders = true;
+            delimit.tsvToDataSet(tsvMissingHeaders, options, function datasetCb(dataset) {
+                should.exist(dataset);
+                dataset.getHeaders().should.eql([
+                   'test_1', 'test_3'
+                ]);
+                dataset.getDataTypes().should.eql([
+                   defines.TEXT, defines.NUMERIC
+                ]);
+                dataset.getData().length.should.eql(3);
+                dataset.getData().should.eql([
+                    ['one', 4.4],
+                    ['two', 5.5],
+                    ['three', 6.6]
+                ]);
+                done();
+            });
+        });
+        it('should convert a TSV file into a DataSet (allow & replace empty header names)', function(done) {
+            delimit.tsvToDataSet(tsvMissingHeaders, options, function datasetCb(dataset) {
+                should.exist(dataset);
+                dataset.getHeaders().should.eql([
+                   'test_1', 'column_2', 'test_3'
+                ]);
+                dataset.getDataTypes().should.eql([
+                   defines.TEXT, defines.PRIMARY_INTEGER, defines.NUMERIC
+                ]);
+                dataset.getData().length.should.eql(3);
+                dataset.getData().should.eql([
+                    ['one', 1, 4.4],
+                    ['two', 2, 5.5],
+                    ['three', 3, 6.6]
+                ]);
+                done();
+            });
+        });
     });
 
     describe('#tsvToPgSql()', function() {
-
-        var simpleTsv;
-        var simple1100Lines;
-        var options;
-
-        before(function() {
-            options = {
-                tablename: 'trevor.test',
-                headerRow: 0
-            };
-            simpleTsv = __dirname + '/files/simple.tsv';
-            simple1100Lines = __dirname + '/files/simple1100Lines.tsv';
+        beforeEach(function() {
+            options = { tablename: 'trevor.test', headerRow: 0 };
         });
 
         it('should convert a TSV file into PGSQL (simple)', function(done) {
             var ws = fs.createWriteStream('out_0.sql');
-            delimit.tsvToPgSql(simpleTsv, ws, options, function doneCb() {
+            delimit.tsvToPgSql(tsvSimple, ws, options, function doneCb() {
                 ws.end();
 
                 fs.readFile('out_0.sql', {encoding: 'UTF8'}, function(error, data) {
@@ -87,25 +119,34 @@ describe('delimit', function() {
 
             });
         });
+
+        it('should convert a TSV file into a PGSQL (skip empty header names)', function(done) {
+            options.ignoreEmptyHeaders = true;
+            var ws = fs.createWriteStream('out_0.sql');
+            delimit.tsvToPgSql(tsvMissingHeaders, ws, options, function doneCb() {
+                ws.end();
+
+                fs.readFile('out_0.sql', {encoding: 'UTF8'}, function(error, data) {
+                    if(error) { throw error; }
+                    data.should.be.ok;
+                    data.indexOf("one\t4.4\n" +
+                                 "two\t5.5\n" +
+                                 "three\t6.6\n").should.not.equal(-1);
+                    fs.unlink('out_0.sql', function() { done(); });
+                });
+
+            });
+        });
     });
 
     describe('#xlsToPgSql()', function() {
-
-        var simpleXls,
-            twosheets,
-            options;
-
-        before(function() {
-            options = {
-                tablename: 'trevor.test'
-            };
-            simpleXls = __dirname + '/files/simple.xls';
-            twosheets = __dirname + '/files/twosheets.xls';
+        beforeEach(function() {
+            options = { tablename: 'trevor.test' };
         });
 
         it('should convert an XLS file into PGSQL (one sheet)', function(done) {
             var ws = fs.createWriteStream('out_1.sql');
-            delimit.xlsToPgSql(simpleXls, ws, options, function doneCb() {
+            delimit.xlsToPgSql(xlsSimple, ws, options, function doneCb() {
                 ws.end();
                 fs.readFile('out_1.sql', {encoding: 'UTF8'}, function(error, data) {
                     if(error) { throw error; }
@@ -119,7 +160,7 @@ describe('delimit', function() {
 
         it('should convert an XLS file into PGSQL (two sheets)', function(done) {
             var ws = fs.createWriteStream('out_2.sql');
-            delimit.xlsToPgSql(twosheets, ws, options, function doneCb() {
+            delimit.xlsToPgSql(xlsTwoSheets, ws, options, function doneCb() {
                 ws.end();
                 fs.readFile('out_2.sql', {encoding: 'UTF8'}, function(error, data) {
                     if(error) { throw error; }
@@ -129,4 +170,5 @@ describe('delimit', function() {
             });
         });
     });
+
 });

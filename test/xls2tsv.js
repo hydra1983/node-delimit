@@ -4,15 +4,15 @@ var xls2tsv = require('../src/xls2tsv.js');
 
 describe('xls2tsv', function() {
 
-    var simpleXls,
-        twosheets,
-        tempDir = '',
-        filePaths = [];
+    var xlsTwoSheets, xlsSimple, xlsInvalid,
+        tempDir = '';
 
     before(function(done) {
-        simpleXls = __dirname + '/files/simple.xls';
-        twosheets = __dirname + '/files/twosheets.xls';
-        xls2tsv.xls2tsv(simpleXls, function xls2tsvCbk(error, _tempDir) {
+        xlsTwoSheets = __dirname + '/files/xlsTwoSheets.xls';
+        xlsSimple = __dirname + '/files/xlsSimple.xls';
+        xlsInvalid = __dirname + '/files/xlsInvalid.xls';
+
+        xls2tsv.xls2tsv(xlsSimple, function xls2tsvCbk(error, _tempDir) {
 
             tempDir = _tempDir;
 
@@ -25,7 +25,7 @@ describe('xls2tsv', function() {
 
     describe('#xls2tsv()', function() {
         it('should create tsv files from xls files and return the directory they are located in with the correct number of files (one sheet)', function(done) {
-            xls2tsv.xls2tsv(simpleXls, function xls2tsvCbk(error, tempDir) {
+            xls2tsv.xls2tsv(xlsSimple, function xls2tsvCbk(error, tempDir) {
                 should.not.exist(error);
                 tempDir.should.be.a('string');
                 tempDir.should.not.be.empty;
@@ -38,7 +38,7 @@ describe('xls2tsv', function() {
             });
         });
         it('should create tsv files from xls files and return the directory they are located in with the correct number of files (two sheets)', function(done) {
-            xls2tsv.xls2tsv(twosheets, function xls2tsvCbk(error, tempDir) {
+            xls2tsv.xls2tsv(xlsTwoSheets, function xls2tsvCbk(error, tempDir) {
                 should.not.exist(error);
                 tempDir.should.be.a('string');
                 tempDir.should.not.be.empty;
@@ -58,11 +58,10 @@ describe('xls2tsv', function() {
             });
         });
         it('should throw an error if there was a problem with pandas', function(done) {
-            xls2tsv.xls2tsv(__dirname + '/files/invalid.xls', function(error, tempDir) {
+            xls2tsv.xls2tsv(xlsInvalid, function(error, tempDir) {
                 should.exist(error);
                 error.message.should.equal(
-                    'There was a problem parsing the file ' +
-                    __dirname + '/files/invalid.xls');
+                    'There was a problem parsing the file ' + xlsInvalid);
                 done();
             });
         });
@@ -98,7 +97,7 @@ describe('xls2tsv', function() {
 
     describe('#process()', function() {
         it('should return an object containing information about the newly created TSV files (one sheet / file)', function (done) {
-            xls2tsv.process(simpleXls, function processCb(error, info) {
+            xls2tsv.process(xlsSimple, function processCb(error, info) {
 
                 should.not.exist(error);
                 should.exist(info);
@@ -116,7 +115,7 @@ describe('xls2tsv', function() {
         });
 
         it('should return an object containing information about the newly created TSV files (two sheets / files)', function (done) {
-            xls2tsv.process(twosheets, function processCb(error, info) {
+            xls2tsv.process(xlsTwoSheets, function processCb(error, info) {
 
                 should.not.exist(error);
                 should.exist(info);

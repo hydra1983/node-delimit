@@ -5,6 +5,7 @@ var defines = require('./defines.js');
 
 exports.isStringEmpty = function(transformer, string) {
     // remove surrounding white space, keep spaces in between words
+    string = string + '';
     string = string.replace(/\n/g, '');
     string = string.replace(/\r/g, '');
     string = string.trim();
@@ -125,6 +126,7 @@ exports.isStringLong = function(string) {
     }
     return false;
 };
+
 
 exports.getNewDataType = function(transformer, oldDataType, newString, oldString) {
 

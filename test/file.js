@@ -6,16 +6,23 @@ var defines = require('../src/defines.js');
 
 describe('file', function() {
 
-    var simpleTsv;
-    var emptyRow;
-    var filePaths = [];
-    var tsvLoader;
-    var datasetTransformer;
+    var options,
+        tsvSimple, tsvSimple1100, tsvMissingHeaders, tsvEmptyRow,
+        xlsTwoSheets, xlsSimple, xlsInvalid,
+        tsvLoader, datasetTransformer;
 
-    before(function() {
-        simpleTsv = __dirname + '/files/simple.tsv';
-        emptyRow = __dirname + '/files/emptyRow.tsv';
-        filePaths = [ simpleTsv ];
+    beforeEach(function() {
+        options = {};
+
+        tsvSimple = __dirname + '/files/tsvSimple.tsv';
+        tsvSimple1100 = __dirname + '/files/tsvSimple1100.tsv';
+        tsvMissingHeaders = __dirname + '/files/tsvMissingHeaders.tsv';
+        tsvTwoSheets = __dirname + '/files/tsvTwoSheets.tsv';
+        tsvEmptyRow = __dirname + '/files/tsvEmptyRow.tsv';
+        xlsTwoSheets = __dirname + '/files/xlsTwoSheets.xls';
+        xlsSimple = __dirname + '/files/xlsSimple.xls';
+        xlsInvalid = __dirname + '/files/xlsInvalid.xls';
+
         tsvLoader = loaders.getTsvLoader();
         datasetTransformer = transformers.getDataSetTransformer();
     });
@@ -33,10 +40,8 @@ describe('file', function() {
 
     describe('#fileToDataRows()', function() {
         it('should take in a tsv file path, and spit back the rows it contains', function(done) {
-            var options = {
-                ignoreEmptyHeaders: true
-            };
-            file.fileToDataRows(simpleTsv, tsvLoader, options,
+            options = { ignoreEmptyHeaders: true };
+            file.fileToDataRows(tsvSimple, tsvLoader, options,
                 function rowCallback(singleRow) {
                     should.exist(singleRow);
                     singleRow.should.be.instanceOf(Array);
@@ -48,10 +53,8 @@ describe('file', function() {
             );
         });
         it('should take in a tsv file path, and spit back the rows it contains ignoring columns that done contain names', function(done) {
-            var options = {
-                ignoreEmptyHeaders: false
-            };
-            file.fileToDataRows(simpleTsv, tsvLoader, options,
+            options = { ignoreEmptyHeaders: false };
+            file.fileToDataRows(tsvSimple, tsvLoader, options,
                 function rowCallback(singleRow) {
                     should.exist(singleRow);
                     singleRow.should.be.instanceOf(Array);
@@ -67,10 +70,8 @@ describe('file', function() {
 
     describe('#getFileAttributes()', function() {
         it('should get the proper headers & data types back', function(done) {
-            var options = {
-                    headerRow: 0
-                };
-            file.getFileAttributes(simpleTsv, tsvLoader, datasetTransformer, options,
+            options = { headerRow: 0 };
+            file.getFileAttributes(tsvSimple, tsvLoader, datasetTransformer, options,
                 function doneHook(headers, dataTypes) {
                     headers.should.eql([
                         'Simple_Text', 'Simple_Int', 'Simple_Numeric',
@@ -89,11 +90,10 @@ describe('file', function() {
 
     describe('#getFileData()', function() {
         it('should loop through the dataset entirely and not skip anything', function(done) {
-            var rowHits = 0,
-                options = {
-                    headerRow: 0
-                };
-            file.getFileData(simpleTsv, tsvLoader, datasetTransformer, options,
+            options = { headerRow: 0 };
+            var rowHits = 0;
+
+            file.getFileData(tsvSimple, tsvLoader, datasetTransformer, options,
                 function dataRowHook(dataRow) {
                     dataRow.length.should.equal(8);
                     ++rowHits;
@@ -104,11 +104,10 @@ describe('file', function() {
                 });
         });
         it('should skip empty data rows', function(done) {
-            var rowHits = 0,
-                options = {
-                    headerRow: 0
-                };
-            file.getFileData(emptyRow, tsvLoader, datasetTransformer, options,
+            options = { headerRow: 0 };
+            var rowHits = 0;
+
+            file.getFileData(tsvEmptyRow, tsvLoader, datasetTransformer, options,
                 function dataRowHook(dataRow) {
                     dataRow.length.should.equal(2);
                     ++rowHits;
@@ -119,12 +118,10 @@ describe('file', function() {
                 });
         });
         it('should NOT skip empty data rows', function(done) {
-            var rowHits = 0,
-                options = {
-                    headerRow: 0,
-                    skipEmptyRows: false
-                };
-            file.getFileData(emptyRow, tsvLoader, datasetTransformer, options,
+            options = { headerRow: 0, skipEmptyRows: false };
+            var rowHits = 0;
+
+            file.getFileData(tsvEmptyRow, tsvLoader, datasetTransformer, options,
                 function dataRowHook(dataRow) {
                     dataRow.length.should.equal(2);
                     ++rowHits;
@@ -135,12 +132,10 @@ describe('file', function() {
                 });
         });
         it('should skip over specified columns', function(done) {
-            var rowHits = 0,
-                options = {
-                    headerRow: 0,
-                    ignoreColumns: [0, 1, 2, 3, 4, 5]
-                };
-            file.getFileData(simpleTsv, tsvLoader, datasetTransformer, options,
+            options = {  headerRow: 0, ignoreColumns: [0, 1, 2, 3, 4, 5] };
+            var rowHits = 0;
+
+            file.getFileData(tsvSimple, tsvLoader, datasetTransformer, options,
                 function dataRowHook(dataRow) {
                     dataRow.length.should.equal(2);
                     ++rowHits;
