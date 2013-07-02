@@ -1,6 +1,7 @@
 var reader = require('line-reader'),
     dataType = require('./dataType.js'),
     transformers = require('./transformers.js');
+    defines = require('./defines.js');
 
 exports.isDataRowEmpty = function(transformer, dataRow) {
     var emptyCount = 0;
@@ -57,25 +58,34 @@ exports.getFileAttributes = function(filePath, loader, transformer, options, cal
         headerRow = (typeof options.headerRow === 'undefined') ?
             -1 : options.headerRow,
         ignoreEmptyHeaders = typeof options.ignoreEmptyHeaders === 'undefined' ?
-            false : true;
+            false : true,
+        forceType = options.forceType || false;
+        if(typeof forceType === 'string') {
+            forceType = defines[forceType.toUpperCase()];
+        }
     //
     var
         dataTypes = [],
         headers = [],
         row = 0,
-        previousDataRow = [];
+        previousDataRow = [],
+        i, len;
 
     exports.fileToDataRows(filePath, loader, options,
         function dataRowCallback(dataRow) {
             if(headerRow == row) {
                 headers = dataRow;
-            } else {
+            } else if(!forceType) {
                 dataTypes = dataType.getNewDataTypes(
                     transformer,
                     dataTypes,
                     dataRow,
                     previousDataRow);
                 previousDataRow = dataRow;
+            } else if(dataTypes.length === 0 && forceType) {
+                for(i = 0, len = dataRow.length; i < len; ++i) {
+                    dataTypes.push(forceType);
+                }
             }
             ++row;
         },

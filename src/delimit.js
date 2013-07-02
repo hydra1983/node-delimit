@@ -93,15 +93,21 @@ exports.xlsToPgSql = function(filePath, writeStream, options, callback) {
         if(error) { throw error; }
         var toProcess = [];
 
-        var singleApply;
+        var singleApply,
+            newOptions = options;
         for(var i = 0, len = info.files.length; i < len; ++i) {
+            newOptions.tablename =
+
+            newOptions.headerRow = headerRow;
             singleApply = async.apply(
                 exports.tsvToPgSql,
                 info.files[i].path,
                 writeStream,
                 {
                     tablename: tablename + "_" + transformers.normalizeString(info.files[i].sheetName),
-                    headerRow: headerRow
+                    headerRow: headerRow,
+                    ignoreEmptyHeaders: options.ignoreEmptyHeaders,
+                    forceType: options.forceType
                 }
             );
             toProcess.push(singleApply);

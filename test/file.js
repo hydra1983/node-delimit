@@ -86,6 +86,23 @@ describe('file', function() {
                     done();
                 });
         });
+        it('should force a particular data type (String)', function(done) {
+            options = { headerRow: 0, forceType: 'TEXT' };
+            file.getFileAttributes(tsvSimple, tsvLoader, datasetTransformer, options,
+                function doneHook(headers, dataTypes) {
+                    headers.should.eql([
+                        'Simple_Text', 'Simple_Int', 'Simple_Numeric',
+                        'Simple_Boolean', 'Simple_LAT', 'Simple_Lng',
+                        'Simple_Primary', 'Simple_Zip'
+                    ]);
+                    dataTypes.should.eql([
+                        defines.TEXT, defines.TEXT, defines.TEXT,
+                        defines.TEXT, defines.TEXT, defines.TEXT,
+                        defines.TEXT, defines.TEXT
+                    ]);
+                    done();
+                });
+        });
     });
 
     describe('#getFileData()', function() {

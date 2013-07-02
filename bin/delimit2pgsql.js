@@ -5,8 +5,8 @@ var argv = require('optimist')
     .options('file', { "demand": true, describe: "The file to parse" })
     .options('name', { describe: "What to name our table" })
     .options('header', { describe: "What row is the header in?" })
-    .options('igEmHead', { describe: "Ignore columns with empty headers?" })
-    .options('sameSheets', { describe: "XLS only - Do all the sheets contain the same data types?" })
+    .options('igEmHead', { "boolean": true, describe: "Ignore columns with empty headers?" })
+    .options('forceType', { describe: "Force a particular type for all columns" })
     .argv;
 
 var extension = argv.file.split(".");
@@ -16,7 +16,7 @@ var options = {
     tablename: argv.name,
     header: argv.header,
     ignoreEmptyHeaders: argv.igEmHead,
-    sameSheets: argv.sameSheets
+    forceType: argv.forceType
 };
 
 if(extension.match(/xlsx?/)) {

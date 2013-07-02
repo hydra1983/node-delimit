@@ -99,6 +99,25 @@ describe('delimit', function() {
                 done();
             });
         });
+        it('should convert a TSV file into a DataSet (force type text)', function(done) {
+            options.forceType = 'text';
+            delimit.tsvToDataSet(tsvMissingHeaders, options, function datasetCb(dataset) {
+                should.exist(dataset);
+                dataset.getHeaders().should.eql([
+                   'test_1', 'column_2', 'test_3'
+                ]);
+                dataset.getDataTypes().should.eql([
+                   defines.TEXT, defines.TEXT, defines.TEXT
+                ]);
+                dataset.getData().length.should.eql(3);
+                dataset.getData().should.eql([
+                    ['one', '1', '4.4'],
+                    ['two', '2', '5.5'],
+                    ['three', '3', '6.6']
+                ]);
+                done();
+            });
+        });
     });
 
     describe('#tsvToPgSql()', function() {
