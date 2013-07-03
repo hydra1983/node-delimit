@@ -9,18 +9,6 @@ describe('xls2tsv', function() {
         xlsSimple = __dirname + '/files/xlsSimple.xls',
         xlsInvalid = __dirname + '/files/xlsInvalid.xls';
 
-    before(function(done) {
-        xls2tsv.xls2tsv(xlsSimple, function xls2tsvCbk(error, _tempDir) {
-
-            tempDir = _tempDir;
-
-            xls2tsv.getTsvFilePaths(tempDir, function(error, _filePaths) {
-                filePaths = _filePaths;
-                done();
-            });
-        });
-    });
-
     describe('#xls2tsv()', function() {
         it('should create tsv files from xls files and return the directory they are located in with the correct number of files (one sheet)', function(done) {
             xls2tsv.xls2tsv(xlsSimple, function xls2tsvCbk(error, tempDir) {
@@ -31,7 +19,9 @@ describe('xls2tsv', function() {
                 fs.readdir(tempDir, function readdirCbk(error, files) {
                     if(error) { throw error; }
                     files.length.should.equal(1);
-                    done();
+                    fs.rmdir(tempDir, function() {
+                        done();
+                    });
                 });
             });
         });
@@ -44,7 +34,9 @@ describe('xls2tsv', function() {
                 fs.readdir(tempDir, function readdirCbk(error, files) {
                     if(error) { throw error; }
                     files.length.should.equal(2);
-                    done();
+                    fs.rmdir(tempDir, function() {
+                        done();
+                    });
                 });
             });
         });
@@ -66,12 +58,27 @@ describe('xls2tsv', function() {
     });
 
     describe('#getTsvFilePaths()', function() {
+
+        before(function(done) {
+            xls2tsv.xls2tsv(xlsSimple, function xls2tsvCbk(error, _tempDir) {
+
+                tempDir = _tempDir;
+
+                xls2tsv.getTsvFilePaths(tempDir, function(error, _filePaths) {
+                    filePaths = _filePaths;
+                    done();
+                });
+            });
+        });
+
         it('should get back a file path for one file', function(done) {
             xls2tsv.getTsvFilePaths(tempDir, function(error, filePaths) {
                 should.not.exist(error);
                 should.exist(filePaths);
                 filePaths.length.should.equal(1);
-                done();
+                fs.rmdir(tempDir, function() {
+                    done();
+                });
             });
         });
         it('should throw an error (dir does not exist)', function(done) {
@@ -108,7 +115,9 @@ describe('xls2tsv', function() {
                 info.files[0].sheetName.should.eql("Sheet1");
                 info.files[0].path.should.ok;
 
-                done();
+                fs.rmdir(info.tempDir, function() {
+                    done();
+                });
             });
         });
 
@@ -127,7 +136,9 @@ describe('xls2tsv', function() {
                 info.files[0].sheetName.should.be.ok;
                 info.files[1].sheetName.should.be.ok;
 
-                done();
+                fs.rmdir(info.tempDir, function() {
+                    done();
+                });
             });
         });
     });

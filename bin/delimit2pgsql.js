@@ -1,5 +1,6 @@
 var xls = require('../src/convert/xls/xls.js');
 var tsv = require('../src/convert/tsv/tsv.js');
+var csv = require('../src/convert/csv/csv.js');
 var defines = require('../src/defines.js');
 
 var argv = require('optimist')
@@ -28,7 +29,7 @@ extension = extension[extension.length - 1];
 
 var options = {
     headerRow: typeof argv.header === 'undefined' ? -1 : argv.header,
-    name: argv.name || "default",
+    name: argv.name || "default_name",
     ignoreEmptyHeaders: argv.igEmHead || false,
     forceType: (function(forceType) {
         if(typeof forceType === 'string') {
@@ -51,6 +52,11 @@ if(extension.match(/xlsx?/)) {
 }
 else if (extension.match(/tsv/)) {
     tsv.tsvToPgSql(argv.file, process.stdout, options, function doneCb() {
+        process.exit(0);
+    });
+}
+else if (extension.match(/csv/)) {
+    csv.csvToPgSql(argv.file, process.stdout, options, function doneCb() {
         process.exit(0);
     });
 }
