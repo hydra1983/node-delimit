@@ -1,4 +1,5 @@
-var delimit = require('../src/delimit.js');
+var xls = require('../src/convert/xls/xls.js');
+var tsv = require('../src/convert/tsv/tsv.js');
 var defines = require('../src/defines.js');
 
 var argv = require('optimist')
@@ -44,12 +45,12 @@ var options = {
 };
 
 if(extension.match(/xlsx?/)) {
-    delimit.xlsToPgSql(argv.file, process.stdout, options, function doneCb() {
+    xls.xlsToPgSql(argv.file, process.stdout, options, function doneCb() {
         process.exit(0);
     });
 }
 else if (extension.match(/tsv/)) {
-    delimit.tsvToPgSql(argv.file, process.stdout, options, function doneCb() {
+    tsv.tsvToPgSql(argv.file, process.stdout, options, function doneCb() {
         process.exit(0);
     });
 }
