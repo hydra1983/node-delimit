@@ -3,18 +3,11 @@
   "version": "0.0.0",
   "description": "Delimit",
   "main": "index.js",
-  "bin": {
-    "delimit": "delimit2pgsql.js"
-  },
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "trev@trev.webfactional.com:/home/trev/webapps/git/repos/delimit.git"
   },
   "author": "Trevor Senior <trevor@tsenior.com> (http://tsenior.com/)",
   "license": "BSD",
