@@ -3,6 +3,9 @@ exports.getTsvLoader = function() {
 
 	loader.toDataRow = function(rowString) {
 
+		if(rowString.match(/\u2018/))
+			console.log("DEBUG:", rowString.match(/\u2018/));
+
 		// convert fancy quotes into normal ones
 		rowString = rowString.replace(/\u2018/g, "'");
 		rowString = rowString.replace(/\u2019/g, "'");

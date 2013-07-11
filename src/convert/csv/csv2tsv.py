@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sys
 import tempfile
 import csv
@@ -9,7 +11,10 @@ with open(sys.argv[1], 'rb') as csvfile:
     with open(tfile_path, 'wb') as tsvfile:
         writer = csv.writer(tsvfile, delimiter="\t")
         for row in reader:
-            writer.writerow(row)
+            fixedRow = []
+            for item in row:
+                fixedRow.append(unicode(item, errors='ignore'))
+            writer.writerow(fixedRow)
 
 sys.stdout.write(tfile_path)
 sys.stdout.flush()

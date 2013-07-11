@@ -64,6 +64,7 @@ exports.process = function(filePath, callback) {
         info.tempDir = tempDir;
         info.files = [];
         exports.getTsvFilePaths(tempDir, function(error, filePaths) {
+
             if(error) {
                 throw error;
             }

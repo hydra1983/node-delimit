@@ -13,7 +13,7 @@ var argv = require('optimist')
         describe: "What to name our data? Default 'default'"
     })
     .options('header', {
-        describe: "What row is the header in? Default -1"
+        describe: "What row is the header in? Default 0"
     })
     .options('igEmHead', {
         "boolean": true,
@@ -28,7 +28,7 @@ var extension = argv.file.split(".");
 extension = extension[extension.length - 1];
 
 var options = {
-    headerRow: typeof argv.header === 'undefined' ? -1 : argv.header,
+    headerRow: typeof argv.header === 'undefined' ? 0 : argv.header,
     name: argv.name || "default_name",
     ignoreEmptyHeaders: argv.igEmHead || false,
     forceType: (function(forceType) {

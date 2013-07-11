@@ -13,6 +13,8 @@ exports.normalizeString = function(string) {
     string = "" + string; // turn into a string
     // Remove surrounding spaces
     string = string.trim();
+    // Replace % with "percent"
+    string = string.replace(/%/g, "percent");
     // Replace all spaces with underscores
     string = string.replace(/ /g, "_");
     // Remove unwanted characters
