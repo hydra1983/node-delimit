@@ -48,7 +48,7 @@ var options = {
     // What should we name our dataset?
     name: argv.name || "default_name",
     // What String should we append to the end of our dataset name?
-    appendString: typeof argv.appendString === 'undefined' ? '' : ('_' + argv.appendString),
+    appendString: typeof argv.appendString === 'undefined' ? '' : argv.appendString,
     // Should we ignore columns in data with empty headers?
     ignoreEmptyHeaders: argv.igEmHead || false,
     // Should we force a particular type on all columns in this data?
