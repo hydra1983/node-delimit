@@ -34,26 +34,37 @@ exports.tsvToPgSql = function(filePath, writeStream, options, callback) {
     var
         i, len,
         tsvLoader = loaders.getTsvLoader(),
-        pgSqlTransformer = transformers.getPgSqlTransformer();
+        pgSqlTransformer = transformers.getPgSqlTransformer(),
+        name = options.name + options.appendString;
 
     file.getFileAttributes(filePath, tsvLoader, pgSqlTransformer, options,
         function doneHook(headers, dataTypes, ignoredColumns) {
-            var statements =
-                pgsql.getHeaderSql(options.name) +
-                pgsql.getCreateTableSql(options.name, headers, dataTypes) +
-                pgsql.getCopyHeaderSql(options.name, headers, dataTypes);
-            writeStream.write(statements);
+
+            writeStream.write(pgsql.getHeaderSql(name));
+
+            if(!options.dataOnly) {
+               writeStream.write(pgsql.getCreateTableSql(name, headers, dataTypes));
+            }
+            if(!options.createOnly) {
+               writeStream.write(pgsql.getCopyHeaderSql(name, headers, dataTypes));
+            }
 
             var adjustedDataRow;
             file.getFileData(filePath, tsvLoader, pgSqlTransformer, options, ignoredColumns,
                 function dataRowHook(dataRow) {
-                    adjustedDataRow = dataType.getAdjustedDataRow(
-                        pgSqlTransformer, dataTypes, dataRow);
-                    writeStream.write(pgsql.getCopyDataRowSql(adjustedDataRow));
+                    if(!options.createOnly) {
+                        adjustedDataRow = dataType.getAdjustedDataRow(
+                            pgSqlTransformer, dataTypes, dataRow);
+                        writeStream.write(
+                            pgsql.getCopyDataRowSql(adjustedDataRow));
+                    }
                 },
                 function doneHook() {
-                    writeStream.write(pgsql.getCopyFooterSql());
-                    writeStream.write(pgsql.getFooterSql(options.name), undefined,
+                    if(!options.createOnly) {
+                        writeStream.write(pgsql.getCopyFooterSql());
+                    }
+
+                    writeStream.write(pgsql.getFooterSql(name), undefined,
                         function sucessfullyWrittenCb() {
                             if(typeof callback === 'function') {
                                callback();

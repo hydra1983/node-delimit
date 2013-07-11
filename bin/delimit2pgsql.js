@@ -12,6 +12,21 @@ var argv = require('optimist')
     .options('name', {
         describe: "What to name our data? Default 'default'"
     })
+    .options('appendString', {
+        describe: "Append a string to the end of the name? Useful with " +
+            "spreadsheets to ensure that a string appears at the end of " +
+            "the table name."
+    })
+    .options('dataOnly', {
+        "boolean": true,
+        "default": false,
+        describe: "SQL ONLY: Only show data SQL (no create statement)"
+    })
+    .options('createOnly', {
+        "boolean": true,
+        "default": false,
+        describe: "SQL ONLY: Only output create table SQL (no data)"
+    })
     .options('header', {
         describe: "What row is the header in? Default 0"
     })
@@ -28,9 +43,15 @@ var extension = argv.file.split(".");
 extension = extension[extension.length - 1];
 
 var options = {
+    // What row contains header information?
     headerRow: typeof argv.header === 'undefined' ? 0 : argv.header,
+    // What should we name our dataset?
     name: argv.name || "default_name",
+    // What String should we append to the end of our dataset name?
+    appendString: typeof argv.appendString === 'undefined' ? '' : ('_' + argv.appendString),
+    // Should we ignore columns in data with empty headers?
     ignoreEmptyHeaders: argv.igEmHead || false,
+    // Should we force a particular type on all columns in this data?
     forceType: (function(forceType) {
         if(typeof forceType === 'string') {
             forceType = forceType.toUpperCase();
@@ -42,7 +63,13 @@ var options = {
             }
         }
         return forceType;
-    })(argv.forceType) || false
+    })(argv.forceType) || false,
+
+    //-- SQL Specific
+    // Are we only displaying data?
+    dataOnly: argv.dataOnly && !argv.createOnly,
+    // Are we only displaying create?
+    createOnly: argv.createOnly && !argv.dataOnly,
 };
 
 if(extension.match(/xlsx?/)) {
