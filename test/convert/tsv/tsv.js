@@ -8,6 +8,7 @@ describe('tsv', function() {
         tsvSimple = __dirname + '/files/tsvSimple.tsv';
         tsvSimple1100 = __dirname + '/files/tsvSimple1100.tsv';
         tsvMissingHeaders = __dirname + '/files/tsvMissingHeaders.tsv';
+        tsvMissingHeaders2 = __dirname + '/files/tsvMissingHeaders2.tsv';
         tsvTwoSheets = __dirname + '/files/tsvTwoSheets.tsv';
         tsvEmptyRow = __dirname + '/files/tsvEmptyRow.tsv';
 
@@ -79,6 +80,20 @@ describe('tsv', function() {
                     ['two', 5.5],
                     ['three', 6.6]
                 ]);
+                done();
+            });
+        });
+        it.only('should convert a TSV file into a DataSet (skip empty header names more obscure)', function(done) {
+            options.ignoreEmptyHeaders = true;
+            tsv.tsvToDataSet(tsvMissingHeaders2, options, function datasetCb(dataset) {
+                should.exist(dataset);
+                dataset.getHeaders().should.eql([
+                   'Heatmap', 'table_name', 'column_name', 'column_criteria'
+                ]);
+                dataset.getDataTypes().should.eql([
+                   defines.TEXT, defines.TEXT, defines.TEXT, defines.TEXT
+                ]);
+                dataset.getData().length.should.eql(1);
                 done();
             });
         });

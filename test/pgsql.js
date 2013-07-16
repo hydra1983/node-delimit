@@ -29,7 +29,7 @@ describe('pgsql', function() {
     describe('#getFooterSql()', function() {
         it('should return some string that appears after the SQL', function() {
             var tablename = 'trevor.test';
-            var shouldBe = "vacuum analyze " + tablename + ';';
+            var shouldBe = "vacuum analyze " + tablename + ';\n';
             pgsql.getFooterSql(tablename).should.equal(shouldBe);
         });
     });

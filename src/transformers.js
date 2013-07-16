@@ -1,12 +1,19 @@
 var defines = require('./defines.js');
 
 exports.removeIndexes = function(indexes, arr) {
-    var _indexes = indexes.slice().sort(),
-        _arr = arr.slice();
-    for(var i = 0, len = _indexes.length; i < len; ++i) {
-        _arr.splice(_indexes[i] - i, 1);
+    var arrObj = {};
+    var i, len;
+    for(i = 0, len = arr.length; i < len; ++i) { arrObj[i] = arr[i]; }
+    for(i = 0, len = indexes.length; i < len; ++i) {
+        delete arrObj[indexes[i]];
     }
-    return _arr;
+    var ret = [];
+    for(i = 0, len = arr.length; i < len; ++i) {
+        if(typeof arrObj[i] !== 'undefined') {
+            ret.push(arrObj[i]);
+        }
+    }
+    return ret;
 };
 
 exports.normalizeString = function(string) {

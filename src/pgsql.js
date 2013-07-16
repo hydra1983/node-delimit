@@ -7,7 +7,7 @@ exports.getHeaderSql = function(tablename) {
 };
 
 exports.getFooterSql = function(tablename) {
-    return "vacuum analyze " + tablename + ';';
+    return "vacuum analyze " + tablename + ';\n';
 };
 
 exports.getCreateTableSql = function(tablename, headers, dataTypes) {

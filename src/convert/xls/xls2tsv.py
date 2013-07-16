@@ -8,6 +8,14 @@ import re
 
 
 def normalize(string):
+
+    if string is None:
+        return ""
+
+    # Pandas workaround #1001
+    if re.search(r'None(\.\d+)?', string):
+        return ""
+
     string = re.sub(r' ', "_", string)
     string = re.sub(r'__*', "_", string)
     string = re.sub(r'^_|_$', "", string)
@@ -31,6 +39,12 @@ for sheet_name in xls.sheet_names:
     dataframe = xls.parse(sheet_name, encoding='utf8')
     tfile_handle, tfile_path = tempfile.mkstemp(dir=tdir_path,
                                                 suffix='.'+normalize(sheet_name))
+
+    rename = {}
+    for column_name in dataframe.columns:
+        rename[column_name] = normalize(column_name)
+
+    dataframe = dataframe.rename_axis(rename)
 
     f = os.fdopen(tfile_handle, 'w+b')
     dataframe.to_csv(

@@ -15,8 +15,12 @@ exports.xlsToPgSql = function(filePath, writeStream, options, callback) {
 
         for(var i = 0, len = info.files.length; i < len; ++i) {
             modifiedOptions = _.clone(options);
-            modifiedOptions.name = options.name + "_" +
-                transformers.normalizeString(info.files[i].sheetName),
+
+            // only append sheet name if there is more than one file to deal with
+            if(info.files.length > 1) {
+                modifiedOptions.name = options.name + "_" +
+                    transformers.normalizeString(info.files[i].sheetName);
+            }
 
             singleApply = async.apply(tsv.tsvToPgSql, info.files[i].path,
                 writeStream, modifiedOptions);
