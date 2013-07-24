@@ -20,9 +20,12 @@ exports.tsvToDataSet = function(filePath, options, callback) {
             var adjustedDataRow;
             file.getFileData(filePath, tsvLoader, datasetTransformer, options, ignoredColumns,
                 function dataRowHook(dataRow) {
+                    // console.log(dataRow);
                     adjustedDataRow = dataType.getAdjustedDataRow(
                         datasetTransformer, dataTypes, dataRow);
                     dataset.addDataRow(adjustedDataRow);
+                    // console.log('----');
+                    // console.log(dataset);
                 },
                 function doneHook() {
                     callback(dataset);

@@ -83,7 +83,7 @@ describe('tsv', function() {
                 done();
             });
         });
-        it.only('should convert a TSV file into a DataSet (skip empty header names more obscure)', function(done) {
+        it('should convert a TSV file into a DataSet (skip empty header names more obscure)', function(done) {
             options.ignoreEmptyHeaders = true;
             tsv.tsvToDataSet(tsvMissingHeaders2, options, function datasetCb(dataset) {
                 should.exist(dataset);

@@ -50,6 +50,7 @@ exports.getDataSetTransformer = function(booleanValues) {
     // What is considered an empty value?
     transformer.emptyValues = [
         '',
+        'nan',
         '#REF!:emptyRange' // Google Docs
     ];
 
@@ -115,6 +116,7 @@ exports.getPgSqlTransformer = function() {
     // What is considered an empty value?
     transformer.emptyValues = [
         '',
+        'nan',
         '#REF!:emptyRange' // Google Docs
     ];
 

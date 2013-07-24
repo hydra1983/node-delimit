@@ -1,0 +1,13 @@
+{
+    "name": "foobar",
+    "headers": [
+        "one", "two", "three"
+    ],
+    "dataTypes": [
+        "integer", "text", "numeric"
+    ],
+    "data": [
+        [ 1, "one", 1.1 ],
+        [ 2, "two", 2.2 ]
+    ]
+}

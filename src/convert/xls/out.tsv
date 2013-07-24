@@ -1,0 +1,263 @@
+Heatmap	Group_Code																			
+	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Allergy & Immunology	1.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Anesthesiology	2.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical Pharmacology	3.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Dermatology	4.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Electrodiagnostic Medicine	5.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Emergency Medicine	6.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Family Medicine	7.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+General Practice	8.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospitalist	9.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Independent Medical Examiner	10.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Internal Medicine	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Legal Medicine	12.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Medical Genetics	13.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Nuclear Medicine	14.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neuromusculoskeletal Medicine & OMM	15.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neuromusculoskeletal Medicine, Sports Medicine	16.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Obstetrics & Gynecology	17.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Ophthalmology	18.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pathology	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatrics	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Phlebology	21.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Physical Medicine & Rehabilitation	22.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Public Health & General Preventive Medicine	23.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Plastic Surgery	24.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Psychiatry	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Radiology	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Surgery	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Urology	28.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Dentist	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Heatmap	in_DB	In_column	Healthcare_Provider_Taxonomy_Code	New_Group_Code	Bandwidth_linear	Bandwidth_time	Weight_Variable	Demographic	Weight_H_Relevance	Weight_S_Relevance										
+Allergy & Immunology	nan	Healthcare Provider Taxonomy Code	207K00000X	1.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Allergy	nan	Healthcare Provider Taxonomy Code	207KA0200X	1.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical & Laboratory Immunology	nan	Healthcare Provider Taxonomy Code	207KI0005X	1.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Anesthesiology	nan	Healthcare Provider Taxonomy Code	207L00000X	2.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Addiction Medicine	nan	Healthcare Provider Taxonomy Code	207LA0401X	2.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Critical Care Medicine	nan	Healthcare Provider Taxonomy Code	207LC0200X	2.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospice and Palliative Medicine	nan	Healthcare Provider Taxonomy Code	207LH0002X	2.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pain Medicine	nan	Healthcare Provider Taxonomy Code	207LP2900X	2.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical Pharmacology	nan	Healthcare Provider Taxonomy Code	208U00000X	3.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Dermatology	nan	Healthcare Provider Taxonomy Code	207N00000X	4.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical & Laboratory Dermatological Immunology	nan	Healthcare Provider Taxonomy Code	207NI0002X	4.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Dermatopathology	nan	Healthcare Provider Taxonomy Code	207ND0900X	4.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Procedural Dermatology	nan	Healthcare Provider Taxonomy Code	207NS0135X	4.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Electrodiagnostic Medicine	nan	Healthcare Provider Taxonomy Code	204R00000X	5.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Emergency Medicine	nan	Healthcare Provider Taxonomy Code	207P00000X	6.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Emergency Medical Services	nan	Healthcare Provider Taxonomy Code	207PE0004X	6.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospice and Palliative Medicine	nan	Healthcare Provider Taxonomy Code	207PH0002X	6.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Medical Toxicology	nan	Healthcare Provider Taxonomy Code	207PT0002X	6.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Sports Medicine	nan	Healthcare Provider Taxonomy Code	207PS0010X	6.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Undersea and Hyperbaric Medicine	nan	Healthcare Provider Taxonomy Code	207PE0005X	6.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Family Medicine	nan	Healthcare Provider Taxonomy Code	207Q00000X	7.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Addiction Medicine	nan	Healthcare Provider Taxonomy Code	207QA0401X	7.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Adult Medicine	nan	Healthcare Provider Taxonomy Code	207QA0505X	7.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Bariatric Medicine	nan	Healthcare Provider Taxonomy Code	207QB0002X	7.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Geriatric Medicine	nan	Healthcare Provider Taxonomy Code	207QG0300X	7.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospice and Palliative Medicine	nan	Healthcare Provider Taxonomy Code	207QH0002X	7.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Sleep Medicine	nan	Healthcare Provider Taxonomy Code	207QS1201X	7.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Sports Medicine	nan	Healthcare Provider Taxonomy Code	207QS0010X	7.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+General Practice	nan	Healthcare Provider Taxonomy Code	208D00000X	8.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospitalist	nan	Healthcare Provider Taxonomy Code	208M00000X	9.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Independent Medical Examiner	nan	Healthcare Provider Taxonomy Code	202C00000X	10.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Internal Medicine	nan	Healthcare Provider Taxonomy Code	207R00000X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Addiction Medicine	nan	Healthcare Provider Taxonomy Code	207RA0401X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Allergy & Immunology	nan	Healthcare Provider Taxonomy Code	207RA0201X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Bariatric Medicine	nan	Healthcare Provider Taxonomy Code	207RB0002X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Cardiovascular Disease	nan	Healthcare Provider Taxonomy Code	207RC0000X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical & Laboratory Immunology	nan	Healthcare Provider Taxonomy Code	207RI0001X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical Cardiac Electrophysiology	nan	Healthcare Provider Taxonomy Code	207RC0001X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Critical Care Medicine	nan	Healthcare Provider Taxonomy Code	207RC0200X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Endocrinology, Diabetes & Metabolism	nan	Healthcare Provider Taxonomy Code	207RE0101X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Gastroenterology	nan	Healthcare Provider Taxonomy Code	207RG0100X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Geriatric Medicine	nan	Healthcare Provider Taxonomy Code	207RG0300X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hematology	nan	Healthcare Provider Taxonomy Code	207RH0000X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hematology & Oncology	nan	Healthcare Provider Taxonomy Code	207RH0003X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hepatology	nan	Healthcare Provider Taxonomy Code	207RI0008X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospice and Palliative Medicine	nan	Healthcare Provider Taxonomy Code	207RH0002X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hypertension Specialist	nan	Healthcare Provider Taxonomy Code	207RH0005X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Infectious Disease	nan	Healthcare Provider Taxonomy Code	207RI0200X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Interventional Cardiology	nan	Healthcare Provider Taxonomy Code	207RI0011X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Magnetic Resonance Imaging (MRI)	nan	Healthcare Provider Taxonomy Code	207RM1200X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Medical Oncology	nan	Healthcare Provider Taxonomy Code	207RX0202X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Nephrology	nan	Healthcare Provider Taxonomy Code	207RN0300X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pulmonary Disease	nan	Healthcare Provider Taxonomy Code	207RP1001X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Rheumatology	nan	Healthcare Provider Taxonomy Code	207RR0500X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Sleep Medicine	nan	Healthcare Provider Taxonomy Code	207RS0012X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Sports Medicine	nan	Healthcare Provider Taxonomy Code	207RS0010X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Transplant Hepatology	nan	Healthcare Provider Taxonomy Code	207RT0003X	11.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Legal Medicine	nan	Healthcare Provider Taxonomy Code	209800000X	12.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Medical Genetics	nan	Healthcare Provider Taxonomy Code		13.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical Biochemical Genetics	nan	Healthcare Provider Taxonomy Code	207SG0202X	13.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical Cytogenetic	nan	Healthcare Provider Taxonomy Code	207SC0300X	13.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical Genetics (M.D.)	nan	Healthcare Provider Taxonomy Code	207SG0201X	13.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical Molecular Genetics	nan	Healthcare Provider Taxonomy Code	207SG0203X	13.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Molecular Genetic Pathology	nan	Healthcare Provider Taxonomy Code	207SM0001X	13.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Ph.D. Medical Genetics	nan	Healthcare Provider Taxonomy Code	207SG0205X	13.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Nuclear Medicine	nan	Healthcare Provider Taxonomy Code	207U00000X	14.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Nuclear Cardiology	nan	Healthcare Provider Taxonomy Code	207UN0901X	14.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Nuclear Imaging & Therapy	nan	Healthcare Provider Taxonomy Code	207UN0902X	14.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neuromusculoskeletal Medicine & OMM	nan	Healthcare Provider Taxonomy Code	204D00000X	15.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neuromusculoskeletal Medicine, Sports Medicine	nan	Healthcare Provider Taxonomy Code	204C00000X	16.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Obstetrics & Gynecology	nan	Healthcare Provider Taxonomy Code	207V00000X	17.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Gynecology	nan	Healthcare Provider Taxonomy Code	207VG0400X	17.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Obstetrics	nan	Healthcare Provider Taxonomy Code	207VX0000X	17.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Bariatric Medicine	nan		207VB0002X	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Critical Care Medicine	nan		207VC0200X	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Female Pelvic Medicine and Reconstructive Surgery	nan		207VF0040X	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Gynecologic Oncology	nan		207VX0201X	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospice and Palliative Medicine	nan		207VH0002X	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Maternal & Fetal Medicine	nan		207VM0101X	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Reproductive Endocrinology	nan		207VE0102X	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Ophthalmology	nan	Healthcare Provider Taxonomy Code	207W00000X	18.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pathology	nan	Healthcare Provider Taxonomy Code		19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Anatomic Pathology	nan	Healthcare Provider Taxonomy Code	207ZP0101X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Anatomic Pathology & Clinical Pathology	nan	Healthcare Provider Taxonomy Code	207ZP0102X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Blood Banking & Transfusion Medicine	nan	Healthcare Provider Taxonomy Code	207ZB0001X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Chemical Pathology	nan	Healthcare Provider Taxonomy Code	207ZP0104X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical Pathology	nan	Healthcare Provider Taxonomy Code	207ZC0006X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical Pathology/Laboratory Medicine	nan	Healthcare Provider Taxonomy Code	207ZP0105X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Cytopathology	nan	Healthcare Provider Taxonomy Code	207ZC0500X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Dermatopathology	nan	Healthcare Provider Taxonomy Code	207ZD0900X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Forensic Pathology	nan	Healthcare Provider Taxonomy Code	207ZF0201X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hematology	nan	Healthcare Provider Taxonomy Code	207ZH0000X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Immunopathology	nan	Healthcare Provider Taxonomy Code	207ZI0100X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Medical Microbiology	nan	Healthcare Provider Taxonomy Code	207ZM0300X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Molecular Genetic Pathology	nan	Healthcare Provider Taxonomy Code	207ZP0007X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neuropathology	nan	Healthcare Provider Taxonomy Code	207ZN0500X	19.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatrics	nan	Healthcare Provider Taxonomy Code	208000000X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Internal MedicineAdolescent Medicine	nan	Healthcare Provider Taxonomy Code	207RA0000X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Family Adolescent Medicine	nan	Healthcare Provider Taxonomy Code	207QA0000X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Adolescent Medicine	nan	Healthcare Provider Taxonomy Code	2080A0000X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Child Abuse Pediatrics	nan	Healthcare Provider Taxonomy Code	2080C0008X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical & Laboratory Immunology	nan	Healthcare Provider Taxonomy Code	2080I0007X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Developmental – Behavioral Pediatrics	nan	Healthcare Provider Taxonomy Code	2080P0006X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospice and Palliative Medicine	nan	Healthcare Provider Taxonomy Code	2080H0002X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Medical Toxicology	nan	Healthcare Provider Taxonomy Code	2080T0002X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neonatal-Perinatal Medicine	nan	Healthcare Provider Taxonomy Code	2080N0001X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neurodevelopmental Disabilities	nan	Healthcare Provider Taxonomy Code	2080P0008X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Allergy/Immunology	nan	Healthcare Provider Taxonomy Code	2080P0201X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Cardiology	nan	Healthcare Provider Taxonomy Code	2080P0202X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Critical Care Medicine	nan	Healthcare Provider Taxonomy Code	2080P0203X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Emergency Medicine	nan	Healthcare Provider Taxonomy Code	2080P0204X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Endocrinology	nan	Healthcare Provider Taxonomy Code	2080P0205X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Gastroenterology	nan	Healthcare Provider Taxonomy Code	2080P0206X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Hematology-Oncology	nan	Healthcare Provider Taxonomy Code	2080P0207X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Infectious Diseases	nan	Healthcare Provider Taxonomy Code	2080P0208X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Nephrology	nan	Healthcare Provider Taxonomy Code	2080P0210X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Pulmonology	nan	Healthcare Provider Taxonomy Code	080P0214X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Rheumatology	nan	Healthcare Provider Taxonomy Code	2080P0216X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Transplant Hepatology	nan	Healthcare Provider Taxonomy Code	2080T0004X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Anesthesiology	nan	Healthcare Provider Taxonomy Code	207LP3000X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Emergency Medicine	nan	Healthcare Provider Taxonomy Code	207PP0204X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Dermatology	nan	Healthcare Provider Taxonomy Code	207NP0225X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Sleep Medicine	nan	Healthcare Provider Taxonomy Code	2080S0012X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Sports Medicine	nan	Healthcare Provider Taxonomy Code	2080S0010X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Urology	nan	Healthcare Provider Taxonomy Code	2088P0231X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Orthopaedic Surgery	nan	Healthcare Provider Taxonomy Code	207XP3100X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Rehabilitation Medicine	nan	Healthcare Provider Taxonomy Code	2081P0010X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Rehabilitation Medicine	nan	Healthcare Provider Taxonomy Code	2081P0010X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Orthodontics and Dentofacial Orthopedics	nan	Healthcare Provider Taxonomy Code	1223X0400X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Dentistry	nan	Healthcare Provider Taxonomy Code	1223P0221X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Radiology	nan	Healthcare Provider Taxonomy Code	2085P0229X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Child & Adolescent Psychiatry	nan	Healthcare Provider Taxonomy Code	2084P0804X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neurodevelopmental Disabilities	nan	Healthcare Provider Taxonomy Code	2084P0005X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Surgery	nan	Healthcare Provider Taxonomy Code	2086S0120X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neurology with Special Qualifications in Child Neurology	nan	Healthcare Provider Taxonomy Code	2084N0402X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Otolaryngology	nan	Healthcare Provider Taxonomy Code	207YP0228X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pediatric Pathology	nan	Healthcare Provider Taxonomy Code	207ZP0213X	20.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Phlebology	nan	Healthcare Provider Taxonomy Code	202K00000X	21.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Physical Medicine & Rehabilitation	nan	Healthcare Provider Taxonomy Code	208100000X	22.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospice and Palliative Medicine	nan	Healthcare Provider Taxonomy Code	2081H0002X	22.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neuromuscular Medicine	nan	Healthcare Provider Taxonomy Code	2081N0008X	22.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pain Medicine	nan	Healthcare Provider Taxonomy Code	2081P2900X	22.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Spinal Cord Injury Medicine	nan	Healthcare Provider Taxonomy Code	2081P0004X	22.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Sports Medicine	nan	Healthcare Provider Taxonomy Code	2081S0010X	22.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Public Health & General Preventive Medicine	nan	Healthcare Provider Taxonomy Code	2083P0901X	23.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Plastic Surgery	nan	Healthcare Provider Taxonomy Code	208200000X	24.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Plastic Surgery Within the Head and Neck	nan	Healthcare Provider Taxonomy Code	2082S0099X	24.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Surgery of the Hand	nan	Healthcare Provider Taxonomy Code	2082S0105X	24.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Addiction Medicine	nan	Healthcare Provider Taxonomy Code	2084A0401X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Addiction Psychiatry	nan	Healthcare Provider Taxonomy Code	2084P0802X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Bariatric Medicine	nan	Healthcare Provider Taxonomy Code	2084B0002X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Behavioral Neurology & Neuropsychiatry	nan	Healthcare Provider Taxonomy Code	2084B0040X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Clinical Neurophysiology	nan	Healthcare Provider Taxonomy Code	2084N0600X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Diagnostic Neuroimaging	nan	Healthcare Provider Taxonomy Code	2084D0003X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Forensic Psychiatry	nan	Healthcare Provider Taxonomy Code	2084F0202X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Geriatric Psychiatry	nan	Healthcare Provider Taxonomy Code	2084P0805X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospice and Palliative Medicine	nan	Healthcare Provider Taxonomy Code	2084H0002X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neurology	nan	Healthcare Provider Taxonomy Code	2084N0400X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neuromuscular Medicine	nan	Healthcare Provider Taxonomy Code	2084N0008X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pain Medicine	nan	Healthcare Provider Taxonomy Code	2084P2900X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Psychiatry	nan	Healthcare Provider Taxonomy Code	2084P0800X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Psychosomatic Medicine	nan	Healthcare Provider Taxonomy Code	2084P0015X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Sleep Medicine	nan	Healthcare Provider Taxonomy Code	2084S0012X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Sports Medicine	nan	Healthcare Provider Taxonomy Code	2084S0010X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Vascular Neurology	nan	Healthcare Provider Taxonomy Code	2084V0102X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Interventional Pain Medicine	nan	Healthcare Provider Taxonomy Code	208VP0014X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Pain Medicine	nan	Healthcare Provider Taxonomy Code	208VP0000X	25.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Body Imaging	nan	Healthcare Provider Taxonomy Code	2085B0100X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Diagnostic Neuroimaging	nan	Healthcare Provider Taxonomy Code	2085D0003X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Diagnostic Radiology	nan	Healthcare Provider Taxonomy Code	2085R0202X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Diagnostic Ultrasound	nan	Healthcare Provider Taxonomy Code	2085U0001X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospice and Palliative Medicine	nan	Healthcare Provider Taxonomy Code	2085H0002X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neuroradiology	nan	Healthcare Provider Taxonomy Code	2085N0700X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Nuclear Radiology	nan	Healthcare Provider Taxonomy Code	2085N0904X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Radiation Oncology	nan	Healthcare Provider Taxonomy Code	2085R0001X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Radiological Physics	nan	Healthcare Provider Taxonomy Code	2085R0205X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Therapeutic Radiology	nan	Healthcare Provider Taxonomy Code	2085R0203X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Vascular & Interventional Radiology	nan	Healthcare Provider Taxonomy Code	2085R0204X	26.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Surgery	nan	Healthcare Provider Taxonomy Code	208600000X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hospice and Palliative Medicine	nan	Healthcare Provider Taxonomy Code	2086H0002X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Plastic and Reconstructive Surgery	nan	Healthcare Provider Taxonomy Code	2086S0122X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Surgery of the Hand	nan	Healthcare Provider Taxonomy Code	2086S0105X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Surgical Critical Care	nan	Healthcare Provider Taxonomy Code	2086S0102X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Surgical Oncology	nan	Healthcare Provider Taxonomy Code	2086X0206X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Trauma Surgery	nan	Healthcare Provider Taxonomy Code	2086S0127X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Vascular Surgery	nan	Healthcare Provider Taxonomy Code	2086S0129X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Thoracic Surgery (Cardiothoracic Vascular Surgery)	nan	Healthcare Provider Taxonomy Code	208G00000X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Transplant Surgery	nan	Healthcare Provider Taxonomy Code	204F00000X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+MOHS-Micrographic Surgery	nan	Healthcare Provider Taxonomy Code	207ND0101X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Colon & Rectal Surgery	nan	Healthcare Provider Taxonomy Code	208C00000X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Neurological Surgery	nan	Healthcare Provider Taxonomy Code	207T00000X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Oral & Maxillofacial Surgery	nan	Healthcare Provider Taxonomy Code	204E00000X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Adult Reconstructive Orthopaedic Surgery	nan	Healthcare Provider Taxonomy Code	207XS0114X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Foot and Ankle Surgery	nan	Healthcare Provider Taxonomy Code	207XX0004X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Hand Surgery	nan	Healthcare Provider Taxonomy Code	207XS0106X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Orthopaedic Surgery of the Spine	nan	Healthcare Provider Taxonomy Code	207XS0117X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Orthopaedic Trauma	nan	Healthcare Provider Taxonomy Code	207XX0801X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Sports Medicine	nan	Healthcare Provider Taxonomy Code	207XX0005X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Orthopaedic Surgery	nan	Healthcare Provider Taxonomy Code	207X00000X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Otolaryngology	nan	Healthcare Provider Taxonomy Code	207Y00000X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Facial Plastic Surgery	nan	Healthcare Provider Taxonomy Code	207YS0123X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Otolaryngic Allergy	nan	Healthcare Provider Taxonomy Code	207YX0602X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Otolaryngology/Facial Plastic Surgery	nan	Healthcare Provider Taxonomy Code	207YX0905X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Otology & Neurotology	nan	Healthcare Provider Taxonomy Code	207YX0901X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Plastic Surgery within the Head & Neck	nan	Healthcare Provider Taxonomy Code	207YX0007X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Female Pelvic Medicine and Reconstructive Surgery	nan	Healthcare Provider Taxonomy Code	2088F0040X	27.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Urology	nan	Healthcare Provider Taxonomy Code	208800000X	28.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Dentist	nan	Healthcare Provider Taxonomy Code	122300000X	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Dental Public Health	nan	Healthcare Provider Taxonomy Code	1223D0001X	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Dentist Anesthesiologist	nan	Healthcare Provider Taxonomy Code	1223D0004X	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Endodontics	nan	Healthcare Provider Taxonomy Code	1223E0200X	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+General Practice	nan	Healthcare Provider Taxonomy Code	1223G0001X	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Oral and Maxillofacial Pathology	nan	Healthcare Provider Taxonomy Code	1223P0106X	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Oral and Maxillofacial Radiology	nan	Healthcare Provider Taxonomy Code	1223X0008X	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Oral and Maxillofacial Surgery	nan	Healthcare Provider Taxonomy Code	1223S0112X	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Periodontics	nan	Healthcare Provider Taxonomy Code	1223P0300X	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+Prosthodontics	nan	Healthcare Provider Taxonomy Code	1223P0700X	29.0	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan			nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan			nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan			nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan			nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan			nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan			nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan
+	nan			nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan	nan

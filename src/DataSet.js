@@ -181,6 +181,10 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
     };
 
     // "Pure" Setter methods, e.g. Change the entire variable
+    this.setName = function(name) {
+        this._name = name;
+    }
+
     this.setPrimaryColumn = function(primaryColumn) {
         if(primaryColumn < 0 || primaryColumn >= this._dataRange) {
             throw new Error('Invalid primary column. It falls outside of the dataset range');
@@ -252,6 +256,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
     };
 
     // Getter Methods
+    this.getName = function() { return this._name; };
     this.getHeaders = function() { return this._headers; };
     this.getDataTypes = function() { return this._dataTypes; };
     this.getSqlTypes = function() { return this._sqlTypes; };

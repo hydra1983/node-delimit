@@ -1,6 +1,7 @@
 var xls = require('../src/convert/xls/xls.js');
 var tsv = require('../src/convert/tsv/tsv.js');
 var csv = require('../src/convert/csv/csv.js');
+var json = require('../src/convert/json/json.js');
 var defines = require('../src/defines.js');
 
 var argv = require('optimist')
@@ -37,6 +38,9 @@ var argv = require('optimist')
     .options('forceType', {
         describe: "Force a particular type for all columns? Default not set"
     })
+    .options('useHeaders', {
+        describe: "Use these headers instead of defaults (comma separated)"
+    })
     .argv;
 
 var extension = argv.file.split(".");
@@ -45,6 +49,8 @@ extension = extension[extension.length - 1];
 var options = {
     // What row contains header information?
     headerRow: typeof argv.header === 'undefined' ? 0 : argv.header,
+    // Have we specified out own headers?
+    useHeaders: typeof argv.useHeaders === 'undefined' ? false : argv.useHeaders.split(','),
     // What should we name our dataset?
     name: argv.name || "default_name",
     // What String should we append to the end of our dataset name?
@@ -85,6 +91,13 @@ else if (extension.match(/tsv/)) {
 else if (extension.match(/csv/)) {
     csv.csvToPgSql(argv.file, process.stdout, options, function doneCb() {
         process.exit(0);
+    });
+}
+else if (extension.match(/json/)) {
+    json.readJson(argv.file, function(jsonObj) {
+        json.jsonToPgSql(jsonObj, process.stdout, options, function doneCb() {
+            process.exit(0);
+        });
     });
 }
 else {

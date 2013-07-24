@@ -75,6 +75,19 @@ describe('DataSet', function() {
         });
     });
 
+    describe('#setName()', function() {
+        it('should set the name!', function() {
+            dataset.setName("events");
+            dataset.getName().should.equal("events");
+        });
+    });
+
+    describe('#getName()', function() {
+        it('should get the name!', function() {
+            dataset.getName().should.equal("My Dataset");
+        });
+    });
+
     describe('#setPrimaryColumn()', function() {
         it('should fail to change the primary column (out of range)', function() {
             (function() {

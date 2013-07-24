@@ -24,6 +24,13 @@ exports.getIgnoreColumns = function(transformer, headers) {
 };
 
 exports.fileToRows = function(filePath, loader, options, headerRowHook, dataRowHook, doneCallback) {
+
+    if(options.useHeaders) {
+        if(typeof headerRowHook === 'function') {
+            headerRowHook(options.useHeaders);
+        }
+    }
+
     lineReader.open(filePath, function(reader) {
 
         var exitReader = function() {
@@ -34,11 +41,9 @@ exports.fileToRows = function(filePath, loader, options, headerRowHook, dataRowH
         var handleLine = function(line, row) {
             var dataRow = loader.toDataRow(line);
             if(options.headerRow == row) {
-                if(typeof headerRowHook === 'function') {
+                // if we're not using custom headers
+                if(!options.useHeaders && typeof headerRowHook === 'function') {
                     headerRowHook(dataRow);
-                    if(options.forceType && options.forceType !== false) {
-                        return false;
-                    }
                 }
             } else {
                 dataRowHook(dataRow);

@@ -83,18 +83,53 @@ describe('file', function() {
             );
         });
 
-        it('should skip once it finds the header (forceType is defined)', function(done) {
+        it('should use the provided headers', function(done) {
             options = {
-                headerRow: 0,
-                forceType: defines.TEXT
+                headerRow: -1,
+                useHeaders: ['one', 'two', 'three', 'four', 'five'],
+                forceType: false
             };
-            var headerCount = 0, dataRowCount = 0;
-            file.fileToRows(tsvSimple, tsvLoader, options,
-                function headerRowCallback(dataRow) { ++headerCount; },
-                function dataRowCallback(dataRow) { ++dataRowCount; },
+
+            var headerRow, headerCount = 0, dataRowCount = 0;
+
+            file.fileToRows(tsvMissingHeaders, tsvLoader, options,
+                function headerRowCallback(dataRow) {
+                    headerRow = dataRow;
+                    ++headerCount;
+                },
+                function dataRowCallback(dataRow) {
+                    ++dataRowCount;
+                },
                 function doneCallback() {
                     headerCount.should.equal(1);
-                    dataRowCount.should.equal(0);
+                    dataRowCount.should.equal(4);
+                    headerRow.should.eql(['one', 'two', 'three', 'four', 'five']);
+                    done();
+                }
+            );
+        });
+
+        it('should provided headers and ignore current header', function(done) {
+            options = {
+                headerRow: 0,
+                useHeaders: ['one', 'two', 'three', 'four', 'five'],
+                forceType: false
+            };
+
+            var headerRow, headerCount = 0, dataRowCount = 0;
+
+            file.fileToRows(tsvSimple, tsvLoader, options,
+                function headerRowCallback(dataRow) {
+                    headerRow = dataRow;
+                    ++headerCount;
+                },
+                function dataRowCallback(dataRow) {
+                    ++dataRowCount;
+                },
+                function doneCallback() {
+                    headerCount.should.equal(1);
+                    dataRowCount.should.equal(4);
+                    headerRow.should.eql(['one', 'two', 'three', 'four', 'five']);
                     done();
                 }
             );
