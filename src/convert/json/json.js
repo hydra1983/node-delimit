@@ -28,7 +28,7 @@ exports.jsonToDataSet = function(jsonObj, options)  {
 	var dataset = new DataSet();
 
 	// name
-	dataset.setName(jsonObj.name);
+	dataset.setName(options.prependString + jsonObj.name + options.appendString);
 
 	// headers
 	dataset.setHeaders(jsonObj.headers);
@@ -71,7 +71,7 @@ exports.jsonToPgSql = function(jsonObj, writeStream, options, callback) {
 
 	for(i = 0, len = datasets.length; i < len; ++i) {
 		dataset = datasets[i];
-		name = options.name || dataset.getName();
+		name = options.prependString + dataset.getName() + options.appendString;
 		headers = dataset.getHeaders();
 		dataTypes = dataset.getDataTypes();
 		data = dataset.getData();

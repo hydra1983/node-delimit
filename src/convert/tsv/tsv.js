@@ -20,12 +20,9 @@ exports.tsvToDataSet = function(filePath, options, callback) {
             var adjustedDataRow;
             file.getFileData(filePath, tsvLoader, datasetTransformer, options, ignoredColumns,
                 function dataRowHook(dataRow) {
-                    // console.log(dataRow);
                     adjustedDataRow = dataType.getAdjustedDataRow(
                         datasetTransformer, dataTypes, dataRow);
                     dataset.addDataRow(adjustedDataRow);
-                    // console.log('----');
-                    // console.log(dataset);
                 },
                 function doneHook() {
                     callback(dataset);
@@ -38,7 +35,7 @@ exports.tsvToPgSql = function(filePath, writeStream, options, callback) {
         i, len,
         tsvLoader = loaders.getTsvLoader(),
         pgSqlTransformer = transformers.getPgSqlTransformer(),
-        name = options.name + options.appendString;
+        name = options.prependString + options.name + options.appendString;
 
     file.getFileAttributes(filePath, tsvLoader, pgSqlTransformer, options,
         function doneHook(headers, dataTypes, ignoredColumns) {

@@ -18,12 +18,10 @@ var argv = require('optimist')
     .options('appendString', {
         describe: "Append a string to the end of the name? Useful with " +
             "spreadsheets to ensure that a string appears at the end of " +
-            "the table name."
+            "the name."
     })
     .options('prependString', {
-        describe: "Append a string to the end of the name? Useful with " +
-            "spreadsheets to ensure that a string appears at the end of " +
-            "the table name."
+        describe: "Prepend a string to the front of name?"
     })
     .options('dataOnly', {
         "boolean": true,
@@ -62,6 +60,8 @@ var options = {
     name: argv.name || "default_name",
     // What String should we append to the end of our dataset name?
     appendString: typeof argv.appendString === 'undefined' ? '' : argv.appendString,
+    // What String should we prepend to the beginning of our dataset name?
+    prependString: typeof argv.prependString === 'undefined' ? '' : argv.prependString,
     // Should we ignore columns in data with empty headers?
     ignoreEmptyHeaders: argv.igEmHead || false,
     // Should we force a particular type on all columns in this data?
