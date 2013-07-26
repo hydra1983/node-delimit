@@ -28,7 +28,7 @@ exports.jsonToDataSet = function(jsonObj, options)  {
 	var dataset = new DataSet();
 
 	// name
-	dataset.setName(options.prependString + jsonObj.name + options.appendString);
+	dataset.setName(jsonObj.name);
 
 	// headers
 	dataset.setHeaders(jsonObj.headers);
