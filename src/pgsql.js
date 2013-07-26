@@ -53,7 +53,24 @@ exports.getCopyHeaderSql = function(tablename, headers, dataTypes) {
 };
 
 exports.getCopyDataRowSql = function(dataRow) {
-    var statement = dataRow.join("\t") + "\n";
+    var i, len;
+    var adjustedDataRow = [];
+    for(i = 0, len = dataRow.length; i < len; ++i) {
+        adjustedDataRow.push((dataRow[i] + '').replace(/\n/g, "\\n"));
+    }
+    var statement = adjustedDataRow.join("\t") + "\n";
+    return statement;
+};
+
+exports.getInsertDataRowSql = function(tablename, headers, dataRow) {
+    var i, len;
+    var adjustedDataRow = [];
+    for(i = 0, len = dataRow.length; i < len; ++i) {
+        adjustedDataRow.push((dataRow[i] + '').replace(/'/g, "''"));
+    }
+    var statement = 'insert into ' + tablename + ' ' +
+        '(' + headers.join(', ') + ') values ' +
+        "(E'" + adjustedDataRow.join("', E'") + "');\n";
     return statement;
 };
 

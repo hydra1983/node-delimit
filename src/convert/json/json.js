@@ -81,13 +81,21 @@ exports.jsonToPgSql = function(jsonObj, writeStream, options, callback) {
 		if(!options.dataOnly) {
 		   writeStream.write(pgsql.getCreateTableSql(name, headers, dataTypes));
 		}
-		if(!options.createOnly) {
+		if(!options.createOnly && !options.insertStatements) {
 		   writeStream.write(pgsql.getCopyHeaderSql(name, headers, dataTypes));
 		}
 
 		for(j = 0, jlen = data.length; j < jlen; ++j) {
 			dataRow = data[i]
-			writeStream.write(pgsql.getCopyDataRowSql(dataRow));
+			if(options.insertStatements) {
+				writeStream.write(pgsql.getInsertDataRowSql(name, headers, dataRow));
+			} else {
+				writeStream.write(pgsql.getCopyDataRowSql(dataRow));
+			}
+		}
+
+		if(!options.createOnly && !options.insertStatements) {
+		    writeStream.write(pgsql.getCopyFooterSql());
 		}
 
 		writeStream.write(pgsql.getFooterSql(name));

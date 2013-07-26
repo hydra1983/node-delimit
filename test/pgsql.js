@@ -149,7 +149,37 @@ describe('pgsql', function() {
             var shouldBe = "1\t2\t3\t4\thello\n";
             pgsql.getCopyDataRowSql(dataRow).should.equal(shouldBe);
         });
+        it('should correctly escape newlines', function() {
+            var dataRow = ['1\n', '\n2\n'];
+            var shouldBe = "1\\n\t\\n2\\n\n";
+            pgsql.getCopyDataRowSql(dataRow).should.equal(shouldBe);
+        });
     });
+
+    describe('#getInsertDataRowSql()', function() {
+        it('should create the correct insert statement (simple case)', function() {
+            var dataRow = data[0];
+            var shouldBe = "insert into trevor.test (column_1) values (E'1');\n";
+            pgsql.getInsertDataRowSql(tablename, headers, dataRow)
+                .should.equal(shouldBe);
+        });
+        it('should create the correct insert statement (multiples)', function() {
+            var dataRow = [ 1, 2, 3 ];
+            var headers = [ 'c1', 'c2', 'c3' ];
+
+            var shouldBe = "insert into trevor.test (c1, c2, c3) values (E'1', E'2', E'3');\n";
+            pgsql.getInsertDataRowSql(tablename, headers, dataRow)
+                .should.equal(shouldBe);
+        });
+        it('should create the correct insert statement (escape single quotes)', function() {
+            var dataRow = [ "Trevor's", "''double" ];
+            var headers = [ 'c1', 'c2' ];
+
+            var shouldBe = "insert into trevor.test (c1, c2) values (E'Trevor''s', E'''''double');\n";
+            pgsql.getInsertDataRowSql(tablename, headers, dataRow)
+                .should.equal(shouldBe);
+        });
+    })
 
     describe('#getCopyFooterSql()', function() {
         it('should create the insert dump statement (simple case)', function() {

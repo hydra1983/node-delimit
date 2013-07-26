@@ -135,7 +135,7 @@ describe('file', function() {
                 }
             );
         });
-        it.only('should be able to continue / join lines', function(done) {
+        it('should be able to continue / join lines', function(done) {
 
             options = { headerRow: 0, forceType: false };
 
