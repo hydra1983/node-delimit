@@ -52,31 +52,33 @@ exports.fileToRows = function(filePath, loader, options, headerRowHook, dataRowH
         };
 
         var row = 0;
-        var previousLine;
+        var joinedLine = '';
         var continueLine = false;
 
         var cycle = function() {
             if(reader.hasNextLine()) {
-                reader.nextLine(function(line) {
-                    // If this line continues into the next, flag it as such
-                    if(loader.lineContinues(line)) {
+                reader.nextLine(function(rawLine) {
+
+                    joinedLine = joinedLine ?
+                        (joinedLine + '\n' + rawLine) : rawLine;
+
+                    // If marked to continue, shall we continue again?
+                    if(continueLine) {
+                        continueLine = !loader.lineEnds(rawLine);
+                    }
+                    // Mark this line for continuation
+                    else if(loader.lineContinues(joinedLine)) {
                         continueLine = true;
-                        previousLine = line;
-                        cycle();
                     }
-                    // Else if this line was marked to continue previously
-                    else if(continueLine) {
-                        line = previousLine + '\\n' + line;
-                        continueLine = loader.lineEnds(line); // continue again?
-                        previousLine = line;
-                        cycle();
-                    }
-                    // Else handle this row
-                    else {
-                        handleLine(line, row);
+
+                    // If we have our final line, handle it
+                    if(!continueLine) {
+                        handleLine(joinedLine, row);
+                        joinedLine = '';
                         ++row;
-                        cycle();
                     }
+
+                    cycle();
                 });
             } else {
                 exitReader();

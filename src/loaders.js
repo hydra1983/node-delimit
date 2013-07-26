@@ -3,22 +3,32 @@ exports.getTsvLoader = function() {
 
 	// Is this row finished or does it continue on another line?
 	loader.lineContinues = function(rowString) {
+		if(rowString === '') {
+			return true;
+		}
 		// Do we end with a continuation?
-		return rowString.match(/"(?:\t|^)"([^\t"]+[^"])?$/) ? true : false;
+		return rowString.match(/(?:\t|^)"([^\t"]+[^"])?$/) ? true : false;
 	};
 
 	// Has this line finished continuing?
 	loader.lineEnds = function(rowString) {
+		if(rowString === '"') {
+			return true;
+		}
+
 		// Does it close off the previous quote?
 		var closeQuote = rowString.match(/^([^\t"]+[^"])?"(?:\t|$)/) ? true : false;
 
 		// Does it continue again?
-		var continuesAgain = lineContinues(rowString);
+		var continuesAgain = loader.lineContinues(rowString);
 
 		return closeQuote && !continuesAgain;
 	}
 
 	loader.toDataRow = function(rowString) {
+
+		// remove any quotes that surround text with newlines
+		rowString = rowString.replace(/"(.*\n(?:\n|.)*)"/, '$1')
 
 		if(rowString.match(/\u2018/))
 			console.log("DEBUG:", rowString.match(/\u2018/));

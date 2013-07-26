@@ -135,9 +135,11 @@ describe('file', function() {
                 }
             );
         });
-        it('should be able to continue / join lines', function() {
+        it.only('should be able to continue / join lines', function(done) {
 
-            var data = [], headerCount = 0, dataRowCount = 0;
+            options = { headerRow: 0, forceType: false };
+
+            var data = [], headerCount = 0;
 
             file.fileToRows(tsvContinue, tsvLoader, options,
                 function headerRowCallback(dataRow) {
@@ -145,16 +147,19 @@ describe('file', function() {
                     ++headerCount;
                 },
                 function dataRowCallback(dataRow) {
-                    ++dataRowCount;
                     data.push(dataRow);
                 },
                 function doneCallback() {
                     headerCount.should.equal(1);
-                    dataRowCount.should.equal(3);
                     data.should.eql([
                         [ 'Dave Bob James' ],
                         [ 'Madison Sally\nSmith' ],
-                        [ 'One\nTwo\nThree' ]
+                        [ 'One\nTwo\nThree' ],
+                        [ 'One\n\nTwo\nThree' ],
+                        [ '\nOne' ],
+                        [ 'One\n' ],
+                        [ '\n' ],
+                        [ '\n\n\n' ]
                     ]);
                     done();
                 }
