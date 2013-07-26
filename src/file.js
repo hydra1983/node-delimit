@@ -52,14 +52,30 @@ exports.fileToRows = function(filePath, loader, options, headerRowHook, dataRowH
         };
 
         var row = 0;
+        var previousLine;
+        var continueLine = false;
+
         var cycle = function() {
             if(reader.hasNextLine()) {
                 reader.nextLine(function(line) {
-                    if(handleLine(line, row)) {
+                    // If this line continues into the next, flag it as such
+                    if(loader.lineContinues(line)) {
+                        continueLine = true;
+                        previousLine = line;
+                        cycle();
+                    }
+                    // Else if this line was marked to continue previously
+                    else if(continueLine) {
+                        line = previousLine + '\\n' + line;
+                        continueLine = loader.lineEnds(line); // continue again?
+                        previousLine = line;
+                        cycle();
+                    }
+                    // Else handle this row
+                    else {
+                        handleLine(line, row);
                         ++row;
                         cycle();
-                    } else {
-                        exitReader();
                     }
                 });
             } else {

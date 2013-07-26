@@ -18,6 +18,7 @@ describe('file', function() {
         tsvSimple1100 = __dirname + '/convert/tsv/files/tsvSimple1100.tsv';
         tsvMissingHeaders = __dirname + '/convert/tsv/files/tsvMissingHeaders.tsv';
         tsvTwoSheets = __dirname + '/convert/tsv/files/tsvTwoSheets.tsv';
+        tsvContinue = __dirname + '/convert/tsv/files/tsvContinue.tsv';
         tsvEmptyRow = __dirname + '/convert/tsv/files/tsvEmptyRow.tsv';
         xlsTwoSheets = __dirname + '/convert/xls/files/xlsTwoSheets.xls';
         xlsSimple = __dirname + '/convert/xls/files/xlsSimple.xls';
@@ -130,6 +131,31 @@ describe('file', function() {
                     headerCount.should.equal(1);
                     dataRowCount.should.equal(4);
                     headerRow.should.eql(['one', 'two', 'three', 'four', 'five']);
+                    done();
+                }
+            );
+        });
+        it('should be able to continue / join lines', function() {
+
+            var data = [], headerCount = 0, dataRowCount = 0;
+
+            file.fileToRows(tsvContinue, tsvLoader, options,
+                function headerRowCallback(dataRow) {
+                    headerRow = dataRow;
+                    ++headerCount;
+                },
+                function dataRowCallback(dataRow) {
+                    ++dataRowCount;
+                    data.push(dataRow);
+                },
+                function doneCallback() {
+                    headerCount.should.equal(1);
+                    dataRowCount.should.equal(3);
+                    data.should.eql([
+                        [ 'Dave Bob James' ],
+                        [ 'Madison Sally\nSmith' ],
+                        [ 'One\nTwo\nThree' ]
+                    ]);
                     done();
                 }
             );

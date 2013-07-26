@@ -1,6 +1,23 @@
 exports.getTsvLoader = function() {
 	var loader = {};
 
+	// Is this row finished or does it continue on another line?
+	loader.lineContinues = function(rowString) {
+		// Do we end with a continuation?
+		return rowString.match(/"(?:\t|^)"([^\t"]+[^"])?$/) ? true : false;
+	};
+
+	// Has this line finished continuing?
+	loader.lineEnds = function(rowString) {
+		// Does it close off the previous quote?
+		var closeQuote = rowString.match(/^([^\t"]+[^"])?"(?:\t|$)/) ? true : false;
+
+		// Does it continue again?
+		var continuesAgain = lineContinues(rowString);
+
+		return closeQuote && !continuesAgain;
+	}
+
 	loader.toDataRow = function(rowString) {
 
 		if(rowString.match(/\u2018/))

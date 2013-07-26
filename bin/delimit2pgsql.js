@@ -1,8 +1,10 @@
-var xls = require('../src/convert/xls/xls.js');
-var tsv = require('../src/convert/tsv/tsv.js');
-var csv = require('../src/convert/csv/csv.js');
-var json = require('../src/convert/json/json.js');
-var defines = require('../src/defines.js');
+#!/usr/bin/env node
+
+var xls = require('../src/convert/xls/xls');
+var tsv = require('../src/convert/tsv/tsv');
+var csv = require('../src/convert/csv/csv');
+var json = require('../src/convert/json/json');
+var defines = require('../src/defines');
 
 var argv = require('optimist')
     .usage("\nUsage: node delimit.js [options] --file <filePath>")
@@ -14,6 +16,11 @@ var argv = require('optimist')
         describe: "What to name our data? Default 'default'"
     })
     .options('appendString', {
+        describe: "Append a string to the end of the name? Useful with " +
+            "spreadsheets to ensure that a string appears at the end of " +
+            "the table name."
+    })
+    .options('prependString', {
         describe: "Append a string to the end of the name? Useful with " +
             "spreadsheets to ensure that a string appears at the end of " +
             "the table name."

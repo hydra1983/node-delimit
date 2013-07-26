@@ -71,7 +71,7 @@ exports.jsonToPgSql = function(jsonObj, writeStream, options, callback) {
 
 	for(i = 0, len = datasets.length; i < len; ++i) {
 		dataset = datasets[i];
-		name = dataset.getName();
+		name = options.name || dataset.getName();
 		headers = dataset.getHeaders();
 		dataTypes = dataset.getDataTypes();
 		data = dataset.getData();
