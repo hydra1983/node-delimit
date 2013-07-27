@@ -1,4 +1,3 @@
-var pgSqlTransformer = require('./transformers.js').getPgSqlTransformer();
 var defines = require('./defines.js');
 
 exports.getHeaderSql = function(tablename) {
@@ -10,7 +9,7 @@ exports.getFooterSql = function(tablename) {
     return "vacuum analyze " + tablename + ';\n';
 };
 
-exports.getCreateTableSql = function(tablename, headers, dataTypes) {
+exports.getCreateTableSql = function(tablename, headers, dataTypes, transformer) {
     var statement = "create table " + tablename +
         " (\n";
     var columns = [], singleLine;
@@ -19,9 +18,9 @@ exports.getCreateTableSql = function(tablename, headers, dataTypes) {
 
     for(var i = 0, len = headers.length; i < len; ++i) {
         singleLine = "\t" +
-            pgSqlTransformer.header(dataTypes[i], headers[i]) +
+            transformer.header(dataTypes[i], headers[i]) +
             " " +
-            pgSqlTransformer.type(dataTypes[i]);
+            transformer.type(dataTypes[i]);
         columns.push(singleLine);
 
         if(dataTypes[i] == defines.PRIMARY_INTEGER) {
@@ -37,11 +36,11 @@ exports.getCreateTableSql = function(tablename, headers, dataTypes) {
     return statement;
 };
 
-exports.getCopyHeaderSql = function(tablename, headers, dataTypes) {
+exports.getCopyHeaderSql = function(tablename, headers, dataTypes, transformer) {
 
     var adjustedHeaders = [];
     for(var i = 0, len = headers.length; i < len; ++i) {
-        adjustedHeaders.push(pgSqlTransformer.header(dataTypes[i], headers[i]));
+        adjustedHeaders.push(transformer.header(dataTypes[i], headers[i]));
     }
 
     var statement = "copy " +
@@ -54,23 +53,33 @@ exports.getCopyHeaderSql = function(tablename, headers, dataTypes) {
 
 exports.getCopyDataRowSql = function(dataRow) {
     var i, len;
-    var adjustedDataRow = [];
+    var adjustedDataRow = [], adjusted;
     for(i = 0, len = dataRow.length; i < len; ++i) {
-        adjustedDataRow.push((dataRow[i] + '').replace(/\n/g, "\\n"));
+        adjusted = (dataRow[i] + '').replace(/\n/g, "\\n");
+        adjusted = adjusted.replace(/\r/g, "\\r");
+        adjusted = adjusted.replace(/\t/g, "\\t");
+        adjustedDataRow.push(adjusted);
     }
     var statement = adjustedDataRow.join("\t") + "\n";
     return statement;
 };
 
-exports.getInsertDataRowSql = function(tablename, headers, dataRow) {
-    var i, len;
-    var adjustedDataRow = [];
+exports.getInsertDataRowSql = function(tablename, headers, dataRow, transformer) {
+    var i, len, adjustedDataRow = [], adjusted;
+
     for(i = 0, len = dataRow.length; i < len; ++i) {
-        adjustedDataRow.push((dataRow[i] + '').replace(/'/g, "''"));
+        adjusted = dataRow[i];
+        if(transformer.nullValue != dataRow[i]) {
+            adjusted = (dataRow[i] + '').replace(/'/g, "''");
+            adjusted = "E'" + adjusted + "'";
+        }
+        adjustedDataRow.push(adjusted);
     }
+
     var statement = 'insert into ' + tablename + ' ' +
-        '(' + headers.join(', ') + ') values ' +
-        "(E'" + adjustedDataRow.join("', E'") + "');\n";
+        '(' + headers.join(', ') + ') values (' +
+        adjustedDataRow.join(', ') + ");\n";
+
     return statement;
 };
 

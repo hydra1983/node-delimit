@@ -362,7 +362,7 @@ exports.getAdjustedDataRow = function(transformer, dataTypes, dataRow) {
         value = dataRow[i];
         type = dataTypes[i];
 
-        if(exports.isStringEmpty(transformer, value)) {
+        if(!value || exports.isStringEmpty(transformer, value)) {
             newDataRow.push(transformer.nullValue);
         } else {
             newDataRow.push(transformer.output(type, value));

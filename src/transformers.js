@@ -107,11 +107,12 @@ exports.getDataSetTransformer = function(booleanValues) {
 };
 
 // @TODO needs test cases
-exports.getPgSqlTransformer = function() {
+exports.getPgSqlTransformer = function(options) {
     var transformer = {};
+    options = options || {};
 
     // What represents NULL?
-    transformer.nullValue = "\\N";
+    transformer.nullValue = options.nullValue || "\\N";
 
     // What is considered an empty value?
     transformer.emptyValues = [
@@ -165,7 +166,6 @@ exports.getPgSqlTransformer = function() {
             default: return exports.normalizeHeader(header);
         }
     };
-
 
     return transformer;
 };

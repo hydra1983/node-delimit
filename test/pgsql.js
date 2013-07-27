@@ -1,5 +1,6 @@
 var should = require('should'),
-    pgsql = require('../src/pgsql.js');
+    pgsql = require('../src/pgsql.js'),
+    transformers = require('../src/transformers'),
     defines = require('../src/defines.js');
 
 describe('pgsql', function() {
@@ -8,6 +9,8 @@ describe('pgsql', function() {
     var headers;
     var dataTypes;
     var data;
+
+    var pgSqlTransformer = transformers.getPgSqlTransformer();
 
     beforeEach(function() {
         tablename = 'trevor.test';
@@ -42,7 +45,7 @@ describe('pgsql', function() {
                 "\tcolumn_1 numeric\n" +
             ");\n";
 
-            pgsql.getCreateTableSql(tablename, headers, dataTypes)
+            pgsql.getCreateTableSql(tablename, headers, dataTypes, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
         it('should create table for type integer', function() {
@@ -53,7 +56,7 @@ describe('pgsql', function() {
                 "\tcolumn_1 integer\n" +
             ");\n";
 
-            pgsql.getCreateTableSql(tablename, headers, dataTypes)
+            pgsql.getCreateTableSql(tablename, headers, dataTypes, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
         it('should create table for type big integer', function() {
@@ -64,7 +67,7 @@ describe('pgsql', function() {
                 "\tcolumn_1 bigint\n" +
             ");\n";
 
-            pgsql.getCreateTableSql(tablename, headers, dataTypes)
+            pgsql.getCreateTableSql(tablename, headers, dataTypes, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
         it('should create table for type text', function() {
@@ -75,7 +78,7 @@ describe('pgsql', function() {
                 "\tcolumn_1 text\n" +
             ");\n";
 
-            pgsql.getCreateTableSql(tablename, headers, dataTypes)
+            pgsql.getCreateTableSql(tablename, headers, dataTypes, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
         it('should create table for multiple types', function() {
@@ -89,7 +92,7 @@ describe('pgsql', function() {
                 "\tcolumn_3 numeric\n" +
             ");\n";
 
-            pgsql.getCreateTableSql(tablename, headers, dataTypes)
+            pgsql.getCreateTableSql(tablename, headers, dataTypes, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
         it('should add the primary key (one)', function() {
@@ -103,7 +106,7 @@ describe('pgsql', function() {
                 "\tprimary key (column_1)\n" +
             ");\n";
 
-            pgsql.getCreateTableSql(tablename, headers, dataTypes)
+            pgsql.getCreateTableSql(tablename, headers, dataTypes, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
         it('should add the primary key (multiple)', function() {
@@ -120,7 +123,7 @@ describe('pgsql', function() {
                 "\tprimary key (column_1, column_3)\n" +
             ");\n";
 
-            pgsql.getCreateTableSql(tablename, headers, dataTypes)
+            pgsql.getCreateTableSql(tablename, headers, dataTypes, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
     });
@@ -128,13 +131,15 @@ describe('pgsql', function() {
     describe('#getCopyHeaderSql()', function() {
         it('should create the insert dump statement (simple case)', function() {
             var shouldBe = "copy trevor.test (column_1) from stdin;\n";
-            pgsql.getCopyHeaderSql(tablename, headers, dataTypes).should.equal(shouldBe);
+            pgsql.getCopyHeaderSql(tablename, headers, dataTypes, pgSqlTransformer)
+                .should.equal(shouldBe);
         });
         it('should create the insert dump statement (adjusted names)', function() {
             dataTypes = [ defines.LAT, defines.LONG, defines.ZIP ];
             headers = ["one", "two", "three"];
             var shouldBe = "copy trevor.test (lat, lng, zip) from stdin;\n";
-            pgsql.getCopyHeaderSql(tablename, headers, dataTypes).should.equal(shouldBe);
+            pgsql.getCopyHeaderSql(tablename, headers, dataTypes, pgSqlTransformer)
+                .should.equal(shouldBe);
         });
     });
 
@@ -160,7 +165,7 @@ describe('pgsql', function() {
         it('should create the correct insert statement (simple case)', function() {
             var dataRow = data[0];
             var shouldBe = "insert into trevor.test (column_1) values (E'1');\n";
-            pgsql.getInsertDataRowSql(tablename, headers, dataRow)
+            pgsql.getInsertDataRowSql(tablename, headers, dataRow, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
         it('should create the correct insert statement (multiples)', function() {
@@ -168,7 +173,7 @@ describe('pgsql', function() {
             var headers = [ 'c1', 'c2', 'c3' ];
 
             var shouldBe = "insert into trevor.test (c1, c2, c3) values (E'1', E'2', E'3');\n";
-            pgsql.getInsertDataRowSql(tablename, headers, dataRow)
+            pgsql.getInsertDataRowSql(tablename, headers, dataRow, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
         it('should create the correct insert statement (escape single quotes)', function() {
@@ -176,7 +181,7 @@ describe('pgsql', function() {
             var headers = [ 'c1', 'c2' ];
 
             var shouldBe = "insert into trevor.test (c1, c2) values (E'Trevor''s', E'''''double');\n";
-            pgsql.getInsertDataRowSql(tablename, headers, dataRow)
+            pgsql.getInsertDataRowSql(tablename, headers, dataRow, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
     })
