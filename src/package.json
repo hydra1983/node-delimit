@@ -1,13 +1,12 @@
 {
   "name": "delimit",
   "description": "Specialized in anything delimited",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "keywords": [],
   "maintainers": [],
   "dependencies": {
     "line-reader": "*",
     "async": "*",
     "underscore": "*"
-  },
-  "main": "./index.js"
+  }
 }
