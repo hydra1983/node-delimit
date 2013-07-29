@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var api = require('../src/api.js');
+var convert = require('../src/convert.js');
 
 var argv = require('optimist')
     .usage("\nUsage: node delimit.js [options] --file <filePath>")
@@ -59,7 +59,7 @@ var argv = require('optimist')
     })
     .argv;
 
-api.toPgSql(argv.file, argv, function(error) {
+convert.toPgSql(argv.file, argv, function(error) {
     if(!error) {
         process.exit(0);
     } else {
