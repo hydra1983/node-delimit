@@ -59,4 +59,10 @@ var argv = require('optimist')
     })
     .argv;
 
-api.toPgSql(argv.file, argv);
+api.toPgSql(argv.file, argv, function(error) {
+    if(!error) {
+        process.exit(0);
+    } else {
+        process.exit(1);
+    }
+});
