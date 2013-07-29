@@ -58,6 +58,7 @@ exports.getCopyDataRowSql = function(dataRow) {
         adjusted = (dataRow[i] + '').replace(/\n/g, "\\n");
         adjusted = adjusted.replace(/\r/g, "\\r");
         adjusted = adjusted.replace(/\t/g, "\\t");
+        adjusted = adjusted.replace(/\\/g, "\\\\");
         adjustedDataRow.push(adjusted);
     }
     var statement = adjustedDataRow.join("\t") + "\n";

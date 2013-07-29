@@ -8,5 +8,6 @@
     "line-reader": "*",
     "async": "*",
     "underscore": "*"
-  }
+  },
+  "main": "./index.js"
 }
