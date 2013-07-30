@@ -56,8 +56,9 @@ exports.getCopyDataRowSql = function(dataRow, transformer) {
     var adjustedDataRow = [], adjusted;
     for(i = 0, len = dataRow.length; i < len; ++i) {
 
+        adjusted = dataRow[i] + '';
+
         if(transformer.nullValue != dataRow[i]) {
-            adjusted = dataRow[i] + '';
             adjusted = adjusted.replace(/\\/g, "\\\\");
             adjusted = adjusted.replace(/\n/g, "\\n");
             adjusted = adjusted.replace(/\r/g, "\\r");
