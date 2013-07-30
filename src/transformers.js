@@ -17,7 +17,7 @@ exports.removeIndexes = function(indexes, arr) {
 };
 
 exports.normalizeString = function(string) {
-    string = "" + string; // turn into a string
+    string = '' + string; // turn into a string
     // Remove surrounding spaces
     string = string.trim();
     // Replace % with "percent"
@@ -26,6 +26,8 @@ exports.normalizeString = function(string) {
     string = string.replace(/ /g, "_");
     // Remove unwanted characters
     string = string.replace(/[^A-Za-z0-9_]/g, "");
+    // Remove any double, leading, and trailing underscores
+    string = string.replace(/__+$/g, '').replace(/_*$/g, '').replace(/^_/g, '');
     return string;
 };
 

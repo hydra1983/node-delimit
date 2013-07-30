@@ -16,10 +16,6 @@ def normalize(string):
     if re.search(r'None(\.\d+)?', string):
         return ""
 
-    string = re.sub(r' ', "_", string)
-    string = re.sub(r'__*', "_", string)
-    string = re.sub(r'^_|_$', "", string)
-    string = re.sub(r'[^\w\d]', "", string)
     return string
 
 
