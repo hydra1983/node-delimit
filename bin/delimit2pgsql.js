@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var delimit = require('delimit');
+var delimit = require('../index.js');
 
 var argv = require('optimist')
     .usage("\nUsage: node delimit.js [options] --file <filePath>")
@@ -53,13 +53,12 @@ var argv = require('optimist')
     .options('insertStatements', {
         alias: 'I',
         "boolean": true,
-        "default": false,
         describe: "PSQL ONLY: Use insert statements instead of dump format? " +
             "Useful for dealing with bad data"
     })
     .argv;
 
-convert.toPgSql(argv.file, argv, function(error) {
+delimit.convert.toPgSql(argv.file, argv, function(error) {
     if(!error) {
         process.exit(0);
     } else {
