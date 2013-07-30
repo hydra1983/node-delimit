@@ -147,18 +147,27 @@ describe('pgsql', function() {
         it('should create the insert dump statement (simple case)', function() {
             var dataRow = data[0];
             var shouldBe = "1\n";
-            pgsql.getCopyDataRowSql(dataRow).should.equal(shouldBe);
+            pgsql.getCopyDataRowSql(dataRow, pgSqlTransformer)
+                .should.equal(shouldBe);
         });
         it('should create the insert dump statement (complex case)', function() {
             var dataRow = ['1', '2', '3', '4', 'hello'];
             var shouldBe = "1\t2\t3\t4\thello\n";
-            pgsql.getCopyDataRowSql(dataRow).should.equal(shouldBe);
+            pgsql.getCopyDataRowSql(dataRow, pgSqlTransformer)
+                .should.equal(shouldBe);
         });
         it('should correctly escape newlines', function() {
             var dataRow = ['1\n', '\n2\n'];
             var shouldBe = "1\\n\t\\n2\\n\n";
-            pgsql.getCopyDataRowSql(dataRow).should.equal(shouldBe);
+            pgsql.getCopyDataRowSql(dataRow, pgSqlTransformer)
+                .should.equal(shouldBe);
         });
+        it('should escape arbitrary backslashes', function() {
+            var dataRow = [ 'hello\\I am stubborn'];
+            var shouldBe = "hello\\\\I am stubborn\n";
+            pgsql.getCopyDataRowSql(dataRow, pgSqlTransformer)
+                .should.equal(shouldBe);
+        })
     });
 
     describe('#getInsertDataRowSql()', function() {

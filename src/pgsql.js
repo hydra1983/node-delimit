@@ -51,14 +51,19 @@ exports.getCopyHeaderSql = function(tablename, headers, dataTypes, transformer) 
     return statement;
 };
 
-exports.getCopyDataRowSql = function(dataRow) {
+exports.getCopyDataRowSql = function(dataRow, transformer) {
     var i, len;
     var adjustedDataRow = [], adjusted;
     for(i = 0, len = dataRow.length; i < len; ++i) {
-        adjusted = (dataRow[i] + '').replace(/\n/g, "\\n");
-        adjusted = adjusted.replace(/\r/g, "\\r");
-        adjusted = adjusted.replace(/\t/g, "\\t");
-        adjusted = adjusted.replace(/\\/g, "\\\\");
+
+        if(transformer.nullValue != dataRow[i]) {
+            adjusted = dataRow[i] + '';
+            adjusted = adjusted.replace(/\\/g, "\\\\");
+            adjusted = adjusted.replace(/\n/g, "\\n");
+            adjusted = adjusted.replace(/\r/g, "\\r");
+            adjusted = adjusted.replace(/\t/g, "\\t");
+        }
+
         adjustedDataRow.push(adjusted);
     }
     var statement = adjustedDataRow.join("\t") + "\n";

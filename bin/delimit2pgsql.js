@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var convert = require('../src/convert.js');
+var delimit = require('delimit');
 
 var argv = require('optimist')
     .usage("\nUsage: node delimit.js [options] --file <filePath>")

@@ -96,7 +96,7 @@ exports.processSingleDataset = function(dataset, transformer, writeStream, optio
 				out += pgsql.getInsertDataRowSql(
 					name, headers, adjustedDataRow, transformer);
 			} else {
-				out += pgsql.getCopyDataRowSql(adjustedDataRow);
+				out += pgsql.getCopyDataRowSql(adjustedDataRow, transformer);
 			}
 		}
 

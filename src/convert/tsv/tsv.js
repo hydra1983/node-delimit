@@ -67,7 +67,8 @@ exports.tsvToPgSql = function(filePath, writeStream, options, callback) {
                                     name, headers, adjustedDataRow, pgSqlTransformer));
                         } else {
                             writeStream.write(
-                                pgsql.getCopyDataRowSql(adjustedDataRow));
+                                pgsql.getCopyDataRowSql(
+                                    adjustedDataRow, pgSqlTransformer));
                         }
                     }
                 },
