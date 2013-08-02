@@ -38,6 +38,9 @@ var argv = require('optimist')
     .options('useHeaders', {
         describe: "Use these headers instead of defaults (comma separated)"
     })
+    .options('maintainHeaders', {
+        describe: "Do not change header names (e.g. zip, lat, lng, etc)"
+    })
     .options('dataOnly', {
         alias: 'D',
         "boolean": true,

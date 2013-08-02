@@ -31,6 +31,8 @@ var getOptions = function(options) {
             }
             return forceType;
         })(options.forceType) || false,
+        // Maintain the original header names? (e.g. don't switch to zip, lat, lng, etc)
+        maintainHeaders: typeof options.maintainHeaders === 'undefined' ? false: true,
 
         //-- SQL Specific
         // Are we only displaying data?

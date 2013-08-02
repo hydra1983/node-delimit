@@ -114,7 +114,7 @@ exports.getPgSqlTransformer = function(options) {
     options = options || {};
 
     // What represents NULL?
-    transformer.nullValue = options.nullValue || "\\N";
+    transformer.nullValue = options.insertStatements ? 'NULL' : '\\N';
 
     // What is considered an empty value?
     transformer.emptyValues = [
@@ -161,12 +161,14 @@ exports.getPgSqlTransformer = function(options) {
 
     // Transform the header based on data type
     transformer.header = function(dataType, header) {
-        switch(dataType) {
-            case defines.LAT: return 'lat';
-            case defines.LONG: return 'lng';
-            case defines.ZIP: return 'zip';
-            default: return exports.normalizeHeader(header);
+        if(!options.maintainHeaders) {
+            switch(dataType) {
+                case defines.LAT: return 'lat';
+                case defines.LONG: return 'lng';
+                case defines.ZIP: return 'zip';
+            }
         }
+        return exports.normalizeHeader(header);
     };
 
     return transformer;

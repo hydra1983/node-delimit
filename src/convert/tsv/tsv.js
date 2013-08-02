@@ -37,9 +37,7 @@ exports.tsvToPgSql = function(filePath, writeStream, options, callback) {
         tsvLoader = loaders.getTsvLoader(),
         name = (options.prependString + options.name + options.appendString),
         // Setup this transformer based on the options passed in
-        pgSqlTransformer = transformers.getPgSqlTransformer({
-            nullValue: (options.insertStatements ? 'NULL' : false)
-        });
+        pgSqlTransformer = transformers.getPgSqlTransformer(options);
 
     file.getFileAttributes(filePath, tsvLoader, pgSqlTransformer, options,
         function doneHook(headers, dataTypes, ignoredColumns) {
