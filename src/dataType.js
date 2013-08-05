@@ -118,9 +118,9 @@ exports.isStringLat = function(string) {
 };
 
 exports.isStringLong = function(string) {
-    if(exports.isStringNumeric(string)) {
+    if (exports.isStringNumeric(string)) {
         var parsed = parseFloat(string);
-        if(parsed >= -180 && parsed <= 180) {
+        if (parsed >= -180 && parsed <= 180) {
             return true;
         }
     }

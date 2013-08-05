@@ -139,6 +139,7 @@ exports.getPgSqlTransformer = function(options) {
             case defines.INTEGER: return parseInt(value, 10);
             case defines.BIGINTEGER: return parseInt(value, 10);
             case defines.PRIMARY_INTEGER: return parseInt(value, 10);
+            case defines.BOOLEAN: return parseInt(value, 10);
             default: return value;
         }
     };
