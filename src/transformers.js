@@ -124,10 +124,10 @@ exports.getPgSqlTransformer = function(options) {
     ];
 
     // What represents true and false?
-    if(typeof booleanValues === 'undefined') {
+    if (typeof booleanValues === 'undefined') {
         transformer.booleanValues = {
-            isTrue: ['1','TRUE','T','YES','Y'],
-            isFalse: ['0','FALSE','F','NO','N']
+            isTrue: ['1', '1.0', 'TRUE', 'T', 'YES', 'Y'],
+            isFalse: ['0', '0.0', 'FALSE', 'F', 'NO', 'N']
         };
     } else {
         transformer.booleanValues = booleanValues;
@@ -135,7 +135,7 @@ exports.getPgSqlTransformer = function(options) {
 
     // Transform the output values based on data type
     transformer.output = function(dataType, value) {
-        switch(dataType) {
+        switch (dataType) {
             case defines.INTEGER: return parseInt(value, 10);
             case defines.BIGINTEGER: return parseInt(value, 10);
             case defines.PRIMARY_INTEGER: return parseInt(value, 10);

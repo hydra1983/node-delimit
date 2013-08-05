@@ -135,15 +135,15 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Primary Integer
     //
     // Can convert to Zip Code, Boolean, Big Integer, Integer, or Text
-    if(oldDataType == defines.PRIMARY_INTEGER) {
-        if(isEmpty || !exports.isStringPrimaryInteger(newString, oldString)) {
-            if(exports.isStringZip(newString)) {
+    if (oldDataType == defines.PRIMARY_INTEGER) {
+        if (isEmpty || !exports.isStringPrimaryInteger(newString, oldString)) {
+            if (exports.isStringZip(newString)) {
                 return defines.ZIP;
-            } else if(exports.isStringBoolean(transformer, newString)) {
+            } else if (exports.isStringBoolean(transformer, newString)) {
                 return defines.BOOLEAN;
-            } else if(exports.isStringBigInteger(newString)) {
+            } else if (exports.isStringBigInteger(newString)) {
                 return defines.BIGINTEGER;
-            } else if(exports.isStringInteger(newString)) {
+            } else if (exports.isStringInteger(newString)) {
                 return defines.INTEGER;
             } else {
                 return defines.TEXT;
@@ -155,11 +155,11 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Zip Code
     //
     // Can convert to Big Integer, Integer or Text if not a zip code
-    if(oldDataType == defines.ZIP) {
-        if(!isEmpty && !exports.isStringZip(newString)) {
-            if(exports.isStringBigInteger(newString)) {
+    if (oldDataType == defines.ZIP) {
+        if (!isEmpty && !exports.isStringZip(newString)) {
+            if (exports.isStringBigInteger(newString)) {
                 return defines.BIGINTEGER;
-            } else if(exports.isStringInteger(newString)) {
+            } else if (exports.isStringInteger(newString)) {
                 return defines.INTEGER;
             } else {
                 return defines.TEXT;
@@ -171,11 +171,11 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Lat
     //
     // Can convert to Long, Numeric or Text if not a latitude coordinate
-    if(oldDataType == defines.LAT) {
-        if(!isEmpty && !exports.isStringLat(newString)) {
-            if(exports.isStringLong(newString)) {
+    if (oldDataType == defines.LAT) {
+        if (!isEmpty && !exports.isStringLat(newString)) {
+            if (exports.isStringLong(newString)) {
                 return defines.LONG;
-            } else if(exports.isStringNumeric(newString)) {
+            } else if (exports.isStringNumeric(newString)) {
                 return defines.NUMERIC;
             } else {
                 return defines.TEXT;
@@ -187,9 +187,9 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Longitude
     //
     // Can convert to Numeric or Text if not a longitude coordinate
-    if(oldDataType == defines.LONG) {
-        if(!isEmpty && !exports.isStringLong(newString)) {
-            if(exports.isStringNumeric(newString)) {
+    if (oldDataType == defines.LONG) {
+        if (!isEmpty && !exports.isStringLong(newString)) {
+            if (exports.isStringNumeric(newString)) {
                 return defines.NUMERIC;
             } else {
                 return defines.TEXT;
@@ -201,11 +201,11 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Boolean
     //
     // Can convert to Big Integer, Integer or Text if not a Boolean
-    if(oldDataType == defines.BOOLEAN) {
-        if(!isEmpty && !exports.isStringBoolean(transformer, newString)) {
-            if(exports.isStringBigInteger(newString)) {
+    if (oldDataType == defines.BOOLEAN) {
+        if (!isEmpty && !exports.isStringBoolean(transformer, newString)) {
+            if (exports.isStringBigInteger(newString)) {
                 return defines.BIGINTEGER;
-            } else if(exports.isStringInteger(newString)) {
+            } else if (exports.isStringInteger(newString)) {
                 return defines.INTEGER;
             } else {
                 return defines.TEXT;
@@ -217,12 +217,12 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Big Integer
     //
     // Can convert to Numeric or Text if not a Big Integer
-    if(oldDataType == defines.BIGINTEGER) {
-        if(!isEmpty &&
+    if (oldDataType == defines.BIGINTEGER) {
+        if (!isEmpty &&
             !exports.isStringInteger(newString) &&
             !exports.isStringBigInteger(newString))
         {
-            if(exports.isStringNumeric(newString)) {
+            if (exports.isStringNumeric(newString)) {
                 return defines.NUMERIC;
             } else {
                 return defines.TEXT;
@@ -234,15 +234,15 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Integer
     //
     // Can convert to Big Integer, Lat, Long, Numeric or Text if not an Integer
-    if(oldDataType == defines.INTEGER) {
-        if(!isEmpty && !exports.isStringInteger(newString)) {
-            if(exports.isStringBigInteger(newString)) {
+    if (oldDataType == defines.INTEGER) {
+        if (!isEmpty && !exports.isStringInteger(newString)) {
+            if (exports.isStringBigInteger(newString)) {
                 return defines.BIGINTEGER;
-            } else if(exports.isStringLat(newString)) {
+            } else if (exports.isStringLat(newString)) {
                 return defines.LAT;
-            } else if(exports.isStringLong(newString)) {
+            } else if (exports.isStringLong(newString)) {
                 return defines.LONG;
-            } else if(exports.isStringNumeric(newString)) {
+            } else if (exports.isStringNumeric(newString)) {
                 return defines.NUMERIC;
             } else {
                 return defines.TEXT;
@@ -254,8 +254,8 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Numeric
     //
     // Can only convert to Text if it is not a number
-    if(oldDataType == defines.NUMERIC) {
-        if(!isEmpty && !exports.isStringNumber(newString)) {
+    if (oldDataType == defines.NUMERIC) {
+        if (!isEmpty && !exports.isStringNumber(newString)) {
             return defines.TEXT;
         }
         return oldDataType;
@@ -264,7 +264,7 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Text
     //
     // Can't convert to anything else but itself!
-    if(oldDataType == defines.TEXT) {
+    if (oldDataType == defines.TEXT) {
         return oldDataType;
     }
 
@@ -274,31 +274,31 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     //     Unknown, Primary Integer, Zip, Boolean, Big Integer,
     //     Integer, Lat, Long, Numeric, Text
     //
-    if(isEmpty) {
+    if (isEmpty) {
         return defines.UNKNOWN;
     }
-    if(exports.isStringPrimaryInteger(newString, oldString)) {
+    if (exports.isStringPrimaryInteger(newString, oldString)) {
         return defines.PRIMARY_INTEGER;
     }
-    if(exports.isStringZip(newString)) {
+    if (exports.isStringZip(newString)) {
         return defines.ZIP;
     }
-    if(exports.isStringBoolean(transformer, newString)) {
+    if (exports.isStringBoolean(transformer, newString)) {
         return defines.BOOLEAN;
     }
-    if(exports.isStringBigInteger(newString)) {
+    if (exports.isStringBigInteger(newString)) {
         return defines.BIGINTEGER;
     }
-    if(exports.isStringInteger(newString)) {
+    if (exports.isStringInteger(newString)) {
         return defines.INTEGER;
     }
-    if(exports.isStringLat(newString)) {
+    if (exports.isStringLat(newString)) {
         return defines.LAT;
     }
-    if(exports.isStringLong(newString)) {
+    if (exports.isStringLong(newString)) {
         return defines.LONG;
     }
-    if(exports.isStringNumeric(newString)) {
+    if (exports.isStringNumeric(newString)) {
         return defines.NUMERIC;
     }
 

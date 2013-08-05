@@ -11,7 +11,7 @@ var getOptions = function(options) {
         // Have we specified out own headers?
         useHeaders: typeof options.useHeaders === 'undefined' ? false : options.useHeaders.split(','),
         // What should we name our dataset?
-        name: options.name || "default_name",
+        name: options.name || 'default_name',
         // What String should we append to the end of our dataset name?
         appendString: typeof options.appendString === 'undefined' ? '' : options.appendString,
         // What String should we prepend to the beginning of our dataset name?
@@ -20,9 +20,9 @@ var getOptions = function(options) {
         ignoreEmptyHeaders: options.igEmHead || false,
         // Should we force a particular type on all columns in this data?
         forceType: (function(forceType) {
-            if(typeof forceType === 'string') {
+            if (typeof forceType === 'string') {
                 forceType = forceType.toUpperCase();
-                if(typeof defines[forceType] === 'undefined') {
+                if (typeof defines[forceType] === 'undefined') {
                     console.error('You have provided an invalid forceType');
                     process.exit(1);
                 } else {
@@ -47,10 +47,10 @@ var getOptions = function(options) {
 exports.toPgSql = function(file, options, callback) {
 
     var options = getOptions(options);
-    var extension = file.split(".");
+    var extension = file.split('.');
     extension = extension[extension.length - 1];
 
-    if(extension.match(/xlsx?/)) {
+    if (extension.match(/xlsx?/)) {
         xls.xlsToPgSql(file, process.stdout, options, function doneCb() {
             callback();
         });
