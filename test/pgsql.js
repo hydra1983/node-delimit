@@ -168,7 +168,7 @@ describe('pgsql', function() {
             pgsql.getCopyDataRowSql(dataRow, pgSqlTransformer)
                 .should.equal(shouldBe);
         });
-        it.only('should not escape newlines defined by the transformer', function() {
+        it('should not escape newlines defined by the transformer', function() {
             var dataRow = [ 'hello', pgSqlTransformer.nullValue ];
             var shouldBe = "hello\t\\N\n";
             pgsql.getCopyDataRowSql(dataRow, pgSqlTransformer)
