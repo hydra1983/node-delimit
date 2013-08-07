@@ -31,6 +31,9 @@ var getOptions = function(options) {
             }
             return forceType;
         })(options.forceType) || false,
+        // Use this file extension instead of the files default
+        forceFileExtension: options.forceFileExtension,
+
         // Maintain the original header names? (e.g. don't switch to zip, lat, lng, etc)
         maintainHeaders: options.maintainHeaders,
 
@@ -48,24 +51,24 @@ exports.toPgSql = function(file, options, callback) {
 
     var options = getOptions(options);
     var extension = file.split('.');
-    extension = extension[extension.length - 1];
+    extension = options.forceFileExtension || extension[extension.length - 1];
 
-    if (extension.match(/xlsx?/)) {
+    if (extension.match(/\.?xlsx?/)) {
         xls.xlsToPgSql(file, process.stdout, options, function doneCb() {
             callback();
         });
     }
-    else if (extension.match(/tsv/)) {
+    else if (extension.match(/\.?tsv/)) {
         tsv.tsvToPgSql(file, process.stdout, options, function doneCb() {
             callback();
         });
     }
-    else if (extension.match(/csv/)) {
+    else if (extension.match(/\.?csv/)) {
         csv.csvToPgSql(file, process.stdout, options, function doneCb() {
             callback();
         });
     }
-    else if (extension.match(/json/)) {
+    else if (extension.match(/\.?json/)) {
         json.readJson(file, function(jsonObj) {
             json.jsonToPgSql(jsonObj, process.stdout, options, function doneCb() {
                 callback();
