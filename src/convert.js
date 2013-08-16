@@ -33,7 +33,6 @@ var getOptions = function(options) {
         })(options.forceType) || false,
         // Ignore a specific type? e.g. don't make a column of 0's and 1's boolean but instead an int.
         ignoreTypes: (function(ignoreTypes) {
-            console.log(ignoreTypes);
             if (typeof ignoreTypes == 'string') {
                 var types = ignoreTypes.split(','), numericType;
                 ignoreTypes = [];
