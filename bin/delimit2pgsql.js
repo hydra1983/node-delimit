@@ -61,10 +61,13 @@ var argv = require('optimist')
         describe: "PSQL ONLY: Use insert statements instead of dump format? " +
             "Useful for dealing with bad data"
     })
+    .options('ignoreTypes', {
+        describe: "Ignore these particular types of data (comma separated)"
+    })
     .argv;
 
 delimit.convert.toPgSql(argv.file, argv, function(error) {
-    if(!error) {
+    if (!error) {
         process.exit(0);
     } else {
         process.exit(1);

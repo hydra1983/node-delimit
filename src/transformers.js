@@ -42,8 +42,8 @@ exports.normalizeHeader = function(header) {
     return normalized;
 };
 
-// @TODO needs test cases
-exports.getDataSetTransformer = function(booleanValues) {
+getDefaultTransformer = function(options) {
+    options = options || {};
     var transformer = {};
 
     // What represents NULL?
@@ -56,27 +56,36 @@ exports.getDataSetTransformer = function(booleanValues) {
         '#REF!:emptyRange' // Google Docs
     ];
 
-
     // What represents true and false?
-    if(typeof booleanValues === 'undefined') {
-        transformer.booleanValues = {
-            isTrue: ['1','TRUE','T','YES','Y'],
-            isFalse: ['0','FALSE','F','NO','N']
-        };
-    } else {
-        transformer.booleanValues = booleanValues;
-    }
+    transformer.booleanValues = {
+        isTrue: ['1', '1.0', 'TRUE', 'T', 'YES', 'Y'],
+        isFalse: ['0', '0.0', 'FALSE', 'F', 'NO', 'N']
+    };
+
+    // Are we ignoring a particular type?
+    transformer.ignoreType = function(dataType) {
+        if (!options.ignoreTypes) { return false; }
+        return options.ignoreTypes.indexOf(dataType) !== -1;
+    };
+
+    return transformer;
+};
+
+// @TODO needs test cases
+exports.getDataSetTransformer = function(options) {
+    options = options || {};
+    var transformer = getDefaultTransformer(options);
 
     // Transform the output values based on data type
     transformer.output = function(dataType, value) {
         var i, len;
 
-        switch(dataType) {
+        switch (dataType) {
             case defines.BOOLEAN:
                 return (function(value) {
                     len = transformer.booleanValues.isTrue.length;
-                    for(i = 0; i < len; ++i) {
-                        if(transformer.booleanValues.isTrue[i].toUpperCase() ==
+                    for (i = 0; i < len; ++i) {
+                        if (transformer.booleanValues.isTrue[i].toUpperCase() ==
                             value.toUpperCase()) {
                             return true;
                         }
@@ -110,28 +119,10 @@ exports.getDataSetTransformer = function(booleanValues) {
 
 // @TODO needs test cases
 exports.getPgSqlTransformer = function(options) {
-    var transformer = {};
     options = options || {};
+    var transformer = getDefaultTransformer(options);
 
-    // What represents NULL?
     transformer.nullValue = options.insertStatements ? 'NULL' : '\\N';
-
-    // What is considered an empty value?
-    transformer.emptyValues = [
-        '',
-        'nan',
-        '#REF!:emptyRange' // Google Docs
-    ];
-
-    // What represents true and false?
-    if (typeof booleanValues === 'undefined') {
-        transformer.booleanValues = {
-            isTrue: ['1', '1.0', 'TRUE', 'T', 'YES', 'Y'],
-            isFalse: ['0', '0.0', 'FALSE', 'F', 'NO', 'N']
-        };
-    } else {
-        transformer.booleanValues = booleanValues;
-    }
 
     // Transform the output values based on data type
     transformer.output = function(dataType, value) {
@@ -146,7 +137,7 @@ exports.getPgSqlTransformer = function(options) {
 
     // What is the output type based on data type
     transformer.type = function(dataType) {
-        switch(dataType) {
+        switch (dataType) {
             case defines.BOOLEAN: return 'boolean';
             case defines.INTEGER: return 'integer';
             case defines.BIGINTEGER: return 'bigint';
@@ -162,8 +153,8 @@ exports.getPgSqlTransformer = function(options) {
 
     // Transform the header based on data type
     transformer.header = function(dataType, header) {
-        if(!options.maintainHeaders) {
-            switch(dataType) {
+        if (!options.maintainHeaders) {
+            switch (dataType) {
                 case defines.LAT: return 'lat';
                 case defines.LONG: return 'lng';
                 case defines.ZIP: return 'zip';

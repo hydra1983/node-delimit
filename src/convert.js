@@ -31,6 +31,25 @@ var getOptions = function(options) {
             }
             return forceType;
         })(options.forceType) || false,
+        // Ignore a specific type? e.g. don't make a column of 0's and 1's boolean but instead an int.
+        ignoreTypes: (function(ignoreTypes) {
+            console.log(ignoreTypes);
+            if (typeof ignoreTypes == 'string') {
+                var types = ignoreTypes.split(','), numericType;
+                ignoreTypes = [];
+                for (var i = 0, len = types.length; i < len; ++i) {
+                    numericType = defines[types[i].toUpperCase()];
+                    if (typeof numericType === 'undefined') {
+                        console.error('You have provided an invalid ignoreType of ' + types[i]);
+                        process.exit(1);
+                    }
+                    ignoreTypes.push(numericType);
+                }
+                return ignoreTypes;
+            } else {
+                return undefined;
+            }
+        })(options.ignoreTypes) || false,
         // Use this file extension instead of the files default
         forceFileExtension: options.forceFileExtension,
 
@@ -48,7 +67,6 @@ var getOptions = function(options) {
 };
 
 exports.toPgSql = function(file, options, callback) {
-
     var options = getOptions(options);
     var extension = file.split('.');
     extension = options.forceFileExtension || extension[extension.length - 1];

@@ -13,57 +13,82 @@ describe('dataType', function() {
 
     describe('#isStringInteger()', function() {
         it('should correctly identify integers', function() {
-            dataType.isStringInteger('1').should.be.true;
-            dataType.isStringInteger('01').should.be.true;
-            dataType.isStringInteger('-1').should.be.true;
-            dataType.isStringInteger('-9').should.be.true;
+            dataType.isStringInteger(datasetTransformer, '1').should.be.true;
+            dataType.isStringInteger(datasetTransformer, '01').should.be.true;
+            dataType.isStringInteger(datasetTransformer, '-1').should.be.true;
+            dataType.isStringInteger(datasetTransformer, '-9').should.be.true;
             // Handle cases where excel appends .0 to the end of integers
-            dataType.isStringInteger('1.0').should.be.true;
-            dataType.isStringInteger('-1.0').should.be.true;
+            dataType.isStringInteger(datasetTransformer, '1.0').should.be.true;
+            dataType.isStringInteger(datasetTransformer, '-1.0').should.be.true;
         });
         it('should fail to find integers', function() {
-            dataType.isStringInteger('hello').should.be.false;
+            dataType.isStringInteger(datasetTransformer, 'hello').should.be.false;
         });
         it('should fail to find integers (leading zero flag)', function() {
-            dataType.isStringInteger('01', true).should.be.false;
+            dataType.isStringInteger(datasetTransformer, '01', true).should.be.false;
         });
-
+        it('should fail to find integers (ignore types)', function() {
+            var testTransformer = transformers.getDataSetTransformer({
+                ignoreTypes: [defines.INTEGER]
+            });
+            dataType.isStringInteger(testTransformer, '1').should.be.false;
+        });
     });
 
     describe('#isStringBigInteger()', function() {
         it('should detect that integers greater than +2147483647 are big', function() {
-            dataType.isStringBigInteger('2147483647').should.be.false;
-            dataType.isStringBigInteger('2147483648').should.be.true;
+            dataType.isStringBigInteger(datasetTransformer, '2147483647').should.be.false;
+            dataType.isStringBigInteger(datasetTransformer, '2147483648').should.be.true;
         });
         it('should detect that integers less than -2147483648 are big', function() {
-            dataType.isStringBigInteger('-2147483648').should.be.false;
-            dataType.isStringBigInteger('-2147483649').should.be.true;
+            dataType.isStringBigInteger(datasetTransformer, '-2147483648').should.be.false;
+            dataType.isStringBigInteger(datasetTransformer, '-2147483649').should.be.true;
+        });
+        it('should fail to find big integers (ignore types)', function() {
+            var testTransformer = transformers.getDataSetTransformer({
+                ignoreTypes: [defines.BIGINTEGER]
+            });
+            dataType.isStringInteger(testTransformer, '1').should.be.true;
+            dataType.isStringBigInteger(testTransformer, '2147483648').should.be.false;
         });
     });
 
     describe('#isStringNumeric()', function() {
         it('should correctly identify numerics', function() {
-            dataType.isStringNumeric('.0').should.be.true;
-            dataType.isStringNumeric('0.0').should.be.true;
-            dataType.isStringNumeric('1.0').should.be.true;
-            dataType.isStringNumeric('-1.0').should.be.true;
+            dataType.isStringNumeric(datasetTransformer, '.0').should.be.true;
+            dataType.isStringNumeric(datasetTransformer, '0.0').should.be.true;
+            dataType.isStringNumeric(datasetTransformer, '1.0').should.be.true;
+            dataType.isStringNumeric(datasetTransformer, '-1.0').should.be.true;
         });
         it('should fail to find numerics', function() {
-            dataType.isStringNumeric('hello').should.be.false;
-            dataType.isStringNumeric('1').should.be.false;
+            dataType.isStringNumeric(datasetTransformer, 'hello').should.be.false;
+            dataType.isStringNumeric(datasetTransformer, '1').should.be.false;
+        });
+        it('should fail to find numeric (ignore types)', function() {
+            var testTransformer = transformers.getDataSetTransformer({
+                ignoreTypes: [defines.NUMERIC]
+            });
+            dataType.isStringNumeric(testTransformer, '1.7').should.be.false;
         });
     });
 
     describe('#isStringNumber()', function() {
         it('should correctly identify numbers (ints + decimals)', function() {
-            dataType.isStringNumber('.0').should.be.true;
-            dataType.isStringNumber('0').should.be.true;
-            dataType.isStringNumber('11').should.be.true;
-            dataType.isStringNumber('1.0').should.be.true;
+            dataType.isStringNumber(datasetTransformer, '.0').should.be.true;
+            dataType.isStringNumber(datasetTransformer, '0').should.be.true;
+            dataType.isStringNumber(datasetTransformer, '11').should.be.true;
+            dataType.isStringNumber(datasetTransformer, '1.0').should.be.true;
         });
-        it('should fail to find numerics', function() {
-            dataType.isStringNumber('hello').should.be.false;
-            dataType.isStringNumber('true').should.be.false;
+        it('should fail to find numbers', function() {
+            dataType.isStringNumber(datasetTransformer, 'hello').should.be.false;
+            dataType.isStringNumber(datasetTransformer, 'true').should.be.false;
+        });
+        it('should fail to find numbers (ignore types)', function() {
+            var testTransformer = transformers.getDataSetTransformer({
+                ignoreTypes: [defines.NUMERIC]
+            });
+            dataType.isStringNumber(testTransformer, '1.7').should.be.false;
+            dataType.isStringNumber(testTransformer, '1').should.be.true;
         });
     });
 
@@ -92,6 +117,12 @@ describe('dataType', function() {
             dataType.isStringBoolean(datasetTransformer, 'hello').should.be.false;
             dataType.isStringBoolean(datasetTransformer, '2').should.be.false;
         });
+        it('should fail to find boolean (ignore types)', function() {
+            var testTransformer = transformers.getDataSetTransformer({
+                ignoreTypes: [defines.BOOLEAN]
+            });
+            dataType.isStringBoolean(testTransformer, 'true').should.be.false;
+        });
     });
 
     describe('#isStringEmpty()', function() {
@@ -113,67 +144,91 @@ describe('dataType', function() {
 
     describe('#isStringZip()', function() {
         it('should detect zip codes', function() {
-            dataType.isStringZip('00000').should.be.true;
-            dataType.isStringZip('00000-0000').should.be.true;
-            dataType.isStringZip('000000000').should.be.true;
-            dataType.isStringZip('12345').should.be.true;
-            dataType.isStringZip('12345-6789').should.be.true;
-            dataType.isStringZip('123456789').should.be.true;
+            dataType.isStringZip(datasetTransformer, '00000').should.be.true;
+            dataType.isStringZip(datasetTransformer, '00000-0000').should.be.true;
+            dataType.isStringZip(datasetTransformer, '000000000').should.be.true;
+            dataType.isStringZip(datasetTransformer, '12345').should.be.true;
+            dataType.isStringZip(datasetTransformer, '12345-6789').should.be.true;
+            dataType.isStringZip(datasetTransformer, '123456789').should.be.true;
         });
         it('should fail to detect zip codes', function() {
-            dataType.isStringZip('1234567890').should.be.false;
-            dataType.isStringZip('1234').should.be.false;
-            dataType.isStringZip(' not a zip code ').should.be.false;
-            dataType.isStringZip('').should.be.false;
+            dataType.isStringZip(datasetTransformer, '1234567890').should.be.false;
+            dataType.isStringZip(datasetTransformer, '1234').should.be.false;
+            dataType.isStringZip(datasetTransformer, ' not a zip code ').should.be.false;
+            dataType.isStringZip(datasetTransformer, '').should.be.false;
+        });
+        it('should fail to find zip (ignore types)', function() {
+            var testTransformer = transformers.getDataSetTransformer({
+                ignoreTypes: [defines.ZIP]
+            });
+            dataType.isStringZip(testTransformer, '12345').should.be.false;
         });
     });
 
     describe('#isStringLat()', function() {
         it('should detect latitudes', function() {
-            dataType.isStringLat('0.0').should.be.true;
-            dataType.isStringLat('90.0').should.be.true;
-            dataType.isStringLat('-90.0').should.be.true;
-            dataType.isStringLat('89.99').should.be.true;
+            dataType.isStringLat(datasetTransformer, '0.0').should.be.true;
+            dataType.isStringLat(datasetTransformer, '90.0').should.be.true;
+            dataType.isStringLat(datasetTransformer, '-90.0').should.be.true;
+            dataType.isStringLat(datasetTransformer, '89.99').should.be.true;
         });
         it('should fail to detect latitudes', function() {
-            dataType.isStringLat('85').should.be.false; // missing decimal
-            dataType.isStringLat('90.1').should.be.false;
-            dataType.isStringLat('-90.1').should.be.false;
-            dataType.isStringLat('').should.be.false;
-            dataType.isStringLat('hello').should.be.false;
+            dataType.isStringLat(datasetTransformer, '85').should.be.false; // missing decimal
+            dataType.isStringLat(datasetTransformer, '90.1').should.be.false;
+            dataType.isStringLat(datasetTransformer, '-90.1').should.be.false;
+            dataType.isStringLat(datasetTransformer, '').should.be.false;
+            dataType.isStringLat(datasetTransformer, 'hello').should.be.false;
+        });
+        it('should fail to find latitudes (ignore types)', function() {
+            var testTransformer = transformers.getDataSetTransformer({
+                ignoreTypes: [defines.LAT]
+            });
+            dataType.isStringLat(testTransformer, '90.0').should.be.false;
         });
     });
 
     describe('#isStringLong()', function() {
         it('should detect longitudes', function() {
-            dataType.isStringLong('0.0').should.be.true;
-            dataType.isStringLong('90.0').should.be.true;
-            dataType.isStringLong('-90.0').should.be.true;
-            dataType.isStringLong('180.0').should.be.true;
-            dataType.isStringLong('-180.0').should.be.true;
-            dataType.isStringLong('-179.9999').should.be.true;
+            dataType.isStringLong(datasetTransformer, '0.0').should.be.true;
+            dataType.isStringLong(datasetTransformer, '90.0').should.be.true;
+            dataType.isStringLong(datasetTransformer, '-90.0').should.be.true;
+            dataType.isStringLong(datasetTransformer, '180.0').should.be.true;
+            dataType.isStringLong(datasetTransformer, '-180.0').should.be.true;
+            dataType.isStringLong(datasetTransformer, '-179.9999').should.be.true;
         });
         it('should fail to detect longitudes', function() {
-            dataType.isStringLong('85').should.be.false; // missing decimal
-            dataType.isStringLong('180.1').should.be.false;
-            dataType.isStringLong('-180.1').should.be.false;
-            dataType.isStringLong('').should.be.false;
-            dataType.isStringLong('hello').should.be.false;
+            dataType.isStringLong(datasetTransformer, '85').should.be.false; // missing decimal
+            dataType.isStringLong(datasetTransformer, '180.1').should.be.false;
+            dataType.isStringLong(datasetTransformer, '-180.1').should.be.false;
+            dataType.isStringLong(datasetTransformer, '').should.be.false;
+            dataType.isStringLong(datasetTransformer, 'hello').should.be.false;
+        });
+        it('should fail to find longitudes (ignore types)', function() {
+            var testTransformer = transformers.getDataSetTransformer({
+                ignoreTypes: [defines.LONG]
+            });
+            dataType.isStringLong(testTransformer, '90.0').should.be.false;
         });
     });
 
     describe('#isStringPrimaryInteger', function() {
         it('should be a primary integer', function() {
-            dataType.isStringPrimaryInteger('1').should.be.true;
-            dataType.isStringPrimaryInteger('2', '1').should.be.true;
-            dataType.isStringPrimaryInteger('500', '100').should.be.true;
-            dataType.isStringPrimaryInteger('-500', '-1000').should.be.true;
+            dataType.isStringPrimaryInteger(datasetTransformer, '1').should.be.true;
+            dataType.isStringPrimaryInteger(datasetTransformer, '2', '1').should.be.true;
+            dataType.isStringPrimaryInteger(datasetTransformer, '500', '100').should.be.true;
+            dataType.isStringPrimaryInteger(datasetTransformer, '-500', '-1000').should.be.true;
         });
         it('should not be a primary integer', function() {
-            dataType.isStringPrimaryInteger('2147483648').should.be.false;
-            dataType.isStringPrimaryInteger('1', '300').should.be.false;
-            dataType.isStringPrimaryInteger('hello', '300').should.be.false;
-            dataType.isStringPrimaryInteger('hello').should.be.false;
+            dataType.isStringPrimaryInteger(datasetTransformer, '2147483648').should.be.false;
+            dataType.isStringPrimaryInteger(datasetTransformer, '1', '300').should.be.false;
+            dataType.isStringPrimaryInteger(datasetTransformer, 'hello', '300').should.be.false;
+            dataType.isStringPrimaryInteger(datasetTransformer, 'hello').should.be.false;
+        });
+        it('should fail to find primary integer (ignore types)', function() {
+            var testTransformer = transformers.getDataSetTransformer({
+                ignoreTypes: [defines.PRIMARY_INTEGER]
+            });
+            dataType.isStringPrimaryInteger(testTransformer, '500').should.be.false;
         });
     });
 
