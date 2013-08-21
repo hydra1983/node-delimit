@@ -1,8 +1,7 @@
-var xls = require('../src/convert/xls/xls');
-var tsv = require('../src/convert/tsv/tsv');
-var csv = require('../src/convert/csv/csv');
-var json = require('../src/convert/json/json');
-var defines = require('../src/defines');
+var xls = require('../src/convert/xls/xls'),
+    tsv = require('../src/convert/tsv/tsv'),
+    csv = require('../src/convert/csv/csv'),
+    json = require('../src/convert/json/json');
 
 var getOptions = function(options) {
     return {
@@ -50,7 +49,7 @@ var getOptions = function(options) {
             }
         })(options.ignoreTypes) || false,
         // Use this file extension instead of the files default
-        forceFileExtension: options.forceFileExtension,
+        forceExtension: options.forceExtension,
 
         // Maintain the original header names? (e.g. don't switch to zip, lat, lng, etc)
         maintainHeaders: options.maintainHeaders,
@@ -68,7 +67,7 @@ var getOptions = function(options) {
 exports.toPgSql = function(file, options, callback) {
     var options = getOptions(options);
     var extension = file.split('.');
-    extension = options.forceFileExtension || extension[extension.length - 1];
+    extension = options.forceExtension || extension[extension.length - 1];
 
     if (extension.match(/\.?xlsx?/)) {
         xls.xlsToPgSql(file, process.stdout, options, function doneCb() {
