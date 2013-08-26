@@ -13,7 +13,10 @@ with open(sys.argv[1], 'rb') as csvfile:
         for row in reader:
             fixedRow = []
             for item in row:
-                fixedRow.append(unicode(item, errors='ignore'))
+            	fixed = item
+            	fixed = fixed.replace('\t', ' ')  # replace tabs with spaces
+            	fixed = unicode(fixed, errors='ignore')
+                fixedRow.append(fixed)
             writer.writerow(fixedRow)
 
 sys.stdout.write(tfile_path)
