@@ -9,7 +9,7 @@ exports.csv2tsv = function(filePath, callback) {
         }
 
         var call = 'python ' + __dirname + '/csv2tsv.py ' + filePath;
-        exec(call, function(error, stdout, etderr) {
+        exec(call, function(error, stdout, stderr) {
             if(error === null) {
                 callback(error, stdout);
             } else {

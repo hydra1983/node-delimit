@@ -17,7 +17,6 @@ with open(sys.argv[1], 'rb') as csvfile:
             	fixed = fixed.replace('\t', ' ')  # replace tabs with spaces
             	fixed = unicode(fixed, errors='ignore')
                 fixedRow.append(fixed)
-                print fixed
             writer.writerow(fixedRow)
 
 sys.stdout.write(tfile_path)
