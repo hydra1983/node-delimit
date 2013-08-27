@@ -44,7 +44,6 @@ exports.jsonToDataSet = function(parsedJson, options)  {
 
 	// data
 	dataset.setData(parsedJson.data);
-	// dataset.setData([[1, 2, 3]]);
 
 	return dataset;
 };

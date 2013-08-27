@@ -263,7 +263,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
     this.getData = function() { return this._data; };
     this.getPrimaryColumn = function() { return this._primaryColumn; };
     this.getIdentifier = function() { return this._identifier; };
-    this.getDataRange = function() {return this._dataRange; };
+    this.getDataRange = function() { return this._dataRange; };
 }
 
 module.exports = DataSet;

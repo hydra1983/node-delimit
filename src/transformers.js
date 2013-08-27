@@ -26,8 +26,8 @@ exports.normalizeString = function(string) {
     string = string.replace(/ /g, "_");
     // Remove unwanted characters
     string = string.replace(/[^A-Za-z0-9_]/g, "");
-    // Remove any double, leading, and trailing underscores
-    string = string.replace(/__+$/g, '').replace(/_*$/g, '').replace(/^_/g, '');
+    // Remove any double and trailing underscores
+    string = string.replace(/__+/g, '_').replace(/_*$/g, '');
     return string;
 };
 
@@ -53,6 +53,9 @@ getDefaultTransformer = function(options) {
     transformer.emptyValues = [
         '',
         'nan',
+        'NaN',
+        'null',
+        'undefined',
         '#REF!:emptyRange' // Google Docs
     ];
 
