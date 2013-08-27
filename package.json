@@ -1,6 +1,6 @@
 {
   "name": "delimit",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Delimit",
   "main": "index.js",
   "directories": {
