@@ -27,13 +27,8 @@ exports.xlsToPgSql = function(filePath, writeStream, options, callback) {
             toProcess.push(singleApply);
         }
 
-        async.series(toProcess, function(error, results) {
-            if(error) {
-                throw error;
-            }
-            if(typeof callback === 'function') {
-                callback();
-            }
+        async.series(toProcess, function(error) {
+            callback(error);
         });
     });
 };

@@ -70,28 +70,28 @@ exports.toPgSql = function(file, options, callback) {
     extension = options.forceExtension || extension[extension.length - 1];
 
     if (extension.match(/\.?xlsx?/)) {
-        xls.xlsToPgSql(file, process.stdout, options, function doneCb() {
-            callback();
+        xls.xlsToPgSql(file, process.stdout, options, function doneCb(error) {
+            callback(error);
         });
     }
     else if (extension.match(/\.?tsv/)) {
-        tsv.tsvToPgSql(file, process.stdout, options, function doneCb() {
-            callback();
+        tsv.tsvToPgSql(file, process.stdout, options, function doneCb(error) {
+            callback(error);
         });
     }
     else if (extension.match(/\.?csv/)) {
-        csv.csvToPgSql(file, process.stdout, options, function doneCb() {
-            callback();
+        csv.csvToPgSql(file, process.stdout, options, function doneCb(error) {
+            callback(error);
         });
     }
     else if (extension.match(/\.?json/)) {
         json.readJson(file, function(jsonObj) {
-            json.jsonToPgSql(jsonObj, process.stdout, options, function doneCb() {
-                callback();
+            json.jsonToPgSql(jsonObj, process.stdout, options, function doneCb(error) {
+                callback(error);
             });
         });
     }
     else {
-        callback("You've provided a file with an invalid extension of '" + extension + "'");
+        callback(new Error("You've provided a file with an invalid extension of '" + extension + "'"));
     }
 };

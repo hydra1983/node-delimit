@@ -133,7 +133,17 @@ exports.getPgSqlTransformer = function(options) {
             case defines.INTEGER: return parseInt(value, 10);
             case defines.BIGINTEGER: return parseInt(value, 10);
             case defines.PRIMARY_INTEGER: return parseInt(value, 10);
-            case defines.BOOLEAN: return parseInt(value, 10);
+            case defines.BOOLEAN:
+                return (function(value) {
+                    len = transformer.booleanValues.isTrue.length;
+                    for (i = 0; i < len; ++i) {
+                        if (transformer.booleanValues.isTrue[i].toUpperCase() ==
+                            value.toUpperCase()) {
+                            return 1;
+                        }
+                    }
+                    return 0;
+                })(value);
             default: return value;
         }
     };

@@ -70,6 +70,7 @@ delimit.convert.toPgSql(argv.file, argv, function(error) {
     if (!error) {
         process.exit(0);
     } else {
+        console.error(error.stack);
         process.exit(1);
     }
 });
