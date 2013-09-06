@@ -24,7 +24,7 @@ exports.getCreateTableSql = function(tablename, headers, dataTypes, transformer)
         columns.push(singleLine);
 
         if(dataTypes[i] == defines.PRIMARY_INTEGER) {
-            primaryHeaders.push(headers[i]);
+            primaryHeaders.push(transformer.header(dataTypes[i], headers[i]));
         }
     }
 
