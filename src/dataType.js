@@ -47,15 +47,17 @@ exports.isStringBoolean = function(transformer, string) {
 exports.isStringBigInteger = function(transformer, string, kickLeadingZeros) {
     if(transformer.ignoreType(defines.BIGINTEGER)) { return false; }
 
-    var isInt = string.match(/^-?\d+(?:\.0+)?$/) ? true : false;
+    try { var parsed = '' + parseFloat(string); } catch (e) { return false; }
+
+    var isInt = parsed.match(/^-?\d+(?:\.0+)?$/) ? true : false;
 
     if(isInt && kickLeadingZeros && string.match(/^0/)) {
         return false;
     }
 
     if(isInt) {
-        var parsed = parseInt(string, 10);
-        if(parsed < -2147483648 || parsed > 2147483647) {
+        var parsedInt = parseInt(parsed, 10);
+        if(parsedInt < -2147483648 || parsedInt > 2147483647) {
             return true;
         }
     }
@@ -67,15 +69,17 @@ exports.isStringBigInteger = function(transformer, string, kickLeadingZeros) {
 exports.isStringInteger = function(transformer, string, kickLeadingZeros) {
     if(transformer.ignoreType(defines.INTEGER)) { return false; }
 
-    var isInt = string.match(/^-?\d+(?:\.0+)?$/) ? true : false;
+    try { var parsed = '' + parseFloat(string); } catch (e) { return false; }
+
+    var isInt = parsed.match(/^-?\d+(?:\.0+)?$/) ? true : false;
 
     if(isInt && kickLeadingZeros && string.match(/^0/)) {
         return false;
     }
 
     if(isInt) {
-        var parsed = parseInt(string, 10);
-        if(parsed >= -2147483648 && parsed <= 2147483647) {
+        var parsedInt = parseInt(parsed, 10);
+        if(parsedInt >= -2147483648 && parsedInt <= 2147483647) {
             return true;
         }
     }
@@ -94,7 +98,10 @@ exports.isStringPrimaryInteger = function(transformer, string, oldString) {
 
     var oldStringIsInt = exports.isStringInteger(transformer, oldString || '');
     if(stringIsInt && oldStringIsInt) {
-        return parseInt(string, 10) > parseInt(oldString, 10);
+        try {
+            var isGreater = parseInt(string, 10) > parseInt(oldString, 10);
+        } catch (e) {}
+        return isGreater || false;
     }
 
     return false;
@@ -103,7 +110,11 @@ exports.isStringPrimaryInteger = function(transformer, string, oldString) {
 exports.isStringNumeric = function(transformer, string) {
     if(transformer.ignoreType(defines.NUMERIC)) { return false; }
 
-    return string.match(/^-?\d*\.\d+$/) ? true : false;
+    try { var parsed = '' + parseFloat(string); } catch (e) { return false; }
+
+    // If the string has a SINGLE decimal place in it && parsed is a numeric
+    return string.split('.').length == 2 &&
+           parsed.match(/^-?\d*\.?\d+$/) ? true : false;
 };
 
 exports.isStringNumber = function(transformer, string) {

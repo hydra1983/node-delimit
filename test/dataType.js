@@ -33,6 +33,9 @@ describe('dataType', function() {
             });
             dataType.isStringInteger(testTransformer, '1').should.be.false;
         });
+        it('should handle e notation', function() {
+            dataType.isStringInteger(datasetTransformer, '1.5e1').should.be.true;
+        });
     });
 
     describe('#isStringBigInteger()', function() {
@@ -50,6 +53,9 @@ describe('dataType', function() {
             });
             dataType.isStringInteger(testTransformer, '1').should.be.true;
             dataType.isStringBigInteger(testTransformer, '2147483648').should.be.false;
+        });
+        it('should handle e notation', function() {
+            dataType.isStringBigInteger(datasetTransformer, '214748364.8e1').should.be.true;
         });
     });
 
@@ -70,6 +76,9 @@ describe('dataType', function() {
             });
             dataType.isStringNumeric(testTransformer, '1.7').should.be.false;
         });
+        it('should handle e notation', function() {
+            dataType.isStringNumeric(datasetTransformer, '1.55555e1').should.be.true;
+        });
     });
 
     describe('#isStringNumber()', function() {
@@ -89,6 +98,9 @@ describe('dataType', function() {
             });
             dataType.isStringNumber(testTransformer, '1.7').should.be.false;
             dataType.isStringNumber(testTransformer, '1').should.be.true;
+        });
+        it('should handle e notation', function() {
+            dataType.isStringNumber(datasetTransformer, '1e1').should.be.true;
         });
     });
 
