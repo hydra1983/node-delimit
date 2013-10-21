@@ -30,9 +30,6 @@ exports.getTsvLoader = function() {
 		// remove any quotes that surround text with newlines
 		rowString = rowString.replace(/"(.*\n(?:\n|.)*)"/, '$1')
 
-		if(rowString.match(/\u2018/))
-			console.log("DEBUG:", rowString.match(/\u2018/));
-
 		// convert fancy quotes into normal ones
 		rowString = rowString.replace(/\u2018/g, "'");
 		rowString = rowString.replace(/\u2019/g, "'");
