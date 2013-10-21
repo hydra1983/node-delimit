@@ -69,6 +69,10 @@ exports.isStringBigInteger = function(transformer, string, kickLeadingZeros) {
 exports.isStringInteger = function(transformer, string, kickLeadingZeros) {
     if(transformer.ignoreType(defines.INTEGER)) { return false; }
 
+    // apparently, 2010-10-10-20-30 is valid when parsing... handle this
+    // edge case. Any string with two "-"'s is invalid
+    if (string.match(/.*-.*-/)) { return false; }
+
     try { var parsed = '' + parseFloat(string); } catch (e) { return false; }
 
     var isInt = parsed.match(/^-?\d+(?:\.0+)?$/) ? true : false;

@@ -23,6 +23,7 @@ describe('dataType', function() {
         });
         it('should fail to find integers', function() {
             dataType.isStringInteger(datasetTransformer, 'hello').should.be.false;
+            dataType.isStringInteger(datasetTransformer, '2010-10-10').should.be.false;
         });
         it('should fail to find integers (leading zero flag)', function() {
             dataType.isStringInteger(datasetTransformer, '01', true).should.be.false;
