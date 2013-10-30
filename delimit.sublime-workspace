@@ -1,0 +1,826 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"dire",
+				"directoryName"
+			],
+			[
+				"dataOnl",
+				"dataOnlyOptions"
+			],
+			[
+				"au",
+				"auto_repo"
+			],
+			[
+				"extr",
+				"extractArchives"
+			],
+			[
+				"importTo",
+				"importToRawDatasets"
+			],
+			[
+				"impoRT",
+				"importedTime"
+			],
+			[
+				"getDb",
+				"getDbProcess"
+			],
+			[
+				"impo",
+				"importedTime_nospace"
+			],
+			[
+				"FILE",
+				"FILE_TYPES"
+			],
+			[
+				"shp2pg",
+				"shp2pgsql"
+			],
+			[
+				"jsonTo",
+				"jsonToDataSet"
+			],
+			[
+				"appends",
+				"appendstring"
+			],
+			[
+				"SCHEMA",
+				"schemaname"
+			],
+			[
+				"create",
+				"createOnly"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/dataType.js",
+			"settings":
+			{
+				"buffer_size": 12687,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/package.json",
+			"settings":
+			{
+				"buffer_size": 231,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "package.json",
+			"settings":
+			{
+				"buffer_size": 463,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/dataType.js",
+			"settings":
+			{
+				"buffer_size": 32506,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/convert/tsv/tsv.js",
+			"settings":
+			{
+				"buffer_size": 8934,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "test/convert/tsv/files/tsvMissingHeaders2.tsv",
+			"settings":
+			{
+				"buffer_size": 172,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 125.0,
+		"selected_items":
+		[
+			[
+				"ww",
+				"Word Wrap: Toggle"
+			],
+			[
+				"ss js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"ss gi",
+				"Set Syntax: Graphviz (DOT)"
+			],
+			[
+				"ss dif",
+				"Set Syntax: Diff"
+			],
+			[
+				"ss html",
+				"Set Syntax: HTML"
+			],
+			[
+				"ss coff",
+				"Set Syntax: CoffeeScript"
+			],
+			[
+				"pack in",
+				"Package Control: Install Package"
+			],
+			[
+				"ss sql",
+				"Set Syntax: SQL"
+			],
+			[
+				"pack re",
+				"Package Control: Remove Package"
+			],
+			[
+				"ss bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"ack re",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"ss",
+				"Set Syntax: SQL"
+			],
+			[
+				"ss bas",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"pack inst",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 453.0
+	},
+	"console":
+	{
+		"height": 392.0,
+		"history":
+		[
+			"import subprocess",
+			"node",
+			"2 + 2",
+			"2 + 2;",
+			"2+@",
+			"clear"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": true,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/urban4m/git/delimit/src/convert.js",
+		"/home/urban4m/git/delimit/src/convert/xls/xls.js",
+		"/home/urban4m/git/delimit/src/convert/tsv/tsv.js",
+		"/home/urban4m/git/delimit/src/convert/json/json.js",
+		"/home/urban4m/git/delimit/src/DataSet.js",
+		"/home/urban4m/git/delimit/src/pgsql.js",
+		"/home/urban4m/git/delimit/src/transformers.js",
+		"/home/urban4m/git/delimit/bin/delimit2pgsql.js",
+		"/tmp/u4import-d-11386-19680-18cqgzf/raw.testingg1_countylevelwithcomponentindex.sql",
+		"/tmp/u4import-d-11386-19680-18cqgzf/raw_datasets.testingg1_countylevelwithcomponentindex.sql",
+		"/tmp/u4import-d-11386-19361-16lnygk/raw.testingg1_countylevelwithcomponentindex.sql",
+		"/home/urban4m/git/delimit/package.json",
+		"/home/urban4m/git/delimit/test/dataType.js",
+		"/home/urban4m/git/delimit/src/dataType.js",
+		"/home/urban4m/git/delimit/src/defines.js",
+		"/home/urban4m/git/delimit/test/transformers.js",
+		"/home/urban4m/git/delimit/src/convert/csv/csv2tsv.py",
+		"/home/urban4m/test/csv/escapeddouble.csv",
+		"/home/urban4m/git/delimit/src/convert/csv/csv2tsv.js",
+		"/home/urban4m/.cache/.fr-4KCLya/e20115fl0038000.txt",
+		"/home/urban4m/.cache/.fr-0meHxw/m20115fl0038000.txt",
+		"/home/urban4m/.cache/.fr-3HNVLw/m20115fl0038000.txt",
+		"/home/urban4m/.cache/.fr-JGljfb/m20115fl0038000.txt",
+		"/home/urban4m/.cache/.fr-LC4SbA/e20115fl0038000.txt",
+		"/home/urban4m/git/db_auto/bin/u4config.json",
+		"/home/urban4m/git/db_auto/bin/README.md",
+		"/home/urban4m/git/db_auto/bin/raw/raw",
+		"/home/urban4m/git/db_auto/bin/out.sql",
+		"/home/urban4m/git/db_auto/bin/out.log",
+		"/home/urban4m/git/db_auto/bin/err.log",
+		"/home/urban4m/.bashrc",
+		"/home/urban4m/git/db_auto/bin/out.diff",
+		"/home/urban4m/test/shape/tl_2010_01013_tabblock10.raw.json",
+		"/home/urban4m/test/shape/tl_2010_01013_tabblock10.raw",
+		"/home/urban4m/git/db_auto/bin/u4setup",
+		"/home/urban4m/git/db_auto/bin/un-archive",
+		"/home/urban4m/backup/auto_backup/bin/un-archive-dir",
+		"/home/urban4m/backup/auto_backup/bin/un-archive",
+		"/home/urban4m/git/db_auto/db_auto.sublime-project",
+		"/home/urban4m/git/db_auto/package.json",
+		"/home/urban4m/git/db_auto/.gitignore",
+		"/home/urban4m/git/db_auto/bin/raw/view",
+		"/home/urban4m/git/db_auto/README.md",
+		"/home/urban4m/git/dm_auto/file2pgsql",
+		"/home/urban4m/git/dm_auto/fixedToTsv.js",
+		"/home/urban4m/git/db_copy_mine/db_auto/bin/raw/raw",
+		"/home/urban4m/git/auto_backup/bin/un-archive-dir",
+		"/home/urban4m/git/db_copy_mine/db_auto/bin/raw/download.raw.6978.22531.20130808t110447.log",
+		"/home/urban4m/git/db_copy_mine/db_auto/bin/raw/download.raw.6958.32194.20130808t110445.log",
+		"/home/urban4m/blah.js",
+		"/home/urban4m/git/db_auto/bin/u4import",
+		"/run/user/urban4m/gvfs/sftp:host=10.1.10.181/home/urban4m/.bashrc",
+		"/home/urban4m/git/dm_auto/eventXML2pgsql",
+		"/home/urban4m/git/auto/eventful2json.js",
+		"/home/urban4m/git/db_auto/bin/real.sql",
+		"/run/user/urban4m/gvfs/sftp:host=10.1.10.181/home/urban4m/tmp.txt",
+		"/home/urban4m/git/db_auto/bin/raw/templates/rawDataset.sql.mustache",
+		"/home/urban4m/git/db_auto/bin/package.json",
+		"/home/urban4m/git/db_copy_mine/db_auto/bin/raw/list-archives.raw.29325.15685.20130808t110436.log",
+		"/home/urban4m/z.js",
+		"/home/urban4m/test/transit/massachusetts-archiver_20130702_0139/routes.csv",
+		"/run/user/urban4m/gvfs/sftp:host=10.1.10.141,user=files/home/urban4m/data/users/files/public/Trevor/Hongs Folder :)/geo_staddr.txt",
+		"/home/urban4m/git/db_auto/bin/u4import.js",
+		"/home/urban4m/git/auto/file2pgsql.js",
+		"/home/urban4m/test/geo/geo_staddr.tsv",
+		"/home/urban4m/git/db_auto/bin/raw/raw.js",
+		"/home/urban4m/test/criminal/ICPSR_27681/DS0001/27681-0001-Data.tsv",
+		"/home/urban4m/test.js",
+		"/home/urban4m/git/auto/dir2pgsql",
+		"/run/user/urban4m/gvfs/sftp:host=10.1.10.141,user=files/home/urban4m/data/users/files/public/Trevor/Hongs Folder :)/geo_addrpnt.txt",
+		"/home/urban4m/git/delimit/test/pgsql.js",
+		"/home/urban4m/git/delimit/test/file.js",
+		"/home/urban4m/workspace/casplug/dance.js",
+		"/home/urban4m/workspace/casplug/bot/auth_cookies/bot_0.json",
+		"/home/urban4m/workspace/casplug/auth.js",
+		"/home/urban4m/workspace/casplug/singleBot.js",
+		"/home/urban4m/workspace/casplug/node_modules/spooky/examples/hello.js",
+		"/home/urban4m/workspace/casplug/node_modules/spooky/examples/cucumber/steps/navigation.js",
+		"/home/urban4m/workspace/casplug/node_modules/spooky/examples/cucumber/features/navigation.feature",
+		"/home/urban4m/workspace/casplug/src",
+		"/home/urban4m/git/plugapi/src/client.js",
+		"/home/urban4m/git/plugapi/src/index.js",
+		"/home/urban4m/git/plugapi/src/sockjs-client.js",
+		"/home/urban4m/git/db_auto/bin/out.",
+		"/home/urban4m/git/auto/test.py",
+		"/home/urban4m/git/auto/out.sql",
+		"/home/urban4m/git/auto/out.tsv",
+		"/home/urban4m/git/delimit/src/package.json",
+		"/home/urban4m/git/auto/package.json",
+		"/home/urban4m/git/delimit/src/file.js",
+		"/home/urban4m/git/auto/old.file2pgsql",
+		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.py",
+		"/home/urban4m/git/auto/fixedToTsv.js",
+		"/home/urban4m/git/db_auto/bin/out.tsv",
+		"/home/urban4m/test/ed/URBAN_4_M_AVM.TXT",
+		"/run/user/urban4m/gvfs/sftp:host=db.urban4m.com,user=trevor/backup/db/sql/load/schema/raw_datasets/avm/URBAN_4_M_AVM.TXT",
+		"/run/user/urban4m/gvfs/sftp:host=10.1.10.141,user=files/home/urban4m/data/users/files/public/Trevor/Hongs Folder :)/URBAN_4_M_AVM.TXT",
+		"/home/urban4m/.config/awesome/rc.lua",
+		"/home/urban4m/git/db_auto/bin/raw/raw.py",
+		"/home/urban4m/test/ed/RANKINGS/4M.txt",
+		"/tmp/tmpUl4BrM/tmprkZi8B.Sheet1",
+		"/tmp/tmpSYx35d/tmpDH6xeY.234234",
+		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.js",
+		"/home/urban4m/git/auto/eventXML2pgsql",
+		"/home/urban4m/git/db_auto/bin/u4rawImport",
+		"/home/urban4m/test/parks/parks_austin.csv",
+		"/home/urban4m/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/urban4m/.config/sublime-text-3/Packages/User/SublimeLinter.sublime-settings",
+		"/home/urban4m/.config/sublime-text-3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/home/urban4m/deleteme.js",
+		"/home/urban4m/git/delimit/index.js",
+		"/home/urban4m/git/delimit/bin/out.sql",
+		"/home/urban4m/test/parks/parks_austin_(20130722).raw",
+		"/home/urban4m/git/db_auto/bin/test.js",
+		"/home/urban4m/git/auto/u4config.json",
+		"/home/urban4m/git/auto/u4setup.json",
+		"/etc/bash_completion",
+		"/usr/share/bash-completion/bash_completion",
+		"/home/urban4m/git/auto/test.js",
+		"/home/urban4m/git/auto/err_20130730.log",
+		"/home/urban4m/.config/sublime-text-3/Packages/User/Default (Linux).sublime-mousemap",
+		"/home/urban4m/test/shape/tl_2010_01011_areawater/tl_2010_01011_areawater.srid",
+		"/home/urban4m/git/db_auto/bin/raw/templates/deleteSrid.sql.mustache",
+		"/home/urban4m/git/db_auto/bin/raw/srs_wkt2proj4.py",
+		"/home/urban4m/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/urban4m/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/urban4m/git/db_auto/bin/raw/templates/copySrid.sql.mustache",
+		"/home/urban4m/git/db_auto/auto_data/avm.sql"
+	],
+	"find":
+	{
+		"height": 37.0
+	},
+	"find_in_files":
+	{
+		"height": 94.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"only",
+			"transformer.header",
+			"normalizeHeader",
+			"transformer\\.output",
+			"transformer.output",
+			"isStringEmpty",
+			"mer.output",
+			"output",
+			"normalizeHeader",
+			"_headers",
+			"getHeaders",
+			"getCreateTableSql",
+			"forceExtension",
+			"forceFileExtension",
+			"forceFileEx",
+			"isStringLong",
+			"isStringLat",
+			"isStringZip",
+			"isStringNumber",
+			"isStringPrimaryInteger",
+			"isStringLat",
+			"isStringInteger",
+			"isStringBigInteger",
+			"isStringBoolean",
+			"getNewDataTypes",
+			"getDataSetTransformer",
+			"getPgSqlTransformer",
+			"getDataSetTransformer",
+			"getFile2Pgsql",
+			"getFile",
+			"warn",
+			"getFile2Pgsql",
+			"getFile2PgSql",
+			"file2pgsq",
+			"walk",
+			"file2pg",
+			"walk",
+			"debug",
+			"'2'",
+			"fs\\.",
+			"unlink",
+			"un",
+			"VALID_FILE_TYPES",
+			"auto_repo",
+			"db.urban",
+			"debug\\(",
+			"getFile2Pgsql",
+			"parallel",
+			"importToDb",
+			"getFile2Pgsql",
+			"branchManager",
+			"getLocalFile",
+			"runOn",
+			"srid",
+			"options._fileName =",
+			"getFile2Pgsql",
+			"raw",
+			"listFiles",
+			"auto_repo",
+			"listFiles",
+			"list",
+			"debug\\(",
+			"debug",
+			"error",
+			"extractArchives",
+			"debug",
+			"warn",
+			"exit",
+			"walk\\(dir",
+			"isDirectory",
+			"_file",
+			"branchMa",
+			"\\.raw",
+			"debug\\(",
+			"debug",
+			"stats",
+			"bold",
+			"exec",
+			"&>/",
+			"downloadDir",
+			"https",
+			"exit",
+			"process.exit\\(1",
+			"console.error",
+			"stderr\\.on",
+			"stderr",
+			"spawn",
+			"process.stderr.write",
+			"raw\\.",
+			"USERSCRIPTS",
+			"./raw/raw",
+			"spawn",
+			"exec",
+			"require",
+			"raw",
+			"\\.js",
+			"getFile2Pgsql",
+			"raw_data",
+			"createRawTable",
+			"createRawDataset",
+			"dbname",
+			"async\\.",
+			"async",
+			"varchar(2)",
+			"PATH",
+			"list-archive",
+			"getFile2Pgsql",
+			"createRawTable",
+			"delete from",
+			"create table if not exists",
+			"create table if not exists\n	raw_datasets.tiger_area_landmark_20100101000000_20130808133957",
+			"create table if not exists\n	raw_datasets.tiger_area_landmark_20100101000000_20130808133957 ",
+			"\"raw_datasets\".\"tiger_area_landmark_20100101000000_20130808133957\" (\"statefp\",\"countyfp\",\"ansicode\",\"areaid\",\"fullname\",\"mtfcc\",\"aland\",\"awater\",\"intptlat\",\"intptlon\",shape)",
+			"importedTime",
+			"getFile2Pgsql",
+			"ext",
+			"spawn",
+			"raw",
+			"getFile2Pgsql",
+			"importedTime",
+			"fileName",
+			"download",
+			"list",
+			"\"",
+			"getRawDatasetSql",
+			"console.log",
+			"getFile2Pgsql",
+			"ext"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"",
+			"===",
+			"+++",
+			"sss",
+			"ggg",
+			"chd_restaurant_miami_20130101000000_20130712162007"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/dataType.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12687,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1735,
+								1735
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 585.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "test/package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 231,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 463,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								279,
+								279
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "test/dataType.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 32506,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8146,
+								8146
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1979.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "test/convert/tsv/tsv.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8934,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3839,
+								3839
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "test/convert/tsv/files/tsvMissingHeaders2.tsv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 172,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "delimit.sublime-project",
+	"replace":
+	{
+		"height": 66.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"raw.js",
+				"db_auto/bin/raw/raw.js"
+			],
+			[
+				"u4im",
+				"db_auto/bin/u4import.js"
+			],
+			[
+				"file",
+				"auto/file2pgsql.js"
+			],
+			[
+				"raw",
+				"db_auto/bin/raw/raw"
+			],
+			[
+				"trans",
+				"delimit/src/transformers.js"
+			],
+			[
+				"pgsql",
+				"delimit/src/pgsql.js"
+			],
+			[
+				"defines",
+				"delimit/src/defines.js"
+			],
+			[
+				"dir",
+				"auto/dir2pgsql"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"sa",
+				"~/git/sansasphere/sansasphere.sublime-project"
+			],
+			[
+				"dm",
+				"~/git/dm_auto/dm_auto.sublime-project"
+			],
+			[
+				"db",
+				"~/git/db_auto/db_auto.sublime-project"
+			],
+			[
+				"del",
+				"~/git/delimit/delimit.sublime-project"
+			],
+			[
+				"",
+				"~/git/sansasphere/sansasphere.sublime-project"
+			],
+			[
+				"v",
+				"~/git/voiceparse/voiceparse.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 375.0,
+		"selected_items":
+		[
+			[
+				"getTime",
+				"getTimeString"
+			]
+		],
+		"width": 426.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 208.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
