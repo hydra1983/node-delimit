@@ -55,6 +55,9 @@ describe('dataType', function() {
             dataType.isStringInteger(testTransformer, '1').should.be.true;
             dataType.isStringBigInteger(testTransformer, '2147483648').should.be.false;
         });
+        it('should fail to find big integers', function() {
+            dataType.isStringBigInteger(datasetTransformer, '2010-10-10').should.be.false;
+        });
         it('should handle e notation', function() {
             dataType.isStringBigInteger(datasetTransformer, '214748364.8e1').should.be.true;
         });
@@ -70,6 +73,7 @@ describe('dataType', function() {
         it('should fail to find numerics', function() {
             dataType.isStringNumeric(datasetTransformer, 'hello').should.be.false;
             dataType.isStringNumeric(datasetTransformer, '1').should.be.false;
+            dataType.isStringNumeric(datasetTransformer, '2010-10-10').should.be.false;
         });
         it('should fail to find numeric (ignore types)', function() {
             var testTransformer = transformers.getDataSetTransformer({
@@ -92,6 +96,7 @@ describe('dataType', function() {
         it('should fail to find numbers', function() {
             dataType.isStringNumber(datasetTransformer, 'hello').should.be.false;
             dataType.isStringNumber(datasetTransformer, 'true').should.be.false;
+            dataType.isStringNumber(datasetTransformer, '2010-10-10').should.be.false;
         });
         it('should fail to find numbers (ignore types)', function() {
             var testTransformer = transformers.getDataSetTransformer({
