@@ -133,24 +133,34 @@ exports.isStringZip = function(transformer, string) {
     return string.match(/^\d{5}-?(\d{4})?$/) ? true : false;
 };
 
-exports.isStringLat = function(transformer, string) {
-    if(transformer.ignoreType(defines.LAT)) { return false; }
+function inLatRange(number) {
+    if (typeof number === 'string') { number = parseFloat(number); }
+    return number >= -90 && number <= 90;
+}
 
-    if(exports.isStringNumeric(transformer, string)) {
+exports.isStringLat = function(transformer, string) {
+    if (transformer.ignoreType(defines.LAT)) { return false; }
+
+    if (exports.isStringNumeric(transformer, string)) {
         var parsed = parseFloat(string);
-        if(parsed >= -90 && parsed <= 90) {
+        if (inLatRange(parsed)) {
             return true;
         }
     }
     return false;
 };
 
+function inLongRange(number) {
+    if (typeof number === 'string') { number = parseFloat(number); }
+    return number >= -180 && number <= 180
+}
+
 exports.isStringLong = function(transformer, string) {
     if(transformer.ignoreType(defines.LONG)) { return false; }
 
     if (exports.isStringNumeric(transformer, string)) {
         var parsed = parseFloat(string);
-        if (parsed >= -180 && parsed <= 180) {
+        if (inLongRange(parsed)) {
             return true;
         }
     }
@@ -203,7 +213,9 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Can convert to Long, Numeric or Text if not a latitude coordinate
     if (oldDataType == defines.LAT) {
         if (!isEmpty && !exports.isStringLat(transformer, newString)) {
-            if (exports.isStringLong(transformer, newString)) {
+            if (inLatRange(newString)) {
+                return oldDataType;
+            } else if (exports.isStringLong(transformer, newString)) {
                 return defines.LONG;
             } else if (exports.isStringNumeric(transformer, newString)) {
                 return defines.NUMERIC;
@@ -219,7 +231,9 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
     // Can convert to Numeric or Text if not a longitude coordinate
     if (oldDataType == defines.LONG) {
         if (!isEmpty && !exports.isStringLong(transformer, newString)) {
-            if (exports.isStringNumeric(transformer, newString)) {
+            if (inLongRange(newString)) {
+                return oldDataType;
+            } else if (exports.isStringNumeric(transformer, newString)) {
                 return defines.NUMERIC;
             } else {
                 return defines.TEXT;

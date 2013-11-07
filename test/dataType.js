@@ -476,6 +476,12 @@ describe('dataType', function() {
             dataType.getNewDataType(datasetTransformer, defines.LAT, '\n')
                 .should.eql(defines.LAT);
         });
+        it('should keep LAT type (numeric -> integer within lat range)', function() {
+            dataType.getNewDataType(datasetTransformer, defines.LAT, '75')
+                .should.eql(defines.LAT);
+            dataType.getNewDataType(datasetTransformer, defines.LAT, '-75')
+                .should.eql(defines.LAT);
+        });
         it('should convert LAT to LONG', function() {
             dataType.getNewDataType(datasetTransformer, defines.LAT, '150.00')
                 .should.eql(defines.LONG);
@@ -493,6 +499,12 @@ describe('dataType', function() {
             dataType.getNewDataType(datasetTransformer, defines.LONG, '')
                 .should.eql(defines.LONG);
             dataType.getNewDataType(datasetTransformer, defines.LONG, '\n')
+                .should.eql(defines.LONG);
+        });
+        it('should keep LONG type (numeric -> integer within lat range)', function() {
+            dataType.getNewDataType(datasetTransformer, defines.LONG, '150')
+                .should.eql(defines.LONG);
+            dataType.getNewDataType(datasetTransformer, defines.LONG, '-150')
                 .should.eql(defines.LONG);
         });
         it('should convert LONG to TEXT', function() {
