@@ -10,10 +10,24 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "delimit2pgsql" : "./bin/delimit2pgsql.js"
+    "delimit2pgsql": "./bin/delimit2pgsql.js"
   },
   "author": "Trevor Senior <trevor@tsenior.com> (http://tsenior.com/)",
   "license": "BSD",
   "readmeFilename": "README.md",
-  "gitHead": "eca8b96bf19c5ce2dc35d4312bac2042c6d9674d"
+  "gitHead": "eca8b96bf19c5ce2dc35d4312bac2042c6d9674d",
+  "dependencies": {
+    "when": "~2.7.0",
+    "lodash": "~2.4.1",
+    "should": "~2.1.1",
+    "mocha": "~1.15.1",
+    "line-reader": "~0.2.3",
+    "underscore": "~1.5.2",
+    "async": "~0.2.9",
+    "chai": "~1.8.1",
+    "chai-as-promised": "~4.1.0",
+    "mocha-as-promised": "~1.4.1",
+    "expect": "0.0.2",
+    "expect.js": "~0.2.0"
+  }
 }

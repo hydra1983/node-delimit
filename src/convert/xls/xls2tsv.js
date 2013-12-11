@@ -1,82 +1,67 @@
-var fs = require('fs');
-var exec = require('child_process').exec;
+"use strict";
 
-exports.xls2tsv = function(filePath, callback) {
-    fs.exists(filePath, function(exists) {
-        if(!exists) {
-            callback(new Error('File ' + filePath + ' does not exist'));
-            return;
-        }
+var fs = require('fs')
+, path = require('path')
+, exec = require('child_process').exec
+, when = require('when')
+, nodefn = require('when/node/function');
 
-        var call = 'python ' + __dirname + '/xls2tsv.py ' + filePath;
-        exec(call, function(error, stdout, stderr) {
-            if(error === null) {
-                callback(error, stdout);
-            } else {
-                callback(
-                    new Error('There was a problem parsing the file ' + filePath),
-                    stderr);
-            }
-        });
-    });
+function xls2tsv(filePath, sheetNumbersToGrab) {
+	sheetNumbersToGrab = sheetNumbersToGrab || [];
+
+	var defer = when.defer();
+	fs.exists(filePath, function(exists) {
+		if (!exists) {
+			return defer.reject(new Error(
+				'File ' + filePath + ' does not exist'));
+		}
+
+		var call = 'python ' + __dirname + '/xls2tsv.py ' + filePath + ' ' +
+			sheetNumbersToGrab.join(' ');
+
+		exec(call, function(error, stdout, stderr) {
+			return (error === null)
+				? defer.resolve(stdout)
+				: defer.reject(new Error(
+					'There was a problem parsing the file ' + filePath +
+					'\nstderr\n:' + stderr));
+		});
+	});
+	return defer.promise;
+}
+
+function getTsvFilePaths(tempDir) {
+	var fsExistsDefer = when.defer();
+	fs.exists(tempDir, fsExistsDefer.resolve);
+	return fsExistsDefer.promise.then(function(exists) {
+		if(!exists) {
+			return when.reject(new Error(
+				'Directory ' + tempDir + ' does not exist'));
+		}
+		return nodefn.call(fs.readdir, tempDir).then(function(files) {
+			return files.map(function(file) {
+				return path.join(tempDir, file);
+			});
+		});
+	});
 };
 
-exports.getTsvFilePaths = function(tempDir, callback) {
+module.exports = function(filePath, sheetNumbersToGrab) {
+	var info = {};
+	return xls2tsv(filePath, sheetNumbersToGrab).then(function(tempDir) {
+		info.tempDir = tempDir;
+		info.files = [];
+		return getTsvFilePaths(tempDir).then(function(filePaths) {
+			info.files = filePaths.map(function(filePath) {
+				return { path: filePath, sheetName: filePath.split('.')[1] };
+			});
+			return info;
+		});
+	});
+}
 
-    if(typeof tempDir !== 'string') {
-        throw new Error('You must provide a valid directory path to getTsvFilePaths');
-    }
-
-    if(typeof callback !== 'function') {
-        throw new Error('You must provide a callback to getTsvFilePaths');
-    }
-
-    fs.exists(tempDir, function(exists) {
-        if(!exists) {
-            callback(new Error('Directory ' + tempDir + ' does not exist'));
-            return;
-        }
-        fs.readdir(tempDir, function readDirCbk(error, files) {
-            if(error !== null) {
-                callback(error);
-                return;
-            }
-
-            var path, filePaths = [];
-
-            for(var i = 0, len = files.length; i < len; ++i) {
-                path = tempDir + "/" + files[i];
-                filePaths.push(path);
-            }
-
-            callback(error, filePaths);
-        });
-    });
-};
-
-exports.process = function(filePath, callback) {
-    var info = {};
-    exports.xls2tsv(filePath, function(error, tempDir) {
-
-        if(error) {
-            throw error;
-        }
-        info.tempDir = tempDir;
-        info.files = [];
-        exports.getTsvFilePaths(tempDir, function(error, filePaths) {
-
-            if(error) {
-                throw error;
-            }
-            var sheetName;
-            for(var i = 0, len = filePaths.length; i < len; ++i) {
-                sheetName = filePaths[i].split('.')[1];
-                info.files.push({
-                    sheetName: sheetName,
-                    path: filePaths[i]
-                });
-            }
-            callback(error, info);
-        });
-    });
+// expose private functions for tests
+module.exports.test = {
+	xls2tsv: xls2tsv,
+	getTsvFilePaths: getTsvFilePaths
 };

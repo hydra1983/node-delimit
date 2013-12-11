@@ -1,34 +1,28 @@
-var transformers = require('../../transformers.js'),
-    tsv = require('../tsv/tsv.js'),
-    xls2tsv = require('./xls2tsv.js'),
-    async = require('async'),
-    _ = require('underscore');
+"use strict";
+
+var when = require('when')
+, transformers = require('../../transformers.js')
+, tsv = require('../tsv/tsv.js')
+, xls2tsv = require('./xls2tsv.js')
+, _ = require('lodash');
 
 exports.xlsToPgSql = function(filePath, writeStream, options, callback) {
-    xls2tsv.process(filePath, function(error, info) {
-        if(error) {
-            throw error;
-        }
+	return xls2tsv(filePath).then(function(info) {
+		return when.map(info.files, function(file) {
+			var modifiedOptions = _.clone(options);
 
-        var toProcess = [], singleApply, modifiedOptions;
+			// append sheet name if there is more than one file
+			if(info.files.length > 1) {
+				modifiedOptions.name = options.name + "_" +
+					transformers.normalizeString(file.sheetName);
+			}
 
-        for(var i = 0, len = info.files.length; i < len; ++i) {
-            modifiedOptions = _.clone(options);
-
-            // only append sheet name if there is more than one file to deal with
-            if(info.files.length > 1) {
-                modifiedOptions.name = options.name + "_" +
-                    transformers.normalizeString(info.files[i].sheetName);
-            }
-
-            singleApply = async.apply(tsv.tsvToPgSql, info.files[i].path,
-                writeStream, modifiedOptions);
-
-            toProcess.push(singleApply);
-        }
-
-        async.series(toProcess, function(error) {
-            callback(error);
-        });
-    });
+			var defer = when.defer();
+			tsv.tsvToPgSql(file.path, writeStream, modifiedOptions
+			, function(error, res) {
+				return error ? defer.reject(error) : defer.resolve(res);
+			});
+			return defer.promise;
+		});
+	});
 };
