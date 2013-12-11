@@ -67,7 +67,7 @@
 			"file": "src/dataType.js",
 			"settings":
 			{
-				"buffer_size": 12687,
+				"buffer_size": 13126,
 				"line_ending": "Unix"
 			}
 		},
@@ -91,7 +91,7 @@
 			"file": "test/dataType.js",
 			"settings":
 			{
-				"buffer_size": 32506,
+				"buffer_size": 33179,
 				"line_ending": "Unix"
 			}
 		},
@@ -115,9 +115,13 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 125.0,
+		"height": 375.0,
 		"selected_items":
 		[
+			[
+				"me",
+				"View: Toggle Menu"
+			],
 			[
 				"ww",
 				"Word Wrap: Toggle"
@@ -511,15 +515,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12687,
+						"buffer_size": 13126,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1735,
-								1735
+								0,
+								0
 							]
 						],
 						"settings":
@@ -601,15 +605,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 32506,
+						"buffer_size": 33179,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8146,
-								8146
+								339,
+								339
 							]
 						],
 						"settings":
@@ -619,7 +623,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1979.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -716,7 +720,7 @@
 			1.0
 		]
 	},
-	"menu_visible": true,
+	"menu_visible": false,
 	"output.find_results":
 	{
 		"height": 0.0
@@ -773,16 +777,16 @@
 		"selected_items":
 		[
 			[
+				"db",
+				"~/git/db_auto/db_auto.sublime-project"
+			],
+			[
 				"sa",
 				"~/git/sansasphere/sansasphere.sublime-project"
 			],
 			[
 				"dm",
 				"~/git/dm_auto/dm_auto.sublime-project"
-			],
-			[
-				"db",
-				"~/git/db_auto/db_auto.sublime-project"
 			],
 			[
 				"del",
