@@ -1,6 +1,6 @@
 Open Source Initiative OSI - The MIT License
 
-http://www.opensource.org/licenses/mit-license.php
+http://opensource.org/licenses/mit-license
 
 Copyright (c) 2013 Trevor Senior
 

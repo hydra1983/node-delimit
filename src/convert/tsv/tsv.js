@@ -25,7 +25,6 @@ exports.tsvToDataSet = function(filePath, options) {
 			filePath, tsvLoader, datasetTransformer, options,
 			fileAttributes.ignoreColumns,
 			function dataRowHook(dataRow) {
-				console.error(dataRow); void('debug');
 				dataset.addDataRow(dataType.getAdjustedDataRow(
 					datasetTransformer, fileAttributes.dataTypes, dataRow));
 			}
