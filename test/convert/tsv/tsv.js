@@ -142,7 +142,7 @@ describe('tsv', function() {
 
 	});
 
-	describe.only('#tsvToPgSql()', function() {
+	describe('#tsvToPgSql()', function() {
 
 		beforeEach(function() {
 			options = {
