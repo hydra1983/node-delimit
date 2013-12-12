@@ -1,50 +1,35 @@
-var DataSet = require('../../DataSet.js'),
-	defines = require('../../defines.js'),
-	pgsql = require('../../pgsql.js'),
-	transformers = require('../../transformers.js'),
-	fs = require('fs'),
-	async = require('async'),
-	dataType = require('../../dataType.js');
+"use strict";
+
+var fs = require('fs')
+, when = require('when')
+, nodefn = require('when/node/function')
+, sequence = require('when/sequence')
+, DataSet = require('../../DataSet.js')
+, defines = require('../../defines.js')
+, pgsql = require('../../pgsql.js')
+, transformers = require('../../transformers.js')
+, async = require('async')
+, dataType = require('../../dataType.js');
 
 var util = require('util');
 
 exports.readJson = function(jsonFile, callback) {
-	fs.readFile(jsonFile, { encoding: 'utf8' }, function(err, jsonString) {
-		if(err) { throw err; }
-
-		var parsedJson;
-
-		try {
-			parsedJson = JSON.parse(jsonString);
-		} catch(e) {
-			throw e;
-		}
-		callback(parsedJson);
+	return nodefn.call(fs.readFile, jsonFile, { encoding: 'utf8' })
+	.then(function(jsonString) {
+		try { var parsedJson = JSON.parse(jsonString); }
+		catch(error) { return when.reject(error); }
+		return parsedJson;
 	});
 }
 
 exports.jsonToDataSet = function(parsedJson, options)  {
-
-	var i, j, len, jlen;
-
 	var dataset = new DataSet();
-
-	// name
 	dataset.setName(parsedJson.name);
-
-	// headers
 	dataset.setHeaders(parsedJson.headers);
-
-	// data types
-	var newDataTypes = [];
-	for(i = 0, len = parsedJson.dataTypes.length; i < len; ++i) {
-		newDataTypes.push(defines.getDefine(parsedJson.dataTypes[i]));
-	}
-	dataset.setDataTypes(newDataTypes);
-
-	// data
+	dataset.setDataTypes(parsedJson.dataTypes.map(function(dataType) {
+		return defines.getDefine(dataType);
+	}));
 	dataset.setData(parsedJson.data);
-
 	return dataset;
 };
 
@@ -59,15 +44,15 @@ exports.jsonToDataSets = function(parsedJson, options) {
 };
 
 // processes a single dataset and writes pgsql to the given stream
-exports.processSingleDataset = function(dataset, transformer, writeStream, options, callback) {
+exports.processSingleDataset = function(dataset, transformer, writeStream, options) {
 
-	var name = options.prependString + dataset.getName() + options.appendString;
-	var headers = dataset.getHeaders();
-	var dataTypes = dataset.getDataTypes();
-	var data = dataset.getData();
+	var headers = dataset.getHeaders()
+	, dataTypes = dataset.getDataTypes()
+	, data = dataset.getData()
+	, name = options.prependString + dataset.getName() + options.appendString
+	, self = this;
 
-	var processHeader = function(callback) {
-
+	var processHeader = function() {
 		var header = pgsql.getHeaderSql(name);
 
 		if(!options.dataOnly) {
@@ -77,16 +62,14 @@ exports.processSingleDataset = function(dataset, transformer, writeStream, optio
 			header += pgsql.getCopyHeaderSql(name, headers, dataTypes, transformer);
 		}
 
-		writeStream.write(header, function() {
-			callback();
-		});
+		var defer = when.defer();
+		writeStream.write(header, defer.resolve);
+		return defer;
 	};
 
-	// Fuck it. This isn't going to be async due to the stack getting too large
-	// on large datasets. @TODO figure out a workaround
-	var processData = function(callback) {
-
+	var processData = function() {
 		var out = '', adjustedDataRow;
+
 		for(var i = 0, len = data.length; i < len; ++i) {
 			adjustedDataRow = dataType.getAdjustedDataRow(
 				transformer, dataTypes, data[i]);
@@ -99,12 +82,12 @@ exports.processSingleDataset = function(dataset, transformer, writeStream, optio
 			}
 		}
 
-		writeStream.write(out, function() {
-			callback();
-		});
+		var defer = when.defer();
+		writeStream.write(out, defer.resolve);
+		return defer;
 	};
 
-	var processFooter = function(callback) {
+	var processFooter = function() {
 		var footer = '';
 
 		if(!options.createOnly && !options.insertStatements) {
@@ -113,21 +96,15 @@ exports.processSingleDataset = function(dataset, transformer, writeStream, optio
 
 		footer += pgsql.getFooterSql(name);
 
-		writeStream.write(footer, function() {
-			callback();
-		});
+		var defer = when.defer();
+		writeStream.write(footer, defer.resolve);
+		return defer;
 	};
 
-	processHeader(function() {
-		processData(function() {
-			processFooter(function() {
-				callback();
-			});
-		});
-	});
+	return sequence([processHeader, processData, processFooter]);
 };
 
-exports.jsonToPgSql = function(parsedJson, writeStream, options, callback) {
+exports.jsonToPgSql = function(parsedJson, writeStream, options) {
 	var datasets = [];
 
 	if(typeof parsedJson === 'object' && parsedJson instanceof Array) {
@@ -135,27 +112,18 @@ exports.jsonToPgSql = function(parsedJson, writeStream, options, callback) {
 	} else if (typeof parsedJson === 'object') {
 		datasets.push(exports.jsonToDataSet(parsedJson, options));
 	} else {
-		throw new Error('The dataset provided is not a valid object');
+		return when.reject(new Error(
+			'The dataset provided is not a valid object'));
 	}
 
-	var i, len, toProcess = [],
-	    pgSqlTransformer = transformers.getPgSqlTransformer({
-	        nullValue: (options.insertStatements ? 'NULL' : false)
-	    });
-
-	for(i = 0, len = datasets.length; i < len; ++i) {
-		singleApply = async.apply(
-			exports.processSingleDataset,
-			datasets[i], pgSqlTransformer, writeStream, options);
-		toProcess.push(singleApply);
-	}
-
-	async.series(toProcess, function(error, results) {
-	    if(error) {
-	        throw error;
-	    }
-	    if(typeof callback === 'function') {
-	        callback();
-	    }
+	var pgSqlTransformer = transformers.getPgSqlTransformer({
+		nullValue: (options.insertStatements ? 'NULL' : false)
 	});
+
+	return sequence(datasets.map(function(dataset) {
+		return function() {
+			return exports.processSingleDataset(
+				dataset, pgSqlTransformer, writeStream, options);
+		};
+	}));
 };
