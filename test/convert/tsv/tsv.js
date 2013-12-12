@@ -1,9 +1,17 @@
 "use strict";
 
-var should = require('should')
+var fs = require('fs')
+, when = require('when')
+, nodefn = require('when/node/function')
 , tsv = require('../../../src/convert/tsv/tsv.js')
 , defines = require('../../../src/defines.js')
-, fs = require('fs');
+, chai = require('chai')
+, chaiAsPromised = require('chai-as-promised');
+
+chai.Should();
+chai.use(chaiAsPromised);
+require("mocha-as-promised")();
+
 
 describe('tsv', function() {
 	var options
@@ -22,25 +30,22 @@ describe('tsv', function() {
 			};
 		});
 
-		it('should convert a TSV file into a DataSet (simple)', function(done) {
+		it('should convert a TSV file into a DataSet (simples)', function() {
+
 			return tsv.tsvToDataSet(tsvSimple, options)
 			.then(function(dataset) {
-				should.exist(dataset);
-				should.exist(dataset.getHeaders());
 				dataset.getHeaders().should.eql([
 				   'Simple_Text', 'Simple_Int', 'Simple_Numeric',
 				   'Simple_Boolean', 'Simple_LAT', 'Simple_Lng',
 				   'Simple_Primary', 'Simple_Zip'
 				]);
 
-				should.exist(dataset.getDataTypes());
 				dataset.getDataTypes().should.eql([
 				   defines.TEXT, defines.INTEGER, defines.NUMERIC,
 				   defines.BOOLEAN, defines.LAT, defines.LONG,
 				   defines.PRIMARY_INTEGER, defines.ZIP
 				]);
 
-				should.exist(dataset.getData());
 				dataset.getData().should.eql([
 					['Hello', 5, 1.1, true, 89.9, 23.56, 1, '12345'],
 					['World', 4, 2.2, false, 55.5, 45.5, 2, '00000'],
@@ -50,10 +55,9 @@ describe('tsv', function() {
 			});
 		});
 
-		it('should convert a TSV file into a DataSet (simple1100Lines)', function(done) {
+		it('should convert a TSV file into a DataSet (simple1100Lines)', function() {
 			return tsv.tsvToDataSet(tsvSimple1100, options)
 			.then(function(dataset) {
-				should.exist(dataset);
 				dataset.getHeaders().should.eql([
 				   'Simple_Text', 'Simple_Int',
 				   'Simple_Numeric', 'Simple_Boolean'
@@ -62,14 +66,14 @@ describe('tsv', function() {
 				   defines.TEXT, defines.INTEGER,
 				   defines.NUMERIC, defines.BOOLEAN
 				]);
-				dataset.getData().length.should.eql(1099);
+				dataset.getData().length.should.equal(1099);
 			});
 		});
-		it('should convert a TSV file into a DataSet (skip empty header names)', function(done) {
+
+		it('should convert a TSV file into a DataSet (skip empty header names)', function() {
 			options.ignoreEmptyHeaders = true;
 			return tsv.tsvToDataSet(tsvMissingHeaders, options)
 			.then(function(dataset) {
-				should.exist(dataset);
 				dataset.getHeaders().should.eql([
 				   'test_1', 'test_3'
 				]);
@@ -84,11 +88,11 @@ describe('tsv', function() {
 				]);
 			});
 		});
-		it('should convert a TSV file into a DataSet (skip empty header names more obscure)', function(done) {
+
+		it('should convert a TSV file into a DataSet (skip empty header names more obscure)', function() {
 			options.ignoreEmptyHeaders = true;
 			return tsv.tsvToDataSet(tsvMissingHeaders2, options)
 			.then(function(dataset) {
-				should.exist(dataset);
 				dataset.getHeaders().should.eql([
 				   'Heatmap', 'table_name', 'column_name', 'column_criteria'
 				]);
@@ -98,10 +102,10 @@ describe('tsv', function() {
 				dataset.getData().length.should.eql(1);
 			});
 		});
-		it('should convert a TSV file into a DataSet (allow & replace empty header names)', function(done) {
+
+		it('should convert a TSV file into a DataSet (allow & replace empty header names)', function() {
 			return tsv.tsvToDataSet(tsvMissingHeaders, options)
 			.then(function(dataset) {
-				should.exist(dataset);
 				dataset.getHeaders().should.eql([
 				   'test_1', 'column_2', 'test_3'
 				]);
@@ -116,12 +120,11 @@ describe('tsv', function() {
 				]);
 			});
 		});
-		it('should convert a TSV file into a DataSet (force type text)', function(done) {
+
+		it('should convert a TSV file into a DataSet (force type text)', function() {
 			options.forceType = defines.TEXT;
 			return tsv.tsvToDataSet(tsvMissingHeaders, options)
 			.then(function(dataset) {
-				should.exist(dataset);
-
 				dataset.getHeaders().should.eql([
 				   'test_1', 'column_2', 'test_3'
 				]);
@@ -129,8 +132,6 @@ describe('tsv', function() {
 				dataset.getDataTypes().should.eql([
 				   defines.TEXT, defines.TEXT, defines.TEXT
 				]);
-
-				should.exist(dataset.getData());
 				dataset.getData().should.eql([
 					['one', '1', '4.4'],
 					['two', '2', '5.5'],
@@ -138,81 +139,99 @@ describe('tsv', function() {
 				]);
 			});
 		});
+
 	});
 
-	describe('#tsvToPgSql()', function() {
+	describe.only('#tsvToPgSql()', function() {
+
 		beforeEach(function() {
 			options = {
 				tablename: 'trevor.test',
 				headerRow: 0
 			};
 		});
-		it('should convert a TSV file into PGSQL (simple)', function(done) {
+
+		it('should convert a TSV file into PGSQL (simple)', function() {
 			var ws = fs.createWriteStream('tsvToPgSql_0.sql');
-			tsv.tsvToPgSql(tsvSimple, ws, options, function doneCb() {
+			return tsv.tsvToPgSql(
+				tsvSimple, ws, options
+			).then(function() {
 				ws.end();
-
-				fs.readFile('tsvToPgSql_0.sql', {encoding: 'UTF8'}, function(error, data) {
-					if(error) { throw error; }
+				return nodefn.call(
+					fs.readFile, 'tsvToPgSql_0.sql', {encoding: 'utf8'}
+				).then(function(data) {
 					data.should.be.ok;
-					fs.unlink('tsvToPgSql_0.sql', function() { done(); });
+					var defer = when.defer;
+					fs.unlink('tsvToPgSql_0.sql', defer.resolve);
+					return defer.promise;
 				});
-
 			});
 		});
-		it('should convert a TSV file into a PGSQL (skip empty header names)', function(done) {
+
+		it('should convert a TSV file into PGSQL (skip empty header names)', function(done) {
 			options.ignoreEmptyHeaders = true;
 
 			var ws = fs.createWriteStream('tsvToPgSql_1.sql');
-			tsv.tsvToPgSql(tsvMissingHeaders, ws, options, function doneCb() {
+			return tsv.tsvToPgSql(
+				tsvMissingHeaders, ws, options
+			).then(function() {
 				ws.end();
 
-				fs.readFile('tsvToPgSql_1.sql', {encoding: 'UTF8'}, function(error, data) {
-					if(error) { throw error; }
+				// fs.readFile('tsvToPgSql_1.sql', {encoding: 'utf8'}, function(error, data) {
+				// 	if(error) { throw error; }
+				// 	data.should.be.ok;
+				// 	data.indexOf("one\t4.4\n" +
+				// 				 "two\t5.5\n" +
+				// 				 "three\t6.6\n").should.not.equal(-1);
+				// 	fs.unlink('tsvToPgSql_1.sql', function() { done(); });
+				// });
+
+				return nodefn.call(
+					fs.readFile, 'tsvToPgSql_1.sql', {encoding: 'utf8'}
+				).then(function(data) {
 					data.should.be.ok;
 					data.indexOf("one\t4.4\n" +
 								 "two\t5.5\n" +
 								 "three\t6.6\n").should.not.equal(-1);
-					fs.unlink('tsvToPgSql_1.sql', function() { done(); });
+					var defer = when.defer;
+					fs.unlink('tsvToPgSql_1.sql', defer.resolve);
+					return defer.promise;
 				});
 
 			});
 		});
+
 		it('should only output data SQL (data only = true)', function(done) {
 			options.ignoreEmptyHeaders = true;
 			options.dataOnly = true;
 
 			var ws = fs.createWriteStream('tsvToPgSql_2.sql');
-			tsv.tsvToPgSql(tsvSimple, ws, options, function doneCb() {
+			return tsv.tsvToPgSql(
+				tsvSimple, ws, options
+			).then(function() {
 				ws.end();
 
-				fs.readFile('tsvToPgSql_2.sql', {encoding: 'UTF8'}, function(error, data) {
-					if(error) { throw error; }
+				// fs.readFile('tsvToPgSql_2.sql', {encoding: 'utf8'}, function(error, data) {
+				// 	if(error) { throw error; }
+				// 	data.should.be.ok;
+				// 	data.indexOf("copy").should.not.equal(-1); // data should exist
+				// 	data.indexOf("create table").should.equal(-1); // create shouldn't
+				// 	fs.unlink('tsvToPgSql_2.sql', function() { done(); });
+				// });
+
+				return nodefn.call(
+					fs.readFile, 'tsvToPgSql_2.sql', {encoding: 'utf8'}
+				).then(function(data) {
 					data.should.be.ok;
 					data.indexOf("copy").should.not.equal(-1); // data should exist
 					data.indexOf("create table").should.equal(-1); // create shouldn't
-					fs.unlink('tsvToPgSql_2.sql', function() { done(); });
+					var defer = when.defer;
+					fs.unlink('tsvToPgSql_2.sql', defer.resolve);
+					return defer.promise;
 				});
 
 			});
 		});
-		it('should only output data SQL (data only = true)', function(done) {
-			options.ignoreEmptyHeaders = true;
-			options.createOnly = true;
 
-			var ws = fs.createWriteStream('tsvToPgSql_2.sql');
-			tsv.tsvToPgSql(tsvSimple, ws, options, function doneCb() {
-				ws.end();
-
-				fs.readFile('tsvToPgSql_2.sql', {encoding: 'UTF8'}, function(error, data) {
-					if(error) { throw error; }
-					data.should.be.ok;
-					data.indexOf("copy").should.equal(-1); // data shouldn't exist
-					data.indexOf("create table").should.not.equal(-1); // create should
-					fs.unlink('tsvToPgSql_2.sql', function() { done(); });
-				});
-
-			});
-		});
 	});
 });

@@ -1,3 +1,5 @@
+"use strict";
+
 var when = require('when')
 , lineReader = require('line-reader')
 , dataType = require('./dataType.js')
@@ -30,64 +32,70 @@ exports.toRows = function(filePath, loader, options, headerRowHook, dataRowHook)
 		}
 	}
 
-	lineReader.open(filePath, function(reader) {
+	try {
+		lineReader.open(filePath, function(reader) {
 
-		var exitReader = function() {
-			reader.close();
-			return defer.resolve();
-		};
+			var exitReader = function() {
+				reader.close();
+				return defer.resolve();
+			};
 
-		var handleLine = function(line, row) {
-			var dataRow = loader.toDataRow(line);
-			if (options.headerRow == row) {
-				// if we're not using custom headers
-				if (!options.useHeaders &&
-					typeof headerRowHook === 'function')
-				{
-					headerRowHook(dataRow);
+			var handleLine = function(line, row) {
+				var dataRow = loader.toDataRow(line);
+				if (options.headerRow == row) {
+					// if we're not using custom headers
+					if (!options.useHeaders &&
+						typeof headerRowHook === 'function')
+					{
+						headerRowHook(dataRow);
+					}
+				} else {
+					dataRowHook(dataRow);
 				}
-			} else {
-				dataRowHook(dataRow);
-			}
-			return true;
-		};
+				return true;
+			};
 
-		var row = 0;
-		var joinedLine = '';
-		var continueLine = false;
+			var row = 0;
+			var joinedLine = '';
+			var continueLine = false;
 
-		var cycle = function() {
-			if(reader.hasNextLine()) {
-				reader.nextLine(function(rawLine) {
+			var cycle = function() {
+				if (reader.hasNextLine()) {
+					reader.nextLine(function(rawLine) {
 
-					joinedLine = joinedLine ?
-						(joinedLine + '\n' + rawLine) : rawLine;
+						joinedLine = joinedLine ?
+							(joinedLine + '\n' + rawLine) : rawLine;
 
-					// If marked to continue, shall we continue again?
-					if (continueLine) {
-						continueLine = !loader.lineEnds(rawLine);
-					}
-					// Mark this line for continuation
-					else if (loader.lineContinues(joinedLine)) {
-						continueLine = true;
-					}
+						// If marked to continue, shall we continue again?
+						if (continueLine) {
+							continueLine = !loader.lineEnds(rawLine);
+						}
+						// Mark this line for continuation
+						else if (loader.lineContinues(joinedLine)) {
+							continueLine = true;
+						}
 
-					// If we have our final line, handle it
-					if (!continueLine) {
-						handleLine(joinedLine, row);
-						joinedLine = '';
-						++row;
-					}
+						// If we have our final line, handle it
+						if (!continueLine) {
+							handleLine(joinedLine, row);
+							joinedLine = '';
+							++row;
+						}
 
-					cycle();
-				});
-			} else {
-				exitReader();
-			}
-		};
+						setImmediate(cycle);
+					});
+				} else {
+					exitReader();
+				}
+			};
 
-		cycle();
-	});
+			setImmediate(cycle);
+		});
+	} catch(error) {
+		return defer.reject(new Error(
+			'Failed to open the file to read lines, \n' +
+			error.stack || error));
+	}
 
 	return defer.promise;
 };

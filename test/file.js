@@ -56,9 +56,12 @@ describe('file', function() {
 
 	});
 
-	describe.only('#toRows()', function() {
+	describe('#toRows()', function() {
 
 		it('take a tsv file path and get the rows it contains', function() {
+
+			return when.reject(new Error('foobar'));
+
 			options = {
 				headerRow: 0,
 				forceType: false
