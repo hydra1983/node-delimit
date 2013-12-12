@@ -1,7 +1,12 @@
 "use strict";
 
-var should = require('should')
-, loaders = require('../src/loaders.js');
+var loaders = require('../src/loaders.js')
+, chai = require('chai')
+, chaiAsPromised = require('chai-as-promised');
+
+chai.Should();
+chai.use(chaiAsPromised);
+require("mocha-as-promised")();
 
 describe('loaders', function() {
 
