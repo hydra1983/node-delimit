@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"sheet",
+				"sheet_numbers_to_grab"
+			],
+			[
+				"sheets",
+				"sheets_to_grab"
+			],
+			[
+				"shee",
+				"sheets_to_grab"
+			],
+			[
 				"dire",
 				"directoryName"
 			],
@@ -64,50 +76,74 @@
 	"buffers":
 	[
 		{
-			"file": "src/dataType.js",
+			"file": "test/DataSet.js",
 			"settings":
 			{
-				"buffer_size": 13126,
+				"buffer_size": 13503,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "test/package.json",
+			"file": "test/file.js",
 			"settings":
 			{
-				"buffer_size": 231,
+				"buffer_size": 8382,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "package.json",
+			"file": "test/loaders.js",
 			"settings":
 			{
-				"buffer_size": 463,
+				"buffer_size": 1292,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "test/dataType.js",
+			"file": "test/pgsql.js",
 			"settings":
 			{
-				"buffer_size": 33179,
+				"buffer_size": 6880,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "test/convert/tsv/tsv.js",
+			"file": "src/file.js",
 			"settings":
 			{
-				"buffer_size": 8934,
+				"buffer_size": 4031,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "test/convert/tsv/files/tsvMissingHeaders2.tsv",
+			"file": "src/loaders.js",
 			"settings":
 			{
-				"buffer_size": 172,
+				"buffer_size": 1360,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/pgsql.js",
+			"settings":
+			{
+				"buffer_size": 2519,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/transformers.js",
+			"settings":
+			{
+				"buffer_size": 4836,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/DataSet.js",
+			"settings":
+			{
+				"buffer_size": 7118,
 				"line_ending": "Unix"
 			}
 		}
@@ -121,6 +157,10 @@
 			[
 				"me",
 				"View: Toggle Menu"
+			],
+			[
+				"ss css",
+				"Set Syntax: CSS"
 			],
 			[
 				"ww",
@@ -209,25 +249,71 @@
 	},
 	"file_history":
 	[
+		"/home/urban4m/git/delimit/src/latlong.js",
 		"/home/urban4m/git/delimit/src/convert.js",
-		"/home/urban4m/git/delimit/src/convert/xls/xls.js",
-		"/home/urban4m/git/delimit/src/convert/tsv/tsv.js",
+		"/home/urban4m/git/delimit/test/convert/csv/csv2tsv.js",
+		"/home/urban4m/git/delimit/test/convert/csv/csv.js",
+		"/home/urban4m/git/delimit/test/convert/json/json.js",
+		"/home/urban4m/git/delimit/src/transformers.js",
+		"/home/urban4m/git/delimit/src/convert/csv/csv.js",
 		"/home/urban4m/git/delimit/src/convert/json/json.js",
+		"/home/urban4m/git/delimit/src/defines.js",
+		"/home/urban4m/git/delimit/src/file.js",
 		"/home/urban4m/git/delimit/src/DataSet.js",
 		"/home/urban4m/git/delimit/src/pgsql.js",
-		"/home/urban4m/git/delimit/src/transformers.js",
+		"/home/urban4m/git/delimit/test/convert/tsv/tsv.js",
+		"/home/urban4m/git/delimit/test/convert/xls/xls.js",
+		"/home/urban4m/git/delimit/test/convert/xls/xls2tsv.js",
+		"/home/urban4m/git/delimit/test/DataSet.js",
+		"/home/urban4m/git/delimit/test/dataType.js",
+		"/home/urban4m/git/delimit/test/defines.js",
+		"/home/urban4m/git/delimit/test/file.js",
+		"/home/urban4m/git/delimit/test/loaders.js",
+		"/home/urban4m/git/delimit/test/pgsql.js",
+		"/home/urban4m/git/delimit/test/transformers.js",
+		"/home/urban4m/git/delimit/package.json",
+		"/home/urban4m/git/delimit/src/dataType.js",
+		"/home/urban4m/git/delimit/src/loaders.js",
+		"/home/urban4m/git/delimit/src/convert/tsv/tsv.js",
+		"/home/urban4m/git/delimit/test/convert/json/files/jsonSimple.json",
+		"/home/urban4m/git/delimit/src/convert/csv/csv2tsv.js",
+		"/home/urban4m/git/delimit/src/convert/csv/pipeCsv2tsv.py",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvMissingHeaders.tsv",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvMissingHeaders2.tsv",
+		"/home/urban4m/git/delimit/node_modules/should/.idea/misc.xml",
+		"/home/urban4m/git/delimit/node_modules/.bin/mocha",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvSimple.tsv",
+		"/home/urban4m/git/delimit/bin/node_modules/optimist/example/line_count_options.js",
+		"/home/urban4m/git/delimit/node_modules/async/LICENSE",
+		"/home/urban4m/git/delimit/tsvToPgSql_0.sql",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvEmptyRow.tsv",
+		"/home/urban4m/git/delimit/node_modules/when/monitor/throttledReporter.js",
+		"/home/urban4m/git/delimit/node_modules/when/monitor/simpleFormatter.js",
+		"/home/urban4m/git/delimit/node_modules/should/should.js",
+		"/home/urban4m/git/delimit/node_modules/when/monitor/simpleReporter.js",
+		"/home/urban4m/git/delimit/node_modules/mocha/lib/test.js",
+		"/home/urban4m/git/delimit/node_modules/mocha/node_modules/jade/lib/nodes/text.js",
+		"/home/urban4m/git/delimit/src/convert/xls/xls.js",
+		"/home/urban4m/git/delimit/test/convert/xls/files/xlsSimple.xls",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvContinue.tsv",
+		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.js",
+		"/home/urban4m/.config/sublime-text-3/Packages/Schemr/Default (Linux).sublime-keymap",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvSimple1100.tsv",
+		"/home/urban4m/git/delimit/tsvToPgSql_1.sql",
+		"/home/urban4m/git/delimit/out_1.sql",
+		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.py",
+		"/home/urban4m/git/delimit/src/convert/xls/tsv.tsv",
+		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.py.backup",
 		"/home/urban4m/git/delimit/bin/delimit2pgsql.js",
+		"/home/urban4m/git/delimit/chai_test/package.json",
+		"/home/urban4m/git/delimit/src/convert/csv/csv2tsv.py",
+		"/home/urban4m/.bashrc",
+		"/home/urban4m/git/delimit/test/package.json",
+		"/home/urban4m/git/delimit/src/package.json",
 		"/tmp/u4import-d-11386-19680-18cqgzf/raw.testingg1_countylevelwithcomponentindex.sql",
 		"/tmp/u4import-d-11386-19680-18cqgzf/raw_datasets.testingg1_countylevelwithcomponentindex.sql",
 		"/tmp/u4import-d-11386-19361-16lnygk/raw.testingg1_countylevelwithcomponentindex.sql",
-		"/home/urban4m/git/delimit/package.json",
-		"/home/urban4m/git/delimit/test/dataType.js",
-		"/home/urban4m/git/delimit/src/dataType.js",
-		"/home/urban4m/git/delimit/src/defines.js",
-		"/home/urban4m/git/delimit/test/transformers.js",
-		"/home/urban4m/git/delimit/src/convert/csv/csv2tsv.py",
 		"/home/urban4m/test/csv/escapeddouble.csv",
-		"/home/urban4m/git/delimit/src/convert/csv/csv2tsv.js",
 		"/home/urban4m/.cache/.fr-4KCLya/e20115fl0038000.txt",
 		"/home/urban4m/.cache/.fr-0meHxw/m20115fl0038000.txt",
 		"/home/urban4m/.cache/.fr-3HNVLw/m20115fl0038000.txt",
@@ -239,7 +325,6 @@
 		"/home/urban4m/git/db_auto/bin/out.sql",
 		"/home/urban4m/git/db_auto/bin/out.log",
 		"/home/urban4m/git/db_auto/bin/err.log",
-		"/home/urban4m/.bashrc",
 		"/home/urban4m/git/db_auto/bin/out.diff",
 		"/home/urban4m/test/shape/tl_2010_01013_tabblock10.raw.json",
 		"/home/urban4m/test/shape/tl_2010_01013_tabblock10.raw",
@@ -279,8 +364,6 @@
 		"/home/urban4m/test.js",
 		"/home/urban4m/git/auto/dir2pgsql",
 		"/run/user/urban4m/gvfs/sftp:host=10.1.10.141,user=files/home/urban4m/data/users/files/public/Trevor/Hongs Folder :)/geo_addrpnt.txt",
-		"/home/urban4m/git/delimit/test/pgsql.js",
-		"/home/urban4m/git/delimit/test/file.js",
 		"/home/urban4m/workspace/casplug/dance.js",
 		"/home/urban4m/workspace/casplug/bot/auth_cookies/bot_0.json",
 		"/home/urban4m/workspace/casplug/auth.js",
@@ -293,50 +376,7 @@
 		"/home/urban4m/git/plugapi/src/index.js",
 		"/home/urban4m/git/plugapi/src/sockjs-client.js",
 		"/home/urban4m/git/db_auto/bin/out.",
-		"/home/urban4m/git/auto/test.py",
-		"/home/urban4m/git/auto/out.sql",
-		"/home/urban4m/git/auto/out.tsv",
-		"/home/urban4m/git/delimit/src/package.json",
-		"/home/urban4m/git/auto/package.json",
-		"/home/urban4m/git/delimit/src/file.js",
-		"/home/urban4m/git/auto/old.file2pgsql",
-		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.py",
-		"/home/urban4m/git/auto/fixedToTsv.js",
-		"/home/urban4m/git/db_auto/bin/out.tsv",
-		"/home/urban4m/test/ed/URBAN_4_M_AVM.TXT",
-		"/run/user/urban4m/gvfs/sftp:host=db.urban4m.com,user=trevor/backup/db/sql/load/schema/raw_datasets/avm/URBAN_4_M_AVM.TXT",
-		"/run/user/urban4m/gvfs/sftp:host=10.1.10.141,user=files/home/urban4m/data/users/files/public/Trevor/Hongs Folder :)/URBAN_4_M_AVM.TXT",
-		"/home/urban4m/.config/awesome/rc.lua",
-		"/home/urban4m/git/db_auto/bin/raw/raw.py",
-		"/home/urban4m/test/ed/RANKINGS/4M.txt",
-		"/tmp/tmpUl4BrM/tmprkZi8B.Sheet1",
-		"/tmp/tmpSYx35d/tmpDH6xeY.234234",
-		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.js",
-		"/home/urban4m/git/auto/eventXML2pgsql",
-		"/home/urban4m/git/db_auto/bin/u4rawImport",
-		"/home/urban4m/test/parks/parks_austin.csv",
-		"/home/urban4m/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
-		"/home/urban4m/.config/sublime-text-3/Packages/User/SublimeLinter.sublime-settings",
-		"/home/urban4m/.config/sublime-text-3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
-		"/home/urban4m/deleteme.js",
-		"/home/urban4m/git/delimit/index.js",
-		"/home/urban4m/git/delimit/bin/out.sql",
-		"/home/urban4m/test/parks/parks_austin_(20130722).raw",
-		"/home/urban4m/git/db_auto/bin/test.js",
-		"/home/urban4m/git/auto/u4config.json",
-		"/home/urban4m/git/auto/u4setup.json",
-		"/etc/bash_completion",
-		"/usr/share/bash-completion/bash_completion",
-		"/home/urban4m/git/auto/test.js",
-		"/home/urban4m/git/auto/err_20130730.log",
-		"/home/urban4m/.config/sublime-text-3/Packages/User/Default (Linux).sublime-mousemap",
-		"/home/urban4m/test/shape/tl_2010_01011_areawater/tl_2010_01011_areawater.srid",
-		"/home/urban4m/git/db_auto/bin/raw/templates/deleteSrid.sql.mustache",
-		"/home/urban4m/git/db_auto/bin/raw/srs_wkt2proj4.py",
-		"/home/urban4m/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
-		"/home/urban4m/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
-		"/home/urban4m/git/db_auto/bin/raw/templates/copySrid.sql.mustache",
-		"/home/urban4m/git/db_auto/auto_data/avm.sql"
+		"/home/urban4m/git/auto/test.py"
 	],
 	"find":
 	{
@@ -355,6 +395,39 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"throwError",
+			"readJson",
+			");\n",
+			"rt a json string into PgSql', function() {\n			var ws = fs.",
+			"UTF8",
+			"skip empty hea",
+			"getFileData",
+			"tsvToPgSql_2",
+			"UTF8",
+			"tsvToPgSql_1",
+			"tsv.tsvToPgSql",
+			"tsvToPgSql",
+			"tsv",
+			"HeaderS",
+			"headers",
+			"getHeaderSql",
+			"headers",
+			" \n",
+			"});\n",
+			"lineEnds",
+			".only",
+			"only",
+			"getFileAtt",
+			"getFileData",
+			"console.",
+			"getFileAttributes",
+			"getIgnoreCol",
+			"\\.only",
+			"only",
+			"void\\('debug",
+			"debug",
+			"xls2tsv.xls2tsv",
+			"xls2tsv",
 			"only",
 			"transformer.header",
 			"normalizeHeader",
@@ -449,40 +522,7 @@
 			"spawn",
 			"exec",
 			"require",
-			"raw",
-			"\\.js",
-			"getFile2Pgsql",
-			"raw_data",
-			"createRawTable",
-			"createRawDataset",
-			"dbname",
-			"async\\.",
-			"async",
-			"varchar(2)",
-			"PATH",
-			"list-archive",
-			"getFile2Pgsql",
-			"createRawTable",
-			"delete from",
-			"create table if not exists",
-			"create table if not exists\n	raw_datasets.tiger_area_landmark_20100101000000_20130808133957",
-			"create table if not exists\n	raw_datasets.tiger_area_landmark_20100101000000_20130808133957 ",
-			"\"raw_datasets\".\"tiger_area_landmark_20100101000000_20130808133957\" (\"statefp\",\"countyfp\",\"ansicode\",\"areaid\",\"fullname\",\"mtfcc\",\"aland\",\"awater\",\"intptlat\",\"intptlon\",shape)",
-			"importedTime",
-			"getFile2Pgsql",
-			"ext",
-			"spawn",
-			"raw",
-			"getFile2Pgsql",
-			"importedTime",
-			"fileName",
-			"download",
-			"list",
-			"\"",
-			"getRawDatasetSql",
-			"console.log",
-			"getFile2Pgsql",
-			"ext"
+			"raw"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -511,56 +551,83 @@
 			[
 				{
 					"buffer": 0,
-					"file": "src/dataType.js",
+					"file": "test/DataSet.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13126,
+						"buffer_size": 13503,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1051,
+								1051
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 585.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "test/package.json",
+					"file": "test/file.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 231,
+						"buffer_size": 8382,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								210,
+								210
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "test/loaders.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1292,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								725,
+								725
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -570,27 +637,119 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "package.json",
+					"buffer": 3,
+					"file": "test/pgsql.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 463,
+						"buffer_size": 6880,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								279,
-								279
+								379,
+								379
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 54.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 4,
+					"file": "src/file.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4031,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1620,
+								1620
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 675.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/loaders.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1360,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								459,
+								459
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/pgsql.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2519,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								691,
+								691
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -600,91 +759,61 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "test/dataType.js",
+					"buffer": 7,
+					"file": "src/transformers.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 33179,
+						"buffer_size": 4836,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								339,
-								339
+								1842,
+								1842
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "test/convert/tsv/tsv.js",
+					"buffer": 8,
+					"file": "src/DataSet.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8934,
+						"buffer_size": 7118,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3839,
-								3839
+								1016,
+								1016
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 810.0,
+						"translation.y": 486.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "test/convert/tsv/files/tsvMissingHeaders2.tsv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 172,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -707,11 +836,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.553964125698,
 			1.0
 		],
 		"rows":
@@ -737,6 +873,46 @@
 		"selected_items":
 		[
 			[
+				"tsv",
+				"src/convert/tsv/tsv.js"
+			],
+			[
+				"tsvmiss",
+				"test/convert/tsv/files/tsvMissingHeaders2.tsv"
+			],
+			[
+				"missinghea",
+				"test/convert/tsv/files/tsvMissingHeaders.tsv"
+			],
+			[
+				"loader",
+				"src/loaders.js"
+			],
+			[
+				"trans",
+				"src/transformers.js"
+			],
+			[
+				"simplet",
+				"test/convert/tsv/files/tsvSimple.tsv"
+			],
+			[
+				"srctsv",
+				"src/convert/tsv/tsv.js"
+			],
+			[
+				"testtsv",
+				"test/convert/tsv/tsv.js"
+			],
+			[
+				"texl",
+				"test/convert/xls/xls.js"
+			],
+			[
+				"xls",
+				"src/convert/xls/xls.js"
+			],
+			[
 				"raw.js",
 				"db_auto/bin/raw/raw.js"
 			],
@@ -751,10 +927,6 @@
 			[
 				"raw",
 				"db_auto/bin/raw/raw"
-			],
-			[
-				"trans",
-				"delimit/src/transformers.js"
 			],
 			[
 				"pgsql",
@@ -777,16 +949,16 @@
 		"selected_items":
 		[
 			[
+				"dm",
+				"~/git/dm_auto/dm_auto.sublime-project"
+			],
+			[
 				"db",
 				"~/git/db_auto/db_auto.sublime-project"
 			],
 			[
 				"sa",
 				"~/git/sansasphere/sansasphere.sublime-project"
-			],
-			[
-				"dm",
-				"~/git/dm_auto/dm_auto.sublime-project"
 			],
 			[
 				"del",

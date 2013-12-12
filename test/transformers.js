@@ -1,7 +1,12 @@
 "use strict";
 
-var should = require('should')
-, transformers = require('../src/transformers.js');
+var transformers = require('../src/transformers.js')
+, chai = require('chai')
+, chaiAsPromised = require('chai-as-promised');
+
+chai.Should();
+chai.use(chaiAsPromised);
+require("mocha-as-promised")();
 
 describe('transformers', function() {
 	describe('#normalizeString()', function() {
@@ -49,7 +54,7 @@ describe('transformers', function() {
 			(function() {
 				transformers.removeIndexes(undefined, ['0', '1', '2', '3'])
 					.should.eql(['0', '1', '2', '3']);
-			}).should.throwError();
+			}).should.throw;
 		});
 	});
 });

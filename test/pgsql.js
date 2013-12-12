@@ -1,9 +1,14 @@
 "use strict";
 
-var should = require('should')
-, pgsql = require('../src/pgsql.js')
+var pgsql = require('../src/pgsql.js')
 , transformers = require('../src/transformers')
-, defines = require('../src/defines.js');
+, defines = require('../src/defines.js')
+, chai = require('chai')
+, chaiAsPromised = require('chai-as-promised');
+
+chai.Should();
+chai.use(chaiAsPromised);
+require("mocha-as-promised")();
 
 describe('pgsql', function() {
 
@@ -28,7 +33,7 @@ describe('pgsql', function() {
 	describe('#getHeaderSql()', function() {
 		it('should return some strings that appear before the SQL', function() {
 			var tablename = 'trevor.test';
-			should.exists(pgsql.getHeaderSql(tablename));
+			pgsql.getHeaderSql(tablename).should.be.ok;
 		});
 	});
 	describe('#getFooterSql()', function() {

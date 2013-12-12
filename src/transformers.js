@@ -44,7 +44,7 @@ exports.normalizeHeader = function(header) {
 	return normalized;
 };
 
-getDefaultTransformer = function(options) {
+function getDefaultTransformer(options) {
 	options = options || {};
 	var transformer = {};
 
@@ -74,7 +74,7 @@ getDefaultTransformer = function(options) {
 	};
 
 	return transformer;
-};
+}
 
 // @TODO needs test cases
 exports.getDataSetTransformer = function(options) {
