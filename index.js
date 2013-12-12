@@ -1,9 +1,10 @@
 "use strict";
 
-var xls = require('src/convert/xls/xls')
-, tsv = require('src/convert/tsv/tsv')
-, csv = require('src/convert/csv/csv')
-, json = require('src/convert/json/json');
+var when = require('when')
+, xls = require('./src/convert/xls/xls')
+, tsv = require('./src/convert/tsv/tsv')
+, csv = require('./src/convert/csv/csv')
+, json = require('./src/convert/json/json');
 
 var getOptions = function(options) {
 	return {
@@ -66,34 +67,27 @@ var getOptions = function(options) {
 	};
 };
 
-exports.toPgSql = function(file, options, callback) {
+exports.toPgSql = function(file, options) {
 	var options = getOptions(options);
 	var extension = file.split('.');
 	extension = options.forceExtension || extension[extension.length - 1];
 
 	if (extension.match(/\.?xlsx?/)) {
-		xls.xlsToPgSql(file, process.stdout, options, function doneCb(error) {
-			callback(error);
-		});
+		return xls.xlsToPgSql(file, process.stdout, options);
 	}
 	else if (extension.match(/\.?tsv/)) {
-		tsv.tsvToPgSql(file, process.stdout, options, function doneCb(error) {
-			callback(error);
-		});
+		return tsv.tsvToPgSql(file, process.stdout, options);
 	}
 	else if (extension.match(/\.?csv/)) {
-		csv.csvToPgSql(file, process.stdout, options, function doneCb(error) {
-			callback(error);
-		});
+		return csv.csvToPgSql(file, process.stdout, options);
 	}
 	else if (extension.match(/\.?json/)) {
-		json.readJson(file, function(jsonObj) {
-			json.jsonToPgSql(jsonObj, process.stdout, options, function doneCb(error) {
-				callback(error);
-			});
+		return json.readJson(file).then(function(jsonObj) {
+			return json.jsonToPgSql(jsonObj, process.stdout, options);
 		});
 	}
-	else {
-		callback(new Error("You've provided a file with an invalid extension of '" + extension + "'"));
-	}
+
+	return when.reject(new Error(
+		"You've provided a file with an invalid extension of '" +
+		extension + "'"));
 };

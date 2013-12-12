@@ -1,76 +1,77 @@
 #!/usr/bin/env node
+"use strict";
 
 var delimit = require('../index.js');
 
-var argv = require('optimist')
-    .usage("\nUsage: node delimit.js [options] --file <filePath>")
-    .options('file', {
-        alias: 'f',
-        "demand": true,
-        describe: "The file to parse"
-    })
-    .options('name', {
+require('main')(module)
+.usage('Usage: ./delimit2pgsql [-flags] <file>')
+.flags({
+    'help': {
+        alias: 'h',
+        describe: 'display this message'
+    },
+    'name': {
         alias: 'n',
         describe: "What to name our data? Default 'default'"
-    })
-    .options('appendString', {
+    },
+    'appendString': {
         alias: 'A',
         describe: "Append a string to the end of the name? Useful with " +
             "spreadsheets to ensure that a string appears at the end of " +
             "the name."
-    })
-    .options('prependString', {
+    },
+    'prependString': {
         alias: 'P',
         describe: "Prepend a string to the front of name?"
-    })
-    .options('header', {
+    },
+    'header': {
         alias: 'h',
         describe: "What row is the header in? Default 0"
-    })
-    .options('igEmHead', {
+    },
+    'igEmHead': {
         "boolean": true,
         describe: "Ignore columns with empty headers? Default false"
-    })
-    .options('forceType', {
+    },
+    'forceType': {
         alias: 'F',
         describe: "Force a particular type for all columns? Default not set"
-    })
-    .options('useHeaders', {
+    },
+    'useHeaders': {
         describe: "Use these headers instead of defaults (comma separated)"
-    })
-    .options('maintainHeaders', {
+    },
+    'maintainHeaders': {
         'boolean': true,
         'default': false,
         describe: "Do not change header names (e.g. zip, lat, lng, etc)"
-    })
-    .options('dataOnly', {
+    },
+    'dataOnly': {
         alias: 'D',
         "boolean": true,
         "default": false,
         describe: "PSQL ONLY: Only show data SQL (no create statement)"
-    })
-    .options('createOnly', {
+    },
+    'createOnly': {
         alias: 'C',
         "boolean": true,
         "default": false,
         describe: "PSQL ONLY: Only output create table SQL (no data)"
-    })
-    .options('insertStatements', {
+    },
+    'insertStatements': {
         alias: 'I',
         "boolean": true,
         describe: "PSQL ONLY: Use insert statements instead of dump format? " +
             "Useful for dealing with bad data"
-    })
-    .options('ignoreTypes', {
+    },
+    'ignoreTypes': {
         describe: "Ignore these particular types of data (comma separated)"
-    })
-    .argv;
-
-delimit.convert.toPgSql(argv.file, argv, function(error) {
-    if (!error) {
-        process.exit(0);
-    } else {
-        console.error(error.stack);
-        process.exit(1);
     }
+})
+.run(function($) {
+    if ($('help')) { $.cerr($.help).exit(); }
+    $.assert.argsLen(1);
+    delimit.toPgSql($(0), $.flags).then(function() {
+        $.exit();
+    }).otherwise(function(error) {
+        $.cerr(error.stack || error).exit(1);
+    })
 });

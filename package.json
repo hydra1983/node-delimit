@@ -24,5 +24,6 @@
     "chai": "~1.8.1",
     "chai-as-promised": "~4.1.0",
     "mocha-as-promised": "~1.4.1",
+    "main": "0.0.19"
   }
 }
