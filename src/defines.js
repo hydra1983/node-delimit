@@ -1,3 +1,5 @@
+"use strict";
+
 exports.UNKNOWN    = -1;
 exports.BOOLEAN    = 0;
 exports.INTEGER    = 1;

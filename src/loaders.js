@@ -1,3 +1,5 @@
+"use strict";
+
 exports.getTsvLoader = function() {
 	var loader = {};
 

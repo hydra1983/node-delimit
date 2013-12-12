@@ -34,13 +34,13 @@ exports.jsonToDataSet = function(parsedJson, options)  {
 };
 
 exports.jsonToDataSets = function(parsedJson, options) {
-	var ret = [];
-	if(typeof parsedJson == 'object' && parsedJson instanceof Array) {
-		for(var i = 0, len = parsedJson.length; i < len; ++i) {
-			ret.push(exports.jsonToDataSet(parsedJson[i], options));
-		}
+	if (typeof parsedJson !== 'object' || !(parsedJson instanceof Array)) {
+		return [];
 	}
-	return ret;
+
+	return parsedJson.map(function(single) {
+		return exports.jsonToDataSet(single, options);
+	});
 };
 
 // processes a single dataset and writes pgsql to the given stream
