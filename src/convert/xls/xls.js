@@ -6,7 +6,7 @@ var when = require('when')
 , xls2tsv = require('./xls2tsv.js')
 , _ = require('lodash');
 
-exports.xlsToPgSql = function(filePath, writeStream, options, callback) {
+exports.xlsToPgSql = function(filePath, writeStream, options) {
 	return xls2tsv(filePath).then(function(info) {
 		return when.map(info.files, function(file) {
 			var modifiedOptions = _.clone(options);
@@ -17,12 +17,7 @@ exports.xlsToPgSql = function(filePath, writeStream, options, callback) {
 					transformers.normalizeString(file.sheetName);
 			}
 
-			var defer = when.defer();
-			tsv.tsvToPgSql(file.path, writeStream, modifiedOptions
-			, function(error, res) {
-				return error ? defer.reject(error) : defer.resolve(res);
-			});
-			return defer.promise;
+			return tsv.tsvToPgSql(file.path, writeStream, modifiedOptions);
 		});
 	});
 };
