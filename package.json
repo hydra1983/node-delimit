@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "delimit2pgsql": "./bin/delimit2pgsql.js"
+    "delimit": "./bin/delimit.js"
   },
   "author": "Trevor Senior <trevor@tsenior.com> (http://tsenior.com/)",
   "license": "BSD",
