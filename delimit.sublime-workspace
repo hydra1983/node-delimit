@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"con",
+				"convertPromise"
+			],
+			[
 				"sheet",
 				"sheet_numbers_to_grab"
 			],
@@ -76,10 +80,44 @@
 	"buffers":
 	[
 		{
-			"file": "test/DataSet.js",
+			"file": "src/DataSet.js",
 			"settings":
 			{
-				"buffer_size": 13503,
+				"buffer_size": 7118,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "bin/delimit.js",
+			"settings":
+			{
+				"buffer_size": 2842,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\nSublimeLinter Beta:\n------------------\n\n  SublimeLinter\n  =============\n  \n  SublimeLinter is a plugin that supports \"lint\" programs (known as \"linters\"). SublimeLinter highlights\n  lines of code the linter deems to contain (potential) errors. It also\n  supports highlighting special annotations (for example: TODO) so that they\n  can be quickly located.\n  \n  SublimeLinter has built in linters for the following languages:\n  \n  * C/C++ - lint via `cppcheck`\n  * CoffeeScript - lint via `coffee -s -l`\n  * CSS - lint via built-in [csslint](http://csslint.net)\n  * Git Commit Messages - lint via built-in module based on [A Note About Git Commit Messages](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).\n  * Haml - syntax check via `haml -c`\n  * HTML - lint via `tidy` (actually [tidy for HTML5](http://w3c.github.com/tidy-html5/))\n  * Java - lint via `javac -Xlint`\n  * JavaScript - lint via built in [jshint](http://jshint.org), [jslint](http://jslint.com), or the [closure linter (gjslint)](https://developers.google.com/closure/utilities/docs/linter_howto) (if installed)\n  * Lua - syntax check via `luac`\n  * Objective-J - lint via built-in [capp_lint](https://github.com/aparajita/capp_lint)\n  * Perl - lint via [Perl:Critic](http://perlcritic.com/) or syntax+deprecation check via `perl -c`\n  * PHP - syntax check via `php -l`\n  * Puppet - syntax check via `puppet parser validate`\n  * Python - native, moderately-complete lint\n  * Ruby - syntax check via `ruby -wc`\n  * XML - lint via `xmllint`\n  \n  \n  For more information:\n  ---------------------\n  Please take the time to read the documentation:\n  \n  * Online - https://github.com/SublimeLinter/SublimeLinter\n  * Sublime Text - Select Preferences->Package Settings->SublimeLinter->README\n  \n  \n  IMPORTANT\n  \n  Do NOT edit the default SublimeLinter settings. Your changes will be lost\n  when SublimeLinter is updated. ALWAYS edit the user SublimeLinter settings\n  by selecting \"Preferences->Package Settings->SublimeLinter->Settings - User\".\n  Note that individual settings you include in your user settings will **completely**\n  replace the corresponding default setting, so you must provide that setting in its entirety.\n  \n\n\nSublimeLinter Beta:\n------------------\n\n  SublimeLinter\n  =============\n  \n  SublimeLinter is a plugin that supports \"lint\" programs (known as \"linters\"). SublimeLinter highlights\n  lines of code the linter deems to contain (potential) errors. It also\n  supports highlighting special annotations (for example: TODO) so that they\n  can be quickly located.\n  \n  SublimeLinter has built in linters for the following languages:\n  \n  * C/C++ - lint via `cppcheck`\n  * CoffeeScript - lint via `coffee -s -l`\n  * CSS - lint via built-in [csslint](http://csslint.net)\n  * Git Commit Messages - lint via built-in module based on [A Note About Git Commit Messages](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).\n  * Haml - syntax check via `haml -c`\n  * HTML - lint via `tidy` (actually [tidy for HTML5](http://w3c.github.com/tidy-html5/))\n  * Java - lint via `javac -Xlint`\n  * JavaScript - lint via built in [jshint](http://jshint.org), [jslint](http://jslint.com), or the [closure linter (gjslint)](https://developers.google.com/closure/utilities/docs/linter_howto) (if installed)\n  * Lua - syntax check via `luac`\n  * Objective-J - lint via built-in [capp_lint](https://github.com/aparajita/capp_lint)\n  * Perl - lint via [Perl:Critic](http://perlcritic.com/) or syntax+deprecation check via `perl -c`\n  * PHP - syntax check via `php -l`\n  * Puppet - syntax check via `puppet parser validate`\n  * Python - native, moderately-complete lint\n  * Ruby - syntax check via `ruby -wc`\n  * XML - lint via `xmllint`\n  \n  \n  For more information:\n  ---------------------\n  Please take the time to read the documentation:\n  \n  * Online - https://github.com/SublimeLinter/SublimeLinter\n  * Sublime Text - Select Preferences->Package Settings->SublimeLinter->README\n  \n  \n  IMPORTANT\n  \n  Do NOT edit the default SublimeLinter settings. Your changes will be lost\n  when SublimeLinter is updated. ALWAYS edit the user SublimeLinter settings\n  by selecting \"Preferences->Package Settings->SublimeLinter->Settings - User\".\n  Note that individual settings you include in your user settings will **completely**\n  replace the corresponding default setting, so you must provide that setting in its entirety.\n  \n",
+			"settings":
+			{
+				"buffer_size": 4471,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"scratch": true
+			}
+		},
+		{
+			"file": "test/convert/csv/files/csvSimple.csv",
+			"settings":
+			{
+				"buffer_size": 58,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.js",
+			"settings":
+			{
+				"buffer_size": 3756,
 				"line_ending": "Unix"
 			}
 		},
@@ -92,58 +130,10 @@
 			}
 		},
 		{
-			"file": "test/loaders.js",
+			"file": "src/convert/xls/xls.js",
 			"settings":
 			{
-				"buffer_size": 1292,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "test/pgsql.js",
-			"settings":
-			{
-				"buffer_size": 6880,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/file.js",
-			"settings":
-			{
-				"buffer_size": 4031,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/loaders.js",
-			"settings":
-			{
-				"buffer_size": 1360,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/pgsql.js",
-			"settings":
-			{
-				"buffer_size": 2519,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/transformers.js",
-			"settings":
-			{
-				"buffer_size": 4836,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/DataSet.js",
-			"settings":
-			{
-				"buffer_size": 7118,
+				"buffer_size": 813,
 				"line_ending": "Unix"
 			}
 		}
@@ -157,6 +147,18 @@
 			[
 				"me",
 				"View: Toggle Menu"
+			],
+			[
+				"pack re",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack in",
+				"Package Control: Install Package"
+			],
+			[
+				"pack rem",
+				"Package Control: Remove Package"
 			],
 			[
 				"ss css",
@@ -187,16 +189,8 @@
 				"Set Syntax: CoffeeScript"
 			],
 			[
-				"pack in",
-				"Package Control: Install Package"
-			],
-			[
 				"ss sql",
 				"Set Syntax: SQL"
-			],
-			[
-				"pack re",
-				"Package Control: Remove Package"
 			],
 			[
 				"ss bash",
@@ -204,10 +198,6 @@
 			],
 			[
 				"ack re",
-				"Package Control: Remove Package"
-			],
-			[
-				"pack rem",
 				"Package Control: Remove Package"
 			],
 			[
@@ -227,7 +217,7 @@
 	},
 	"console":
 	{
-		"height": 392.0,
+		"height": 245.0,
 		"history":
 		[
 			"import subprocess",
@@ -249,32 +239,42 @@
 	},
 	"file_history":
 	[
-		"/home/urban4m/git/delimit/src/latlong.js",
-		"/home/urban4m/git/delimit/src/convert.js",
-		"/home/urban4m/git/delimit/test/convert/csv/csv2tsv.js",
-		"/home/urban4m/git/delimit/test/convert/csv/csv.js",
-		"/home/urban4m/git/delimit/test/convert/json/json.js",
-		"/home/urban4m/git/delimit/src/transformers.js",
-		"/home/urban4m/git/delimit/src/convert/csv/csv.js",
-		"/home/urban4m/git/delimit/src/convert/json/json.js",
-		"/home/urban4m/git/delimit/src/defines.js",
-		"/home/urban4m/git/delimit/src/file.js",
-		"/home/urban4m/git/delimit/src/DataSet.js",
-		"/home/urban4m/git/delimit/src/pgsql.js",
-		"/home/urban4m/git/delimit/test/convert/tsv/tsv.js",
-		"/home/urban4m/git/delimit/test/convert/xls/xls.js",
-		"/home/urban4m/git/delimit/test/convert/xls/xls2tsv.js",
-		"/home/urban4m/git/delimit/test/DataSet.js",
-		"/home/urban4m/git/delimit/test/dataType.js",
 		"/home/urban4m/git/delimit/test/defines.js",
+		"/home/urban4m/git/delimit/src/defines.js",
+		"/home/urban4m/git/delimit/package.json",
+		"/home/urban4m/.config/awesome/themes/mine-dark/theme.lua",
+		"/home/urban4m/.config/sublime-text-3/Packages/User/SublimeLinter.sublime-settings",
+		"/home/urban4m/.config/awesome/rc.lua",
+		"/home/urban4m/.config/sublime-text-3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/home/urban4m/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/urban4m/.config/awesome/themes/mine-light/theme.lua",
+		"/home/urban4m/git/delimit/bin/package.json",
+		"/home/urban4m/git/delimit/src/convert/tsv/tsv.js",
+		"/home/urban4m/git/delimit/src/file.js",
+		"/home/urban4m/git/delimit/src/dataType.js",
+		"/home/urban4m/git/delimit/src/convert.js",
+		"/home/urban4m/git/delimit/src/loaders.js",
+		"/home/urban4m/git/delimit/src/latlong.js",
+		"/home/urban4m/git/delimit/src/pgsql.js",
+		"/home/urban4m/git/delimit/src/transformers.js",
+		"/home/urban4m/git/delimit/src/DataSet.js",
+		"/home/urban4m/git/delimit/test/DataSet.js",
 		"/home/urban4m/git/delimit/test/file.js",
 		"/home/urban4m/git/delimit/test/loaders.js",
 		"/home/urban4m/git/delimit/test/pgsql.js",
 		"/home/urban4m/git/delimit/test/transformers.js",
-		"/home/urban4m/git/delimit/package.json",
-		"/home/urban4m/git/delimit/src/dataType.js",
-		"/home/urban4m/git/delimit/src/loaders.js",
-		"/home/urban4m/git/delimit/src/convert/tsv/tsv.js",
+		"/home/urban4m/git/delimit/test/convert/csv/csv.js",
+		"/home/urban4m/git/delimit/test/convert/csv/csv2tsv.js",
+		"/home/urban4m/git/delimit/test/convert/json/json.js",
+		"/home/urban4m/git/delimit/test/convert/tsv/tsv.js",
+		"/home/urban4m/git/delimit/test/convert/xls/xls.js",
+		"/home/urban4m/git/delimit/test/convert/xls/xls2tsv.js",
+		"/home/urban4m/git/delimit/index.js",
+		"/home/urban4m/git/delimit/README.md",
+		"/home/urban4m/git/delimit/LICENSE.txt",
+		"/home/urban4m/git/delimit/src/convert/csv/csv.js",
+		"/home/urban4m/git/delimit/src/convert/json/json.js",
+		"/home/urban4m/git/delimit/test/dataType.js",
 		"/home/urban4m/git/delimit/test/convert/json/files/jsonSimple.json",
 		"/home/urban4m/git/delimit/src/convert/csv/csv2tsv.js",
 		"/home/urban4m/git/delimit/src/convert/csv/pipeCsv2tsv.py",
@@ -366,17 +366,7 @@
 		"/run/user/urban4m/gvfs/sftp:host=10.1.10.141,user=files/home/urban4m/data/users/files/public/Trevor/Hongs Folder :)/geo_addrpnt.txt",
 		"/home/urban4m/workspace/casplug/dance.js",
 		"/home/urban4m/workspace/casplug/bot/auth_cookies/bot_0.json",
-		"/home/urban4m/workspace/casplug/auth.js",
-		"/home/urban4m/workspace/casplug/singleBot.js",
-		"/home/urban4m/workspace/casplug/node_modules/spooky/examples/hello.js",
-		"/home/urban4m/workspace/casplug/node_modules/spooky/examples/cucumber/steps/navigation.js",
-		"/home/urban4m/workspace/casplug/node_modules/spooky/examples/cucumber/features/navigation.feature",
-		"/home/urban4m/workspace/casplug/src",
-		"/home/urban4m/git/plugapi/src/client.js",
-		"/home/urban4m/git/plugapi/src/index.js",
-		"/home/urban4m/git/plugapi/src/sockjs-client.js",
-		"/home/urban4m/git/db_auto/bin/out.",
-		"/home/urban4m/git/auto/test.py"
+		"/home/urban4m/workspace/casplug/auth.js"
 	],
 	"find":
 	{
@@ -387,6 +377,8 @@
 		"height": 94.0,
 		"where_history":
 		[
+			"",
+			"<open files>",
 			""
 		]
 	},
@@ -395,6 +387,24 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"theme",
+			"mine",
+			"len",
+			"{\n",
+			" {",
+			"{\n",
+			"options",
+			" {",
+			"{\n",
+			"void\\('debug'",
+			"'debug'",
+			"skip",
+			"async",
+			"require.*convert",
+			"convert",
+			"convert.toPgSql",
+			"toPgSql",
+			"callback",
 			"throwError",
 			"readJson",
 			");\n",
@@ -504,25 +514,7 @@
 			"debug\\(",
 			"debug",
 			"stats",
-			"bold",
-			"exec",
-			"&>/",
-			"downloadDir",
-			"https",
-			"exit",
-			"process.exit\\(1",
-			"console.error",
-			"stderr\\.on",
-			"stderr",
-			"spawn",
-			"process.stderr.write",
-			"raw\\.",
-			"USERSCRIPTS",
-			"./raw/raw",
-			"spawn",
-			"exec",
-			"require",
-			"raw"
+			"bold"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -546,175 +538,24 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 6,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "test/DataSet.js",
+					"file": "src/DataSet.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13503,
+						"buffer_size": 7118,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1051,
-								1051
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "test/file.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8382,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								210,
-								210
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "test/loaders.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1292,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								725,
-								725
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "test/pgsql.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6880,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								379,
-								379
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 54.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 3,
-			"sheets":
-			[
-				{
-					"buffer": 4,
-					"file": "src/file.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4031,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1620,
-								1620
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 675.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "src/loaders.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1360,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								459,
-								459
+								0,
+								0
 							]
 						],
 						"settings":
@@ -730,55 +571,55 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "src/pgsql.js",
+					"buffer": 1,
+					"file": "bin/delimit.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2519,
+						"buffer_size": 2842,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								691,
-								691
+								885,
+								885
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 405.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "src/transformers.js",
+					"buffer": 2,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4836,
+						"buffer_size": 4471,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1842,
-								1842
+								904,
+								904
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"word_wrap": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -788,20 +629,48 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "src/DataSet.js",
+					"buffer": 3,
+					"file": "test/convert/csv/files/csvSimple.csv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7118,
+						"buffer_size": 58,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1016,
-								1016
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "index.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3756,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3705,
+								3705
 							]
 						],
 						"settings":
@@ -810,10 +679,68 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 486.0,
+						"translation.y": 765.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "test/file.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8382,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/convert/xls/xls.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 813,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								568,
+								568
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -836,18 +763,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.553964125698,
 			1.0
 		],
 		"rows":
@@ -949,12 +869,12 @@
 		"selected_items":
 		[
 			[
-				"dm",
-				"~/git/dm_auto/dm_auto.sublime-project"
-			],
-			[
 				"db",
 				"~/git/db_auto/db_auto.sublime-project"
+			],
+			[
+				"dm",
+				"~/git/dm_auto/dm_auto.sublime-project"
 			],
 			[
 				"sa",

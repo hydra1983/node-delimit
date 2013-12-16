@@ -131,6 +131,8 @@ exports.getPgSqlTransformer = function(options) {
 
 	// Transform the output values based on data type
 	transformer.output = function(dataType, value) {
+		var i, len;
+
 		switch (dataType) {
 			case defines.INTEGER: return parseInt(value, 10);
 			case defines.BIGINTEGER: return parseInt(value, 10);

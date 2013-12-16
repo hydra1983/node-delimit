@@ -91,3 +91,18 @@ exports.toPgSql = function(file, options) {
 		"You've provided a file with an invalid extension of '" +
 		extension + "'"));
 };
+
+exports.convertTo = function(file, convertTo, options) {
+	var convertPromise;
+
+	switch (convertTo.toUpperCase()) {
+	    case 'PG':
+	        convertPromise = exports.toPgSql(file, options);
+	        break;
+	    default:
+	        convertPromise = when.reject(new Error(
+	        	'Invalid convertTo provided'));
+	}
+
+	return convertPromise;
+};
