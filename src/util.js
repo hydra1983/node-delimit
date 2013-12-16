@@ -7,6 +7,7 @@ exports.getOptions = function(givenOpts) {
 		return givenOpts;
 	}
 
+	givenOpts = givenOpts || {};
 	var retOpts = {};
 
 	var addOption = function(name, alias, is_bool, describe, value) {
@@ -29,34 +30,33 @@ exports.getOptions = function(givenOpts) {
 		value: true
 	});
 
-	addOption('name', 'n', false,
+	addOption('name', 'n', false
 	, 'What should we name our dataset?'
 	, (givenOpts.name || 'default_name'));
 
-	addOption('appendString', 'a', false,
+	addOption('appendString', 'a', false
 	, 'What String should we append to the end of our dataset name?'
 	, (typeof givenOpts.appendString === 'undefined'
 		? '' : givenOpts.appendString));
 
-	addOption('prependString', 'p', false,
+	addOption('prependString', 'p', false
 	, 'What String should we prepend to the beginning of our dataset name?'
 	, (typeof givenOpts.prependString === 'undefined'
 		? '' : givenOpts.prependString));
 
-	addOption('headerRow', 'H', false,
+	addOption('headerRow', 'H', false
 	, '[DELIMITED FILES ONLY] What row contains header information?'
 	, (givenOpts.headerRow = typeof givenOpts.headerRow === 'undefined'
 		? 0 : givenOpts.headerRow));
 
-	addOption('ignoreEmptyHeaders', 'E', true,
+	addOption('ignoreEmptyHeaders', 'E', true
 	, 'Should we ignore columns in data with empty headers?'
 	, (givenOpts.ignoreEmptyHeaders || false));
 
-	addOption('forceTypes', 'f', false,
+	addOption('forceTypes', 'f', false
 	, 'Force a type for a given column? (comma separated)\n' +
 		"e.g. 'column_name:boolean,another_column:text'"
 	, (function(forceTypes) {
-		// @TODO
 		if (typeof forceTypes === 'object') { return forceTypes; }
 		if (typeof forceTypes !== 'string') { return undefined; }
 
@@ -73,7 +73,7 @@ exports.getOptions = function(givenOpts) {
 		}, {});
 	})(givenOpts.forceTypes));
 
-	addOption('ignoreTypes', 't', false,
+	addOption('ignoreTypes', 't', false
 	, "Ignore a specific type?\n" +
 		" e.g. make a column of 0's and 1's type int instead of boolean"
 	, (function(ignoreTypes) {
@@ -91,28 +91,28 @@ exports.getOptions = function(givenOpts) {
 		}, []);
 	})(givenOpts.ignoreTypes));
 
-	addOption('useHeaders', 'u', false,
+	addOption('useHeaders', 'u', false
 	, 'Have we specified out own headers?'
 	, (function(useHeaders) {
 		if (useHeaders instanceof Array) { return useHeaders; }
 		if (typeof useHeaders === 'string') { return useHeaders.split(','); }
-		return false;
+		return undefined;
 	})(givenOpts.useHeaders));
 
-	addOption('maintainHeaders', 'A', true,
+	addOption('maintainHeaders', 'A', true
 	, 'Maintain the original header names?\n' +
 		'(e.g. do not switch to zip, lat, lng, etc)'
 	, (givenOpts.maintainHeaders ? true : false));
 
-	addOption('dataOnly', 'A', true,
+	addOption('dataOnly', 'A', true
 	, '[PSQL ONLY] Only output data SQL (no create statement)'
-	, (givenOpts.dataOnly && !givenOpts.createOnly));
+	, ((givenOpts.dataOnly && !givenOpts.createOnly) || false));
 
-	addOption('createOnly', 'A', true,
+	addOption('createOnly', 'A', true
 	, '[PSQL ONLY] Only output create table SQL (no data)'
-	, (givenOpts.createOnly && !givenOpts.dataOnly));
+	, ((givenOpts.createOnly && !givenOpts.dataOnly) || false));
 
-	addOption('insertStatements', 'A', true,
+	addOption('insertStatements', 'A', true
 	, '[PSQL ONLY] Use insert statements instead of dump format?'
 	, (givenOpts.insertStatements ? true : false));
 
