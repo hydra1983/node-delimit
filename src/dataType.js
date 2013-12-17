@@ -12,14 +12,9 @@ exports.isStringEmpty = function(transformer, string) {
 	string = string.replace(/\r/g, '');
 	string = string.trim();
 
-	var i, len = transformer.emptyValues.length;
-	for(i = 0; i < len; ++i) {
-		if(transformer.emptyValues[i].toUpperCase() == string.toUpperCase()) {
-			return true;
-		}
-	}
-
-	return false;
+	return transformer.emptyValues.some(function(value) {
+		return value.toUpperCase() === string.toUpperCase();
+	});
 };
 
 exports.isStringBoolean = function(transformer, string, oldString) {
@@ -48,13 +43,13 @@ exports.isStringBigInteger = function(transformer, string, kickLeadingZeros) {
 
 	var isInt = parsed.match(/^-?\d+(?:\.0+)?$/) ? true : false;
 
-	if(isInt && kickLeadingZeros && string.match(/^0/)) {
+	if (isInt && kickLeadingZeros && string.match(/^0/)) {
 		return false;
 	}
 
-	if(isInt) {
+	if (isInt) {
 		var parsedInt = parseInt(parsed, 10);
-		if(parsedInt < -2147483648 || parsedInt > 2147483647) {
+		if (parsedInt < -2147483648 || parsedInt > 2147483647) {
 			return true;
 		}
 	}
@@ -74,11 +69,11 @@ exports.isStringInteger = function(transformer, string, kickLeadingZeros) {
 
 	var isInt = parsed.match(/^-?\d+(?:\.0+)?$/) ? true : false;
 
-	if(isInt && kickLeadingZeros && string.match(/^0/)) {
+	if (isInt && kickLeadingZeros && string.match(/^0/)) {
 		return false;
 	}
 
-	if(isInt) {
+	if (isInt) {
 		var parsedInt = parseInt(parsed, 10);
 		if(parsedInt >= -2147483648 && parsedInt <= 2147483647) {
 			return true;
@@ -93,12 +88,12 @@ exports.isStringPrimaryInteger = function(transformer, string, oldString) {
 
 	var stringIsInt = exports.isStringInteger(transformer, string);
 
-	if(stringIsInt && typeof oldString === 'undefined') {
+	if (stringIsInt && typeof oldString === 'undefined') {
 		return true;
 	}
 
 	var oldStringIsInt = exports.isStringInteger(transformer, oldString || '');
-	if(stringIsInt && oldStringIsInt) {
+	if (stringIsInt && oldStringIsInt) {
 		try {
 			var isGreater = parseInt(string, 10) > parseInt(oldString, 10);
 		} catch (e) {}
@@ -125,7 +120,7 @@ exports.isStringNumber = function(transformer, string) {
 };
 
 exports.isStringZip = function(transformer, string) {
-	if(transformer.ignoreType(defines.ZIP)) { return false; }
+	if (transformer.ignoreType(defines.ZIP)) { return false; }
 
 	return string.match(/^\d{5}-?(\d{4})?$/) ? true : false;
 };
@@ -156,11 +151,9 @@ exports.isStringLong = function(transformer, string) {
 	if(transformer.ignoreType(defines.LONG)) { return false; }
 
 	if (exports.isStringNumeric(transformer, string)) {
-		var parsed = parseFloat(string);
-		if (inLongRange(parsed)) {
-			return true;
-		}
+		return inLongRange(parseFloat(string));
 	}
+
 	return false;
 };
 
