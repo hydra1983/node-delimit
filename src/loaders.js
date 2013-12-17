@@ -5,7 +5,7 @@ exports.getTsvLoader = function() {
 
 	// Is this row finished or does it continue on another line?
 	loader.lineContinues = function(rowString) {
-		if(rowString === '') {
+		if (rowString === '') {
 			return true;
 		}
 		// Do we end with a continuation?
@@ -14,7 +14,7 @@ exports.getTsvLoader = function() {
 
 	// Has this line finished continuing?
 	loader.lineEnds = function(rowString) {
-		if(rowString === '"') {
+		if (rowString === '"') {
 			return true;
 		}
 

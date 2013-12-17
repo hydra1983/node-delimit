@@ -47,12 +47,12 @@ exports.tsvToPgSql = function(filePath, writeStream, options) {
 
 		writeStream.write(pgsql.getHeaderSql(name));
 
-		if(!options.dataOnly) {
+		if (!options.dataOnly) {
 			writeStream.write(pgsql.getCreateTableSql(
 				name, fileAttributes.headers, fileAttributes.dataTypes,
 				pgSqlTransformer));
 		}
-		if(!options.createOnly && !options.insertStatements) {
+		if (!options.createOnly && !options.insertStatements) {
 			writeStream.write(pgsql.getCopyHeaderSql(
 				name, fileAttributes.headers, fileAttributes.dataTypes,
 				pgSqlTransformer));
@@ -64,10 +64,10 @@ exports.tsvToPgSql = function(filePath, writeStream, options) {
 			filePath, tsvLoader, pgSqlTransformer, options,
 			fileAttributes.ignoreColumns,
 			function dataRowHook(dataRow) {
-				if(!options.createOnly) {
+				if (!options.createOnly) {
 					adjustedDataRow = dataType.getAdjustedDataRow(
 						pgSqlTransformer, fileAttributes.dataTypes, dataRow);
-					if(options.insertStatements) {
+					if (options.insertStatements) {
 						writeStream.write(
 							pgsql.getInsertDataRowSql(
 								name, fileAttributes.headers, adjustedDataRow,
@@ -80,7 +80,7 @@ exports.tsvToPgSql = function(filePath, writeStream, options) {
 				}
 			}
 		).then(function() {
-			if(!options.createOnly && !options.insertStatements) {
+			if (!options.createOnly && !options.insertStatements) {
 				writeStream.write(pgsql.getCopyFooterSql());
 			}
 

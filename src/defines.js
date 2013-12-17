@@ -13,7 +13,7 @@ exports.PRIMARY_INTEGER = 8;
 
 exports.getDefine = function(thing) {
 
-	if(!isNaN(thing)) {
+	if (!isNaN(thing)) {
 		return thing;
 	}
 

@@ -369,7 +369,7 @@ describe.only('DataSet', function() {
 			dataset = new DataSet(headers, dataTypes, data);
 
 			dataset.testColumnByIndex(0, function(item_in_column) {
-				if(item_in_column > 0) {
+				if (item_in_column > 0) {
 					return true;
 				} else {
 					return false;
@@ -389,7 +389,7 @@ describe.only('DataSet', function() {
 			dataset = new DataSet(headers, dataTypes, data);
 
 			dataset.testColumnByIndex(0, function(item_in_column) {
-				if(item_in_column > 0) {
+				if (item_in_column > 0) {
 					return true;
 				} else {
 					return false;
@@ -410,7 +410,7 @@ describe.only('DataSet', function() {
 			dataset = new DataSet(headers, dataTypes, data);
 
 			dataset.testColumnByIndex(0, function(item_in_column) {
-				if(item_in_column > 0) {
+				if (item_in_column > 0) {
 					return true;
 				} else {
 					return false;
@@ -431,7 +431,7 @@ describe.only('DataSet', function() {
 			dataset = new DataSet(headers, dataTypes, data);
 
 			dataset.testColumnByIndex(0, function(item_in_column) {
-				if(item_in_column > 0) {
+				if (item_in_column > 0) {
 					return true;
 				} else {
 					return false;

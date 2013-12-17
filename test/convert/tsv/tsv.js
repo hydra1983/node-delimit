@@ -178,7 +178,7 @@ describe('tsv', function() {
 				ws.end();
 
 				// fs.readFile('tsvToPgSql_1.sql', {encoding: 'utf8'}, function(error, data) {
-				// 	if(error) { throw error; }
+				// 	if (error) { throw error; }
 				// 	data.should.be.ok;
 				// 	data.indexOf("one\t4.4\n" +
 				// 				 "two\t5.5\n" +
@@ -212,7 +212,7 @@ describe('tsv', function() {
 				ws.end();
 
 				// fs.readFile('tsvToPgSql_2.sql', {encoding: 'utf8'}, function(error, data) {
-				// 	if(error) { throw error; }
+				// 	if (error) { throw error; }
 				// 	data.should.be.ok;
 				// 	data.indexOf("copy").should.not.equal(-1); // data should exist
 				// 	data.indexOf("create table").should.equal(-1); // create shouldn't

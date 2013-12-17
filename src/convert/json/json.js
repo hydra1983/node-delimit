@@ -55,10 +55,10 @@ exports.processSingleDataset = function(dataset, transformer, writeStream, optio
 	var processHeader = function() {
 		var header = pgsql.getHeaderSql(name);
 
-		if(!options.dataOnly) {
+		if (!options.dataOnly) {
 			header += pgsql.getCreateTableSql(name, headers, dataTypes, transformer);
 		}
-		if(!options.createOnly && !options.insertStatements) {
+		if (!options.createOnly && !options.insertStatements) {
 			header += pgsql.getCopyHeaderSql(name, headers, dataTypes, transformer);
 		}
 
@@ -70,11 +70,11 @@ exports.processSingleDataset = function(dataset, transformer, writeStream, optio
 	var processData = function() {
 		var out = '', adjustedDataRow;
 
-		for(var i = 0, len = data.length; i < len; ++i) {
+		for (var i = 0, len = data.length; i < len; ++i) {
 			adjustedDataRow = dataType.getAdjustedDataRow(
 				transformer, dataTypes, data[i]);
 
-			if(options.insertStatements) {
+			if (options.insertStatements) {
 				out += pgsql.getInsertDataRowSql(
 					name, headers, adjustedDataRow, transformer);
 			} else {
@@ -90,7 +90,7 @@ exports.processSingleDataset = function(dataset, transformer, writeStream, optio
 	var processFooter = function() {
 		var footer = '';
 
-		if(!options.createOnly && !options.insertStatements) {
+		if (!options.createOnly && !options.insertStatements) {
 		    footer += pgsql.getCopyFooterSql();
 		}
 
@@ -107,7 +107,7 @@ exports.processSingleDataset = function(dataset, transformer, writeStream, optio
 exports.jsonToPgSql = function(parsedJson, writeStream, options) {
 	var datasets = [];
 
-	if(typeof parsedJson === 'object' && parsedJson instanceof Array) {
+	if (typeof parsedJson === 'object' && parsedJson instanceof Array) {
 		datasets = exports.jsonToDataSets(parsedJson, options);
 	} else if (typeof parsedJson === 'object') {
 		datasets.push(exports.jsonToDataSet(parsedJson, options));

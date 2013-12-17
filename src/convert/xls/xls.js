@@ -17,7 +17,7 @@ exports.xlsToPgSql = function(filePath, writeStream, options) {
 			var modifiedOptions = _.clone(options);
 
 			// append sheet name if there is more than one file
-			if(info.files.length > 1) {
+			if (info.files.length > 1) {
 				modifiedOptions.name = options.name + "_" +
 					transformers.normalizeString(file.sheetName);
 			}

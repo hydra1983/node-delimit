@@ -37,7 +37,7 @@ exports.dmsToDecimal = function(dmsString) {
 	// Run the regular expression on the DMS String provided
 	var match = dmsString.match(/(\+?-?)(\d+)([NSEWnsew]?)\S?\s+(\d+)'?\s+(\d+\.?\d*)"?/);
 	// Throw an error if there was a problem running the DMS String provided
-	if(!match) { throw new Error('Invalid DMS String provided'); }
+	if (!match) { throw new Error('Invalid DMS String provided'); }
 	// Parse out the match objects into their respective categories
 	// e.g. given ["34N 40' 50.12"", "", "34", "N", "40", "50.12"] ...
 	var degrees     = parseFloat(match[2]),
@@ -47,11 +47,11 @@ exports.dmsToDecimal = function(dmsString) {
 		sign        = match[1], // + or -
 		cardinal    = match[3].toUpperCase(); // N S E W
 	// Invalid to have both cardinal and a sign specified. Should be one or the other
-	if(cardinal && sign) { throw new Error('Invalid DMS String syntax: DMS should either specify cardinal (NSEW) or a sign (+/-) but not both!'); }
+	if (cardinal && sign) { throw new Error('Invalid DMS String syntax: DMS should either specify cardinal (NSEW) or a sign (+/-) but not both!'); }
 	// Adjust degree value if a cardinal was specified (make it negative)
-	if(cardinal === "S" || cardinal === "W") { decimal = 0 - decimal; }
+	if (cardinal === "S" || cardinal === "W") { decimal = 0 - decimal; }
 	// Adjust degree value if a sign was present
-	if(sign === "-") { decimal = 0 - decimal; }
+	if (sign === "-") { decimal = 0 - decimal; }
 
 	return decimal;
 };

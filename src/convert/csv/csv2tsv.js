@@ -8,7 +8,7 @@ module.exports = function(filePath) {
 	var defer = when.defer();
 
 	fs.exists(filePath, function(exists) {
-		if(!exists) {
+		if (!exists) {
 			return defer.reject(new Error(
 				'File ' + filePath + ' does not exist'));
 		}

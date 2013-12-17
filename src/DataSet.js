@@ -1,25 +1,25 @@
 "use strict";
 
 function validateHeaders(headers) {
-	if(typeof headers !== 'undefined' && !(headers instanceof Array)) {
+	if (typeof headers !== 'undefined' && !(headers instanceof Array)) {
 		throw new Error('headers should be an instance of an array');
 	}
 }
 
 function validateDataTypes(dataTypes) {
-	if(typeof dataTypes !== 'undefined' && !(dataTypes instanceof Array)) {
+	if (typeof dataTypes !== 'undefined' && !(dataTypes instanceof Array)) {
 		throw new Error('dataTypes should be an instance of an array');
 	}
 }
 
 function validateData(data) {
-	if(typeof data !== 'undefined' && !(data instanceof Array)) {
+	if (typeof data !== 'undefined' && !(data instanceof Array)) {
 		throw new Error('data should be an instance of an array');
 	}
 
-	if(typeof data !== 'undefined') {
-		if(data.length > 0) {
-			if(typeof data[0] === 'undefined' || !(data[0] instanceof Array)) {
+	if (typeof data !== 'undefined') {
+		if (data.length > 0) {
+			if (typeof data[0] === 'undefined' || !(data[0] instanceof Array)) {
 				throw new Error('data should be an array of arrays');
 			}
 		}
@@ -27,7 +27,7 @@ function validateData(data) {
 }
 
 function validateDataSetParameters(headers, dataTypes, data, primaryColumn) {
-	if(typeof headers === 'undefined' &&
+	if (typeof headers === 'undefined' &&
 		typeof dataTypes === 'undefined' &&
 		typeof data === 'undefined') {
 		return;
@@ -42,21 +42,21 @@ function getDataRange(headers, dataTypes, data) {
 		dataTypesRange = -1,
 		dataRange = -1;
 
-	if(typeof headers !== 'undefined') {
+	if (typeof headers !== 'undefined') {
 		headerRange = headers.length;
 	}
-	if(typeof dataTypes !== 'undefined') {
+	if (typeof dataTypes !== 'undefined') {
 		dataTypesRange = dataTypes.length;
 	}
-	if(typeof data !== 'undefined') {
-		if(data.length > 0) {
+	if (typeof data !== 'undefined') {
+		if (data.length > 0) {
 			dataRange = data[0].length;
 		}
 	}
 
 	var compareRanges = function(rangeOne, rangeTwo) {
-		if(rangeOne !== -1 && rangeTwo !== -1) {
-			if(rangeOne !== rangeTwo) {
+		if (rangeOne !== -1 && rangeTwo !== -1) {
+			if (rangeOne !== rangeTwo) {
 				throw new Error('The data provided has mis-matched ranges');
 			}
 		}
@@ -91,20 +91,20 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 
 	this.testColumnByIndex = function(columnIndex, callback, match_precision) {
 
-		if(typeof callback !== 'function') {
+		if (typeof callback !== 'function') {
 			throw new Error('This function requires a callback function to operate on items in a column and return true or false accordingly');
 		}
 
-		if(match_precision && (match_precision > 1 || match_precision < 0)) {
+		if (match_precision && (match_precision > 1 || match_precision < 0)) {
 			throw new Error('Match precision is not within allowed range of 0-1');
 		}
 
 		var row, item, total=0, totalMiss=0;
-		for(var index in this._data) {
+		for (var index in this._data) {
 			row = this._data[index];
 			item = row[columnIndex];
-			if(!callback(item)) {
-				if(!match_precision) {
+			if (!callback(item)) {
+				if (!match_precision) {
 					return false;
 				}
 				++totalMiss;
@@ -112,7 +112,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 			++total;
 		}
 
-		if(match_precision) {
+		if (match_precision) {
 			return (totalMiss / total) <= match_precision;
 		}
 
@@ -121,7 +121,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 
 	this.getColumnByIndex = function(columnIndex) {
 		var row, column = [];
-		for(var index in this._data) {
+		for (var index in this._data) {
 			row = this._data[index];
 			column.push(row[columnIndex]);
 		}
@@ -134,10 +134,10 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 
 	// "Kinda" Setter methods, e.g. they modify the variables
 	this.setSingleHeader = function(columnIndex, headerName) {
-		if(typeof this._headers === 'undefined') {
+		if (typeof this._headers === 'undefined') {
 			throw new Error('Headers are not defined yet! Unable to modify');
 		}
-		if(columnIndex < 0 || columnIndex >= this._dataRange) {
+		if (columnIndex < 0 || columnIndex >= this._dataRange) {
 			throw new Error('Can not change header, column index out of range');
 		}
 
@@ -145,10 +145,10 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 	};
 
 	this.setSingleDataType = function(columnIndex, dataType) {
-		if(typeof this._dataTypes === 'undefined') {
+		if (typeof this._dataTypes === 'undefined') {
 			throw new Error('DataTypes are not defined yet! Unable to modify');
 		}
-		if(columnIndex < 0 || columnIndex >= this._dataRange) {
+		if (columnIndex < 0 || columnIndex >= this._dataRange) {
 			throw new Error('Can not change data type, column index out of range');
 		}
 
@@ -156,24 +156,24 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 	};
 
 	this.addDataRow = function(dataRow) {
-		if(typeof dataRow === 'undefined' || !(dataRow instanceof Array)) {
+		if (typeof dataRow === 'undefined' || !(dataRow instanceof Array)) {
 			throw new Error('dataRow is undefined or is not an array');
 		}
-		if(dataRow.length <= 0) {
+		if (dataRow.length <= 0) {
 			throw new Error('You must provide at least one element');
 		}
 
-		if(typeof this._data === 'undefined') {
+		if (typeof this._data === 'undefined') {
 			this._data = [];
 		}
 
-		if(this._dataRange === -1) {
+		if (this._dataRange === -1) {
 			this._data.push(dataRow);
 			this._dataRange = getDataRange(this._headers,
 										   this._dataTypes,
 										   this._data);
 		}
-		else if(dataRow.length === this._dataRange) {
+		else if (dataRow.length === this._dataRange) {
 			this._data.push(dataRow);
 		}
 		else {
@@ -187,7 +187,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 	}
 
 	this.setPrimaryColumn = function(primaryColumn) {
-		if(primaryColumn < 0 || primaryColumn >= this._dataRange) {
+		if (primaryColumn < 0 || primaryColumn >= this._dataRange) {
 			throw new Error('Invalid primary column. It falls outside of the dataset range');
 		}
 		this._primaryColumn = primaryColumn;
@@ -196,7 +196,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 	this.setHeaders = function(headers) {
 		validateHeaders(headers);
 
-		if(this._dataRange === -1) {
+		if (this._dataRange === -1) {
 			this._headers = headers;
 			this._dataRange = getDataRange(this._headers,
 										   this._dataTypes,
@@ -204,7 +204,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 			return;
 		}
 
-		if(headers.length !== this._dataRange) {
+		if (headers.length !== this._dataRange) {
 			throw new Error('Invalid header length. It does not match the data range');
 		}
 
@@ -215,7 +215,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 
 		validateDataTypes(dataTypes);
 
-		if(this._dataRange === -1) {
+		if (this._dataRange === -1) {
 			this._dataTypes = dataTypes;
 			this._dataRange = getDataRange(this._headers,
 										   this._dataTypes,
@@ -223,7 +223,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 			return;
 		}
 
-		if(dataTypes.length !== this._dataRange) {
+		if (dataTypes.length !== this._dataRange) {
 			throw new Error('Invalid dataTypes length. It does not match the data range');
 		}
 
@@ -233,7 +233,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 	this.setData = function(data) {
 		validateData(data);
 
-		if(this._dataRange === -1) {
+		if (this._dataRange === -1) {
 			this._data = data;
 			this._dataRange = getDataRange(this._headers,
 										   this._dataTypes,
@@ -241,14 +241,14 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 			return;
 		}
 
-		if(typeof data !== 'undefined') {
-			if(data.length > 0) {
-				if(data[0].length !== this._dataRange) {
+		if (typeof data !== 'undefined') {
+			if (data.length > 0) {
+				if (data[0].length !== this._dataRange) {
 					throw new Error('Invalid data width. It does not match the data range');
 				}
 			}
 		} else {
-			if(this._dataRange !== -1) {
+			if (this._dataRange !== -1) {
 				throw new Error('Invalid data width. It does not match the data range');
 			}
 		}

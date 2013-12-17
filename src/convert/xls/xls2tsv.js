@@ -34,7 +34,7 @@ function getTsvFilePaths(tempDir) {
 	var fsExistsDefer = when.defer();
 	fs.exists(tempDir, fsExistsDefer.resolve);
 	return fsExistsDefer.promise.then(function(exists) {
-		if(!exists) {
+		if (!exists) {
 			return when.reject(new Error(
 				'Directory ' + tempDir + ' does not exist'));
 		}

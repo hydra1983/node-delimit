@@ -14,8 +14,8 @@ exports.isDataRowEmpty = function(transformer, dataRow) {
 
 exports.getIgnoreColumns = function(transformer, headers) {
 	var i = 0, len = headers.length, ignoreColumns = [];
-	for(; i < len; ++i) {
-		if(dataType.isStringEmpty(transformer, headers[i])) {
+	for (; i < len; ++i) {
+		if (dataType.isStringEmpty(transformer, headers[i])) {
 			ignoreColumns.push(i);
 		}
 	}
@@ -137,7 +137,7 @@ exports.getAttributes = function(filePath, loader, transformer, options) {
 		// Adjust Data Types
 		if (options.forceType && options.forceType !== false) {
 			dataTypes = [];
-			for(i = 0; i < dataLength; ++i) {
+			for (i = 0; i < dataLength; ++i) {
 				dataTypes.push(options.forceType);
 			}
 		}
@@ -162,7 +162,7 @@ exports.getData = function(filePath, loader, transformer, options, ignoreColumns
 			}
 
 			if (ignoreColumns) {
-				for(i = 0, len = ignoreColumns.length; i < len; ++i) {
+				for (i = 0, len = ignoreColumns.length; i < len; ++i) {
 					dataRow.splice(ignoreColumns[i] - i, 1);
 				}
 			}

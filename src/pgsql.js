@@ -18,19 +18,19 @@ exports.getCreateTableSql = function(tablename, headers, dataTypes, transformer)
 
 	var primaryHeaders = [];
 
-	for(var i = 0, len = headers.length; i < len; ++i) {
+	for (var i = 0, len = headers.length; i < len; ++i) {
 		singleLine = "\t" +
 			transformer.header(dataTypes[i], headers[i]) +
 			" " +
 			transformer.type(dataTypes[i]);
 		columns.push(singleLine);
 
-		if(dataTypes[i] == defines.PRIMARY_INTEGER) {
+		if (dataTypes[i] == defines.PRIMARY_INTEGER) {
 			primaryHeaders.push(transformer.header(dataTypes[i], headers[i]));
 		}
 	}
 
-	if(primaryHeaders.length > 0) {
+	if (primaryHeaders.length > 0) {
 		columns.push('\tprimary key (' + primaryHeaders.join(', ') + ')');
 	}
 
@@ -41,7 +41,7 @@ exports.getCreateTableSql = function(tablename, headers, dataTypes, transformer)
 exports.getCopyHeaderSql = function(tablename, headers, dataTypes, transformer) {
 
 	var adjustedHeaders = [];
-	for(var i = 0, len = headers.length; i < len; ++i) {
+	for (var i = 0, len = headers.length; i < len; ++i) {
 		adjustedHeaders.push(transformer.header(dataTypes[i], headers[i]));
 	}
 
@@ -56,11 +56,11 @@ exports.getCopyHeaderSql = function(tablename, headers, dataTypes, transformer) 
 exports.getCopyDataRowSql = function(dataRow, transformer) {
 	var i, len;
 	var adjustedDataRow = [], adjusted;
-	for(i = 0, len = dataRow.length; i < len; ++i) {
+	for (i = 0, len = dataRow.length; i < len; ++i) {
 
 		adjusted = dataRow[i] + '';
 
-		if(transformer.nullValue != dataRow[i]) {
+		if (transformer.nullValue != dataRow[i]) {
 			adjusted = adjusted.replace(/\\/g, "\\\\");
 			adjusted = adjusted.replace(/\n/g, "\\n");
 			adjusted = adjusted.replace(/\r/g, "\\r");
@@ -76,9 +76,9 @@ exports.getCopyDataRowSql = function(dataRow, transformer) {
 exports.getInsertDataRowSql = function(tablename, headers, dataRow, transformer) {
 	var i, len, adjustedDataRow = [], adjusted;
 
-	for(i = 0, len = dataRow.length; i < len; ++i) {
+	for (i = 0, len = dataRow.length; i < len; ++i) {
 		adjusted = dataRow[i];
-		if(transformer.nullValue != dataRow[i]) {
+		if (transformer.nullValue != dataRow[i]) {
 			adjusted = (dataRow[i] + '').replace(/'/g, "''");
 			adjusted = "E'" + adjusted + "'";
 		}
