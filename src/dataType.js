@@ -32,25 +32,11 @@ exports.isStringBoolean = function(transformer, string, oldString) {
 
 	var i, len, stringBoolean = false;
 
-	len = transformer.booleanValues.isTrue.length;
-	for (i = 0; i < len; ++i) {
-		if (transformer.booleanValues.isTrue[i].toUpperCase() ==
-			string.toUpperCase())
-		{
-			stringBoolean = true;
-			break;
-		}
-	}
-
-	len = transformer.booleanValues.isFalse.length;
-	for (i = 0; i < len; ++i) {
-		if (transformer.booleanValues.isFalse[i].toUpperCase() ==
-			string.toUpperCase())
-		{
-			stringBoolean = true;
-			break;
-		}
-	}
+	stringBoolean = transformer.booleanValues.isTrue.some(function(item) {
+		return item.toUpperCase() === string.toUpperCase();
+	}) || transformer.booleanValues.isFalse.some(function(item) {
+		return item.toUpperCase() === string.toUpperCase();
+	});
 
 	return stringBoolean && oldStringBoolean;
 };
