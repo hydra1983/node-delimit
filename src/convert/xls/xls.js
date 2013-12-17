@@ -6,10 +6,10 @@ var when = require('when')
 , tsv = require('../tsv/tsv.js')
 , xls2tsv = require('./xls2tsv.js')
 , _ = require('lodash')
-, util = require('../../util');
+, helper = require('../../helper');
 
 exports.xlsToPgSql = function(filePath, writeStream, options) {
-	options = util.getOptions(options);
+	options = helper.getOptions(options);
 
 	return xls2tsv(filePath).then(function(info) {
 

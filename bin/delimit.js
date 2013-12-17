@@ -2,10 +2,10 @@
 "use strict";
 
 var delimit = require('../index.js')
-, util = require('../src/util');
+, helper = require('../src/helper');
 
 function buildFlags() {
-    var options = util.getOptions()
+    var options = helper.getOptions()
     , flags = {};
 
     for (var item in options) {
@@ -59,10 +59,10 @@ require('main')(module)
 .run(function($) {
     if ($('help')) { $.cerr($.help).exit(); }
     $.assert.argsLen(3);
-    delimit.convert($(0), $(1), $(2), $.flags)
+    delimit.convertStream($(0), $(1), $(2), $.flags)
     .then(function(pgsqlStream) {
         pgsqlStream.pipe(process.stdout);
-        $.exit();
+        pgsqlStream.on('end', $.exit);
     })
     .otherwise(function(error) {
         $.cerr(error.stack || error).exit(1);

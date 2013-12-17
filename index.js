@@ -10,48 +10,51 @@ var when = require('when')
 exports.toPgSql = function(convertFrom, file, options) {
 	options = helper.getOptions(options);
 
-	var pgsqlPromise;
+	var pgsqlStreamPromise;
 
 	switch (convertFrom.toLowerCase()) {
 		case 'xls':
 		case 'xlsx':
-			pgsqlPromise = xls.xlsToPgSql(file, options);
+			pgsqlStreamPromise = xls.xlsToPgSql(file, options);
 			break;
 
 		case 'tsv':
-			pgsqlPromise = tsv.tsvToPgSql(file, options);
+			pgsqlStreamPromise = tsv.tsvToPgSql(file, options);
 			break;
 
 		case 'csv':
-			pgsqlPromise = csv.csvToPgSql(file, options);
+			pgsqlStreamPromise = csv.csvToPgSql(file, options);
 			break;
 
 		case 'json':
-			pgsqlPromise = json.readJson(file).then(function(jsonObj) {
+			pgsqlStreamPromise = json.readJson(file).then(function(jsonObj) {
 				return json.jsonToPgSql(jsonObj, options);
 			});
 			break;
 
 		default:
-			pgsqlPromise = when.reject(new Error(
+			pgsqlStreamPromise = when.reject(new Error(
 				"Invalid <convertFrom> specified '" + convertFrom + "'"));
 	}
 
-	return pgsqlPromise;
+	return pgsqlStreamPromise;
 };
 
-exports.convert = function(convertFrom, convertTo, file, options) {
-	var convertPromise;
+exports.convertStream = function(convertFrom, convertTo, file, options) {
+
+	options = helper.getOptions(options);
+
+	var convertStreamPromise;
 
 	switch (convertTo.toLowerCase()) {
 		case 'pgsql':
-			convertPromise = exports.toPgSql(convertFrom, file, outStream, options);
+			convertStreamPromise = exports.toPgSql(convertFrom, file, options);
 			break;
 
 		default:
-			convertPromise = when.reject(new Error(
+			convertStreamPromise = when.reject(new Error(
 				'Invalid <convertTo> provided'));
 	}
 
-	return convertPromise;
+	return convertStreamPromise;
 };
