@@ -49,7 +49,7 @@ exports.getOptions = function(givenOpts) {
 	, (givenOpts.headerRow = typeof givenOpts.headerRow === 'undefined'
 		? 0 : givenOpts.headerRow));
 
-	addOption('ignoreEmptyHeaders', 'E', true
+	addOption('ignoreEmptyHeaders', 'e', true
 	, 'Should we ignore columns in data with empty headers?'
 	, (givenOpts.ignoreEmptyHeaders || false));
 
@@ -99,20 +99,20 @@ exports.getOptions = function(givenOpts) {
 		return undefined;
 	})(givenOpts.useHeaders));
 
-	addOption('maintainHeaders', 'A', true
+	addOption('maintainHeaders', 'm', true
 	, 'Maintain the original header names?\n' +
 		'(e.g. do not switch to zip, lat, lng, etc)'
 	, (givenOpts.maintainHeaders ? true : false));
 
-	addOption('dataOnly', 'A', true
+	addOption('dataOnly', 'D', true
 	, '[PSQL ONLY] Only output data SQL (no create statement)'
 	, ((givenOpts.dataOnly && !givenOpts.createOnly) || false));
 
-	addOption('createOnly', 'A', true
+	addOption('createOnly', 'C', true
 	, '[PSQL ONLY] Only output create table SQL (no data)'
 	, ((givenOpts.createOnly && !givenOpts.dataOnly) || false));
 
-	addOption('insertStatements', 'A', true
+	addOption('insertStatements', 'I', true
 	, '[PSQL ONLY] Use insert statements instead of dump format?'
 	, (givenOpts.insertStatements ? true : false));
 
