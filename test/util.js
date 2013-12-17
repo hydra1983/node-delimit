@@ -33,6 +33,19 @@ describe('util', function() {
 			});
 		});
 
+		it.skip('should set a name');
+		it.skip('should set an append string');
+		it.skip('should set a prepend string');
+		it.skip('should set the header row');
+		it.skip('should set ignoreEmptyHeaders');
+		it.skip('should set force types');
+		it.skip('should set ignore types');
+		it.skip('should set the headers to use');
+		it.skip('should set maintain headers');
+		it.skip('should set data only');
+		it.skip('should set create only');
+		it.skip('should set insert only');
+
 	});
 
 });
