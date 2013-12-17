@@ -4,7 +4,7 @@
 var delimit = require('../index.js')
 , util = require('../src/util');
 
-function buildFlags = function() {
+function buildFlags() {
     var options = util.getOptions()
     , flags = {};
 
