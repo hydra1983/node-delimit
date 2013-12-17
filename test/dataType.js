@@ -136,6 +136,7 @@ describe('dataType', function() {
 		it('should fail to find booleans', function() {
 			dataType.isStringBoolean(datasetTransformer, 'hello').should.be.false;
 			dataType.isStringBoolean(datasetTransformer, '2').should.be.false;
+			dataType.isStringBoolean(datasetTransformer, '4').should.be.false;
 		});
 		it('should fail to find boolean (ignore types)', function() {
 			var testTransformer = transformers.getDataSetTransformer({
