@@ -128,7 +128,7 @@ exports.getAttributes = function(filePath, loader, transformer, options) {
 	});
 };
 
-exports.getData = function(filePath, loader, transformer, options, ignoreColumns, dataRowHook, callback) {
+exports.getData = function(filePath, loader, transformer, options, ignoreColumns, dataRowHook) {
 	var i, len;
 
 	return exports.toRows(

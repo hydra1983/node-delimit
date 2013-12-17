@@ -40,9 +40,6 @@ exports.tsvToPgSql = function(filePath, writeStream, options) {
 
 	var duplexStream = new stream.Duplex();
 
-	util.inherits()
-
-
 	var i, len,
 		tsvLoader = loaders.getTsvLoader(),
 		name = (options.prependString + options.name + options.appendString),
