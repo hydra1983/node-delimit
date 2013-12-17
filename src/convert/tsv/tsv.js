@@ -5,12 +5,15 @@ var stream = require('stream')
 , when = require('when')
 , pgsql = require('../../pgsql.js')
 , file = require('../../file.js')
+, helper = require('../../helper')
 , loaders = require('../../loaders.js')
 , transformers = require('../../transformers.js')
 , DataSet = require('../../DataSet.js')
 , dataType = require('../../dataType.js');
 
 exports.tsvToDataSet = function(filePath, options) {
+	options = helper.getOptions(options);
+
 	var tsvLoader = loaders.getTsvLoader()
 	, datasetTransformer = transformers.getDataSetTransformer();
 
@@ -36,9 +39,14 @@ exports.tsvToDataSet = function(filePath, options) {
 	});
 };
 
-exports.tsvToPgSql = function(filePath, writeStream, options) {
+exports.tsvToPgSql = function(filePath, options) {
+	options = helper.getOptions(options);
 
-	var duplexStream = new stream.Duplex();
+	util.inherits(PgsqlStream, stream.Readable);
+	function PgsqlStream() { stream.Readable.call(this); }
+	PgsqlStream.prototype._read = function() {};
+
+	var pgsqlStream = new PgsqlStream();
 
 	var i, len,
 		tsvLoader = loaders.getTsvLoader(),
@@ -50,15 +58,15 @@ exports.tsvToPgSql = function(filePath, writeStream, options) {
 		filePath, tsvLoader, pgSqlTransformer, options
 	).then(function(fileAttributes) {
 
-		writeStream.write(pgsql.getHeaderSql(name));
+		pgsqlStream.push(pgsql.getHeaderSql(name));
 
 		if (!options.dataOnly) {
-			writeStream.write(pgsql.getCreateTableSql(
+			pgsqlStream.push(pgsql.getCreateTableSql(
 				name, fileAttributes.headers, fileAttributes.dataTypes,
 				pgSqlTransformer));
 		}
 		if (!options.createOnly && !options.insertStatements) {
-			writeStream.write(pgsql.getCopyHeaderSql(
+			pgsqlStream.push(pgsql.getCopyHeaderSql(
 				name, fileAttributes.headers, fileAttributes.dataTypes,
 				pgSqlTransformer));
 		}
@@ -73,12 +81,12 @@ exports.tsvToPgSql = function(filePath, writeStream, options) {
 					adjustedDataRow = dataType.getAdjustedDataRow(
 						pgSqlTransformer, fileAttributes.dataTypes, dataRow);
 					if (options.insertStatements) {
-						writeStream.write(
+						pgsqlStream.push(
 							pgsql.getInsertDataRowSql(
 								name, fileAttributes.headers, adjustedDataRow,
 								pgSqlTransformer));
 					} else {
-						writeStream.write(
+						pgsqlStream.push(
 							pgsql.getCopyDataRowSql(
 								adjustedDataRow, pgSqlTransformer));
 					}
@@ -86,14 +94,13 @@ exports.tsvToPgSql = function(filePath, writeStream, options) {
 			}
 		).then(function() {
 			if (!options.createOnly && !options.insertStatements) {
-				writeStream.write(pgsql.getCopyFooterSql());
+				pgsqlStream.push(pgsql.getCopyFooterSql());
 			}
 
-			var defer = when.defer();
-			// wait till the write is complete before resolving this promise
-			writeStream.write(
-				pgsql.getFooterSql(name), undefined, defer.resolve);
-			return defer.promise;
+			pgsqlStream.push(pgsql.getFooterSql(name));
+			pgsqlStream.push(null); // end this readable stream
+
+			return pgsqlStream;
 		});
 	});
 };
