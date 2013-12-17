@@ -18,7 +18,7 @@ describe('file', function() {
 	var options
 
 	, tsvSimple, tsvSimple1100, tsvMissingHeaders, tsvTwoSheets, tsvEmptyRow
-	, tsvContinue
+	, tsvContinue, tsvDecimalInt
 
 	, xlsTwoSheets, xlsSimple, xlsInvalid
 
@@ -33,6 +33,7 @@ describe('file', function() {
 		tsvTwoSheets = __dirname + '/convert/tsv/files/tsvTwoSheets.tsv';
 		tsvEmptyRow = __dirname + '/convert/tsv/files/tsvEmptyRow.tsv';
 		tsvContinue = __dirname + '/convert/tsv/files/tsvContinue.tsv';
+		tsvDecimalInt = __dirname + '/convert/tsv/files/tsvDecimalInt.tsv';
 
 		xlsTwoSheets = __dirname + '/convert/xls/files/xlsTwoSheets.xls';
 		xlsSimple = __dirname + '/convert/xls/files/xlsSimple.xls';
@@ -59,8 +60,6 @@ describe('file', function() {
 	describe('#toRows()', function() {
 
 		it('take a tsv file path and get the rows it contains', function() {
-
-			return when.reject(new Error('foobar'));
 
 			options = {
 				headerRow: 0,
@@ -192,6 +191,21 @@ describe('file', function() {
 					defines.TEXT, defines.INTEGER, defines.NUMERIC,
 					defines.BOOLEAN, defines.LAT, defines.LONG,
 					defines.PRIMARY_INTEGER, defines.ZIP
+				]);
+				fileAttributes.ignoreColumns.length.should.equal(0);
+			});
+		});
+
+		it.only('get the proper headers & data types back (decimal integers)', function() {
+			options = {
+				headerRow: 0
+			};
+			return file.getAttributes(
+				tsvDecimalInt, tsvLoader, datasetTransformer, options
+			).then(function(fileAttributes) {
+				fileAttributes.headers.should.eql(['int', 'text']);
+				fileAttributes.dataTypes.should.eql([
+					defines.INTEGER, defines.TEXT
 				]);
 				fileAttributes.ignoreColumns.length.should.equal(0);
 			});

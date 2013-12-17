@@ -64,15 +64,14 @@ exports.tsvToPgSql = function(filePath, writeStream, options) {
 			filePath, tsvLoader, pgSqlTransformer, options,
 			fileAttributes.ignoreColumns,
 			function dataRowHook(dataRow) {
-
 				if(!options.createOnly) {
 					adjustedDataRow = dataType.getAdjustedDataRow(
 						pgSqlTransformer, fileAttributes.dataTypes, dataRow);
-
 					if(options.insertStatements) {
 						writeStream.write(
 							pgsql.getInsertDataRowSql(
-								name, fileAttributes.headers, adjustedDataRow, pgSqlTransformer));
+								name, fileAttributes.headers, adjustedDataRow,
+								pgSqlTransformer));
 					} else {
 						writeStream.write(
 							pgsql.getCopyDataRowSql(

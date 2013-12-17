@@ -57,8 +57,6 @@ describe('xls', function() {
 				ws.end();
 				return nodefn.call(fs.readFile, tmpFile, {encoding: 'utf8'})
 				.then(function(data) {
-					console.error(data); void('debug');
-
 					data.should.equal([
 						'set client_encoding to UTF8;',
 						'set standard_conforming_strings to on;',

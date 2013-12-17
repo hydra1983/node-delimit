@@ -1,16 +1,22 @@
 "use strict";
 
-var should = require('should')
-, dataType = require('../src/dataType.js')
+var dataType = require('../src/dataType.js')
 , transformers = require('../src/transformers.js')
-, defines = require('../src/defines.js');
+, defines = require('../src/defines.js')
+, chai = require('chai')
+, chaiAsPromised = require('chai-as-promised');
+
+chai.Should();
+chai.use(chaiAsPromised);
+require("mocha-as-promised")();
 
 describe('dataType', function() {
 
-	var datasetTransformer;
+	var datasetTransformer, pgsqlTransformer;
 
 	before(function() {
 		datasetTransformer = transformers.getDataSetTransformer();
+		pgsqlTransformer = transformers.getPgSqlTransformer();
 	});
 
 	describe('#isStringInteger()', function() {
@@ -143,6 +149,10 @@ describe('dataType', function() {
 				ignoreTypes: [defines.BOOLEAN]
 			});
 			dataType.isStringBoolean(testTransformer, 'true').should.be.false;
+		});
+		it('should fail to find boolean (old string is not a boolean)', function() {
+			dataType.isStringBoolean(datasetTransformer, 'true').should.be.true;
+			dataType.isStringBoolean(datasetTransformer, 'true', 'foo').should.be.false;
 		});
 	});
 
@@ -527,6 +537,18 @@ describe('dataType', function() {
 			dataType.getNewDataType(datasetTransformer, defines.PRIMARY_INTEGER, '100', '500')
 				.should.eql(defines.INTEGER);
 		});
+		it('should convert PRIMARY_INTEGER to BOOLEAN', function() {
+			dataType.getNewDataType(datasetTransformer, defines.PRIMARY_INTEGER, '1', '0')
+				.should.eql(defines.PRIMARY_INTEGER);
+			dataType.getNewDataType(datasetTransformer, defines.PRIMARY_INTEGER, '0', '1')
+				.should.eql(defines.BOOLEAN);
+		});
+		it('should NOT convert PRIMARY_INTEGER to BOOLEAN (edge case)', function() {
+			dataType.getNewDataType(datasetTransformer, defines.PRIMARY_INTEGER, '1', '0')
+				.should.eql(defines.PRIMARY_INTEGER);
+			dataType.getNewDataType(datasetTransformer, defines.PRIMARY_INTEGER, '1', '4')
+				.should.eql(defines.INTEGER);
+		});
 
 		it('should keep UNKNWON type', function() {
 			dataType.getNewDataType(datasetTransformer, undefined, ' ')
@@ -599,6 +621,7 @@ describe('dataType', function() {
 	});
 
 	describe('#getAdjustedDataRow()', function() {
+
 		it('should change values based on the output type (BOOLEAN)', function() {
 			dataType.getAdjustedDataRow(datasetTransformer,
 				[defines.BOOLEAN], ['false']).should.eql([false]);
@@ -609,6 +632,7 @@ describe('dataType', function() {
 				['TRUE', 'true', 'yes', 'n'])
 			.should.eql([true, true, true, false]);
 		});
+
 		it('should change values based on the output type (INTEGER)', function() {
 			dataType.getAdjustedDataRow(
 				datasetTransformer,
@@ -616,6 +640,7 @@ describe('dataType', function() {
 				['1', '2'])
 			.should.eql([1, 2]);
 		});
+
 		it('should change values based on the output type (NUMERIC)', function() {
 			dataType.getAdjustedDataRow(
 				datasetTransformer,
@@ -623,6 +648,7 @@ describe('dataType', function() {
 				['1.5', '2.5'])
 			.should.eql([1.5, 2.5]);
 		});
+
 		it('should change values based on the output type (TEXT)', function() {
 			dataType.getAdjustedDataRow(
 				datasetTransformer,
@@ -630,6 +656,7 @@ describe('dataType', function() {
 				['hello', 'world'])
 			.should.eql(['hello', 'world']);
 		});
+
 		it('should change values based on the output type (UNKNWON)', function() {
 			dataType.getAdjustedDataRow(
 				datasetTransformer,
@@ -656,6 +683,7 @@ describe('dataType', function() {
 				['', ' ', '\n'])
 			.should.eql([null, null, null]);
 		});
+
 	});
 
 });

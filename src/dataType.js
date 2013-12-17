@@ -22,28 +22,37 @@ exports.isStringEmpty = function(transformer, string) {
 	return false;
 };
 
-exports.isStringBoolean = function(transformer, string) {
+exports.isStringBoolean = function(transformer, string, oldString) {
 	if(transformer.ignoreType(defines.BOOLEAN)) { return false; }
 
-	var i, len;
+	// We will AND this at the end to determine validity
+	var oldStringBoolean = (typeof oldString === 'string')
+		? exports.isStringBoolean(transformer, oldString)
+		: true;
+
+	var i, len, stringBoolean = false;
 
 	len = transformer.booleanValues.isTrue.length;
-	for(i = 0; i < len; ++i) {
-		if(transformer.booleanValues.isTrue[i].toUpperCase() ==
-			string.toUpperCase()) {
-			return true;
+	for (i = 0; i < len; ++i) {
+		if (transformer.booleanValues.isTrue[i].toUpperCase() ==
+			string.toUpperCase())
+		{
+			stringBoolean = true;
+			break;
 		}
 	}
 
 	len = transformer.booleanValues.isFalse.length;
-	for(i = 0; i < len; ++i) {
-		if(transformer.booleanValues.isFalse[i].toUpperCase() ==
-			string.toUpperCase()) {
-			return true;
+	for (i = 0; i < len; ++i) {
+		if (transformer.booleanValues.isFalse[i].toUpperCase() ==
+			string.toUpperCase())
+		{
+			stringBoolean = true;
+			break;
 		}
 	}
 
-	return false;
+	return stringBoolean && oldStringBoolean;
 };
 
 exports.isStringBigInteger = function(transformer, string, kickLeadingZeros) {
@@ -181,7 +190,7 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
 		if (isEmpty || !exports.isStringPrimaryInteger(transformer, newString, oldString)) {
 			if (exports.isStringZip(transformer, newString)) {
 				return defines.ZIP;
-			} else if (exports.isStringBoolean(transformer, newString)) {
+			} else if (exports.isStringBoolean(transformer, newString, oldString)) {
 				return defines.BOOLEAN;
 			} else if (exports.isStringBigInteger(transformer, newString)) {
 				return defines.BIGINTEGER;
