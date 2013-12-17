@@ -18,7 +18,7 @@ exports.isStringEmpty = function(transformer, string) {
 };
 
 exports.isStringBoolean = function(transformer, string, oldString) {
-	if(transformer.ignoreType(defines.BOOLEAN)) { return false; }
+	if (transformer.ignoreType(defines.BOOLEAN)) { return false; }
 
 	// We will AND this at the end to determine validity
 	var oldStringBoolean = (typeof oldString === 'string')
@@ -37,7 +37,7 @@ exports.isStringBoolean = function(transformer, string, oldString) {
 };
 
 exports.isStringBigInteger = function(transformer, string, kickLeadingZeros) {
-	if(transformer.ignoreType(defines.BIGINTEGER)) { return false; }
+	if (transformer.ignoreType(defines.BIGINTEGER)) { return false; }
 
 	try { var parsed = '' + parseFloat(string); } catch (e) { return false; }
 
@@ -59,7 +59,7 @@ exports.isStringBigInteger = function(transformer, string, kickLeadingZeros) {
 
 
 exports.isStringInteger = function(transformer, string, kickLeadingZeros) {
-	if(transformer.ignoreType(defines.INTEGER)) { return false; }
+	if (transformer.ignoreType(defines.INTEGER)) { return false; }
 
 	// apparently, 2010-10-10-20-30 is valid when parsing... handle this
 	// edge case. Any string with two "-"'s is invalid
@@ -75,7 +75,7 @@ exports.isStringInteger = function(transformer, string, kickLeadingZeros) {
 
 	if (isInt) {
 		var parsedInt = parseInt(parsed, 10);
-		if(parsedInt >= -2147483648 && parsedInt <= 2147483647) {
+		if (parsedInt >= -2147483648 && parsedInt <= 2147483647) {
 			return true;
 		}
 	}
@@ -84,7 +84,7 @@ exports.isStringInteger = function(transformer, string, kickLeadingZeros) {
 };
 
 exports.isStringPrimaryInteger = function(transformer, string, oldString) {
-	if(transformer.ignoreType(defines.PRIMARY_INTEGER)) { return false; }
+	if (transformer.ignoreType(defines.PRIMARY_INTEGER)) { return false; }
 
 	var stringIsInt = exports.isStringInteger(transformer, string);
 
@@ -104,7 +104,7 @@ exports.isStringPrimaryInteger = function(transformer, string, oldString) {
 };
 
 exports.isStringNumeric = function(transformer, string) {
-	if(transformer.ignoreType(defines.NUMERIC)) { return false; }
+	if (transformer.ignoreType(defines.NUMERIC)) { return false; }
 
 	try { var parsed = '' + parseFloat(string); } catch (e) { return false; }
 
