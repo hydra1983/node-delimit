@@ -340,37 +340,37 @@ exports.getNewDataType = function(transformer, oldDataType, newString, oldString
 };
 
 exports.getNewDataTypes = function(transformer, oldDataTypes, dataRow, previousDataRow) {
-	var i, len, newString, oldString,
-		newDataTypes = [],
-		latPositions = {}, // Where were latitude coordinates found?
-		longPositions = {}; // Where were longitude coordinates found?
+	var i, len, newString, oldString
+	, newDataTypes = []
+	, latPositions = {} // Where were latitude coordinates found?
+	, longPositions = {}; // Where were longitude coordinates found?
 
-	for(i = 0, len = dataRow.length; i < len; ++i) {
+	for (i = 0, len = dataRow.length; i < len; ++i) {
 		newString = dataRow[i];
 		oldString = previousDataRow ? previousDataRow[i] : undefined;
 		newDataTypes[i] = exports.getNewDataType(
 				transformer, oldDataTypes[i], newString, oldString);
 
 		// record where lat & long positions were found
-		if(newDataTypes[i] == defines.LAT) { latPositions[i] = true; }
-		if(newDataTypes[i] == defines.LONG) { longPositions[i] = true; }
+		if (newDataTypes[i] == defines.LAT) { latPositions[i] = true; }
+		if (newDataTypes[i] == defines.LONG) { longPositions[i] = true; }
 	}
 
 	// look through the new data types for LAT / LONG. IF they exist and are
 	// not next to each other in LAT -> LONG order, change them to NUMERIC
 	var pairings = {};
-	for(var latPos in latPositions) {
+	for (var latPos in latPositions) {
 		var pos = parseInt(latPos, 10);
 		// if the current latPos is a pairing already, move on
-		if(pairings[pos]) { continue; }
+		if (pairings[pos]) { continue; }
 		// if next is lat make it a paring (adjust type to LONG)
-		if(latPositions[pos+1]) {
+		if (latPositions[pos+1]) {
 			pairings[pos] = true;
 			pairings[pos+1] = true;
 			newDataTypes[pos+1] = defines.LONG;
 			continue;
 		}
-		if(longPositions[pos+1]) {
+		if (longPositions[pos+1]) {
 			pairings[pos] = true;
 			pairings[pos+1] = true;
 			continue;
@@ -380,28 +380,18 @@ exports.getNewDataTypes = function(transformer, oldDataTypes, dataRow, previousD
 	}
 
 	// cleanup leftover LONG's that aren't paired
-	for(var longPos in longPositions) {
-		if(!pairings[longPos]) { newDataTypes[longPos] = defines.NUMERIC; }
+	for (var longPos in longPositions) {
+		if (!pairings[longPos]) { newDataTypes[longPos] = defines.NUMERIC; }
 	}
 
 	return newDataTypes;
 };
 
 exports.getAdjustedDataRow = function(transformer, dataTypes, dataRow) {
-
-	var newDataRow = [];
-
-	var value, type;
-	for(var i = 0, len = dataRow.length; i < len; ++i) {
-		value = dataRow[i];
-		type = dataTypes[i];
-
-		if(!value || exports.isStringEmpty(transformer, value)) {
-			newDataRow.push(transformer.nullValue);
-		} else {
-			newDataRow.push(transformer.output(type, value));
+	return dataRow.map(function(dataItem, dataIndex) {
+		if (!dataItem || exports.isStringEmpty(transformer, dataItem)) {
+			return transformer.nullValue;
 		}
-	}
-
-	return newDataRow;
+		return transformer.output(dataTypes[dataIndex], dataItem);
+	});
 };
