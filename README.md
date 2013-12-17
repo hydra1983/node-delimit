@@ -1,8 +1,8 @@
 # delimit
 
-Convert delimited files from one format into another with type-checking.
+Convert delimited files from one format into another with optional type conversion.
 
-Take this simple CSV file for example:
+Given the following CSV file:
 
 	ID,FirstName,LastName,Code,Position1,Position2,LikesCats,CatsOwned,SomethingElse
 	1,Trevor,Senior,00000,89.999,179.999,true,0,1.1

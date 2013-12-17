@@ -22,6 +22,12 @@ require('main')(module)
 .usage(
     'Usage: ./delimit [-flags] <convertFrom> <convertTo> <inputFile>',
     '',
+    'Convert From Valid Values:',
+    '  - csv, tsv, xls, xlsx, json',
+    '',
+    'Convert To Valid Values:',
+    '  - pgsql',
+    '',
     'If specifying column types for a flag, the following values are valid:',
     '',
     '  - boolean   ',

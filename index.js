@@ -34,7 +34,7 @@ exports.toPgSql = function(convertFrom, file, options) {
 
 		default:
 			pgsqlPromise = when.reject(new Error(
-				"Invaid convert from specified '" + convertFrom + "'"));
+				"Invalid <convertFrom> specified '" + convertFrom + "'"));
 	}
 
 	return pgsqlPromise;
@@ -50,7 +50,7 @@ exports.convertTo = function(convertFrom, convertTo, file, options) {
 
 		default:
 			convertPromise = when.reject(new Error(
-				'Invalid convertTo provided'));
+				'Invalid <convertTo> provided'));
 	}
 
 	return convertPromise;
