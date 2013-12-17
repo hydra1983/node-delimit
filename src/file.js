@@ -1,9 +1,13 @@
 "use strict";
 
-var when = require('when')
-, lineReader = require('line-reader')
+var fs = require('fs')
+, stream = require('stream')
+, util = require('util')
+, when = require('when')
+, byline = require('byline')
 , dataType = require('./dataType.js')
 , transformers = require('./transformers.js')
+, helper = require('./helper')
 , defines = require('./defines.js');
 
 exports.isDataRowEmpty = function(transformer, dataRow) {
@@ -23,80 +27,54 @@ exports.getIgnoreColumns = function(transformer, headers) {
 };
 
 exports.toRows = function(filePath, loader, options, headerRowHook, dataRowHook) {
+	options = helper.getOptions(options);
 
 	var defer = when.defer();
 
-	if (options.useHeaders) {
-		if (typeof headerRowHook === 'function') {
-			headerRowHook(options.useHeaders);
+	if (options.useHeaders && typeof headerRowHook === 'function') {
+		headerRowHook(options.useHeaders);
+	}
+
+	var lineStream = byline(fs.createReadStream(filePath, { encoding: 'utf8' })
+	, { keepEmptyLines: true });
+
+	var handleLine = function(line, currentRow) {
+		var dataRow = loader.toDataRow(line);
+
+		if (options.headerRow !== currentRow) {
+			return dataRowHook(dataRow);
 		}
-	}
+		// if we're not using custom headers
+		if (!options.useHeaders && typeof headerRowHook === 'function') {
+			return headerRowHook(dataRow);
+		}
+	};
 
-	try {
-		lineReader.open(filePath, function(reader) {
+	var currentRow = 0, joinedLine = '', endLine = true;
 
-			var exitReader = function() {
-				reader.close();
-				return defer.resolve();
-			};
+	lineStream.on('data', function(rawLine) {
 
-			var handleLine = function(line, row) {
-				var dataRow = loader.toDataRow(line);
-				if (options.headerRow == row) {
-					// if we're not using custom headers
-					if (!options.useHeaders &&
-						typeof headerRowHook === 'function')
-					{
-						headerRowHook(dataRow);
-					}
-				} else {
-					dataRowHook(dataRow);
-				}
-				return true;
-			};
+		joinedLine = joinedLine === '' ? rawLine : joinedLine + '\n' + rawLine;
 
-			var row = 0;
-			var joinedLine = '';
-			var continueLine = false;
+		// If we were told to not end the line, check if that is still the case
+		if (!endLine) {
+			endLine = loader.lineEnds(rawLine);
+		}
+		// If we were told that the line ends, ensure that is the case, else
+		// send end line to false and append this line to the next
+		else if (loader.lineContinues(joinedLine)) {
+			endLine = false;
+		}
 
-			var cycle = function() {
-				if (reader.hasNextLine()) {
-					reader.nextLine(function(rawLine) {
+		// If we are ending this line, handle it
+		if (endLine) {
+			handleLine(joinedLine, currentRow);
+			joinedLine = '';
+			++currentRow;
+		}
+	});
 
-						joinedLine = joinedLine ?
-							(joinedLine + '\n' + rawLine) : rawLine;
-
-						// If marked to continue, shall we continue again?
-						if (continueLine) {
-							continueLine = !loader.lineEnds(rawLine);
-						}
-						// Mark this line for continuation
-						else if (loader.lineContinues(joinedLine)) {
-							continueLine = true;
-						}
-
-						// If we have our final line, handle it
-						if (!continueLine) {
-							handleLine(joinedLine, row);
-							joinedLine = '';
-							++row;
-						}
-
-						setImmediate(cycle);
-					});
-				} else {
-					exitReader();
-				}
-			};
-
-			setImmediate(cycle);
-		});
-	} catch(error) {
-		return defer.reject(new Error(
-			'Failed to open the file to read lines, \n' +
-			error.stack || error));
-	}
-
+	lineStream.on('end', defer.resolve);
 	return defer.promise;
 };
 

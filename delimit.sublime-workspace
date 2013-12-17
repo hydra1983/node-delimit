@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"pgsql",
+				"pgsqlStream"
+			],
+			[
+				"give",
+				"givenOpts"
+			],
+			[
+				"defin",
+				"defineProperty"
+			],
+			[
 				"con",
 				"convertPromise"
 			],
@@ -80,77 +92,26 @@
 	"buffers":
 	[
 		{
-			"file": "test/convert/xls/xls.js",
+			"file": "test/convert/tsv/files/tsvContinue.tsv",
 			"settings":
 			{
-				"buffer_size": 2236,
+				"buffer_size": 102,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/pgsql.js",
+			"file": "src/file.js",
 			"settings":
 			{
-				"buffer_size": 2519,
+				"buffer_size": 3867,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "test/testConfig.js",
+			"file": "test/file.js",
 			"settings":
 			{
-				"buffer_size": 397,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "\"use strict\";\n\nexports.getOptions = function(options) {\n\n	// no need to get the options if we have already inspected it previously\n	if (typeof options === 'object' && options._inspected) {\n		return options;\n	}\n\n	return {\n		// set this flag so we don't have to check it again later\n		_inspected: true,\n		// What should we name our dataset?\n		name: options.name || 'default_name',\n		// What String should we append to the end of our dataset name?\n		appendString: typeof options.appendString === 'undefined' ? '' : options.appendString,\n		// What String should we prepend to the beginning of our dataset name?\n		prependString: typeof options.prependString === 'undefined' ? '' : options.prependString,\n\n		// What row contains header information?\n		headerRow: typeof options.headerRow === 'undefined' ? 0 : options.headerRow,\n		// Have we specified out own headers?\n		useHeaders: typeof options.useHeaders === 'undefined' ? false : options.useHeaders.split(','),\n\n		// Should we ignore columns in data with empty headers?\n		ignoreEmptyHeaders: options.ignoreEmptyHeaders || false,\n\n		// Force a type for a given column? (comma separated)\n		// e.g.  'column_name:boolean,another_column:text'\n		// @TODO\n		forceTypes: (function(forceType) {\n			if (typeof forceType === 'string') {\n				forceType = forceType.toUpperCase();\n				if (typeof defines[forceType] === 'undefined') {\n					console.error('You have provided an invalid forceType');\n					process.exit(1);\n				} else {\n					return defines[forceType];\n				}\n			}\n			return forceType;\n		})(options.forceTypes) || false,\n\n		// Ignore a specific type? e.g. don't make a column of 0's and 1's boolean but instead an int.\n		ignoreTypes: (function(ignoreTypes) {\n			if (typeof ignoreTypes == 'string') {\n				var types = ignoreTypes.split(','), numericType;\n				ignoreTypes = [];\n				for (var i = 0, len = types.length; i < len; ++i) {\n					numericType = defines[types[i].toUpperCase()];\n					if (typeof numericType === 'undefined') {\n						console.error('You have provided an invalid ignoreType of ' + types[i]);\n						process.exit(1);\n					}\n					ignoreTypes.push(numericType);\n				}\n				return ignoreTypes;\n			} else {\n				return undefined;\n			}\n		})(options.ignoreTypes) || false,\n\n		// Use this file extension instead of the files default\n		forceExtension: options.forceExtension,\n\n		// Maintain the original header names? (e.g. don't switch to zip, lat, lng, etc)\n		maintainHeaders: options.maintainHeaders,\n\n		//-- SQL Specific\n		// Are we only displaying data?\n		dataOnly: options.dataOnly && !options.createOnly,\n		// Are we only displaying create?\n		createOnly: options.createOnly && !options.dataOnly,\n		// Using insert statements vs. dump (COPY) format?\n		insertStatements: options.insertStatements ? true : false\n	};\n};\n",
-			"file": "src/util.js",
-			"file_size": 2772,
-			"file_write_time": 130316968409354224,
-			"settings":
-			{
-				"buffer_size": 2772,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/convert/xls/xls.js",
-			"settings":
-			{
-				"buffer_size": 662,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/convert/xls/xls2tsv.js",
-			"settings":
-			{
-				"buffer_size": 1756,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/convert/tsv/tsv.js",
-			"settings":
-			{
-				"buffer_size": 2792,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "index.js",
-			"settings":
-			{
-				"buffer_size": 1348,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "bin/delimit.js",
-			"settings":
-			{
-				"buffer_size": 2930,
+				"buffer_size": 8685,
 				"line_ending": "Unix"
 			}
 		}
@@ -158,16 +119,24 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 148.0,
+		"height": 375.0,
 		"selected_items":
 		[
+			[
+				"me",
+				"View: Toggle Menu"
+			],
 			[
 				"ss js",
 				"Set Syntax: JavaScript"
 			],
 			[
-				"me",
-				"View: Toggle Menu"
+				"ww",
+				"Word Wrap: Toggle"
+			],
+			[
+				"mini",
+				"View: Toggle Minimap"
 			],
 			[
 				"pack re",
@@ -184,10 +153,6 @@
 			[
 				"ss css",
 				"Set Syntax: CSS"
-			],
-			[
-				"ww",
-				"Word Wrap: Toggle"
 			],
 			[
 				"ss gi",
@@ -230,7 +195,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 435.0
+		"width": 453.0
 	},
 	"console":
 	{
@@ -256,22 +221,53 @@
 	},
 	"file_history":
 	[
-		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.py.backup",
+		"/home/urban4m/git/delimit/test/file.js",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvMissingHeaders2.tsv",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvMissingHeaders.tsv",
+		"/home/urban4m/git/delimit/src/file.js",
+		"/home/urban4m/git/delimit/src/helper.js",
+		"/home/urban4m/git/delimit/test/helper.js",
+		"/home/urban4m/git/delimit/src/pgsql.js",
+		"/home/urban4m/git/delimit/bin/delimit.js",
+		"/home/urban4m/git/delimit/README.md",
+		"/home/urban4m/git/delimit/example/simple.js",
+		"/home/urban4m/git/delimit/src/convert/tsv/tsv.js",
+		"/home/urban4m/git/delimit/src/loaders.js",
+		"/home/urban4m/git/delimit/example/files/simpleCsv.csv",
+		"/home/urban4m/git/delimit/LICENSE.txt",
+		"/home/urban4m/git/delimit/index.js",
+		"/home/urban4m/git/delimit/src/DataSet.js",
+		"/home/urban4m/git/delimit/src/convert/xls/xls.js",
+		"/home/urban4m/git/delimit/src/latlong.js",
+		"/home/urban4m/git/delimit/src/defines.js",
+		"/home/urban4m/git/delimit/src/dataType.js",
+		"/home/urban4m/git/delimit/test/dataType.js",
+		"/home/urban4m/git/delimit/test/convert/xls/xls2tsv.js",
+		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.js",
+		"/home/urban4m/git/delimit/test/DataSet.js",
+		"/home/urban4m/git/delimit/test/convert/tsv/tsv.js",
+		"/home/urban4m/git/delimit/test/convert/xls/xls.js",
 		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.py",
+		"/home/urban4m/git/delimit/src/transformers.js",
+		"/home/urban4m/git/delimit/src/convert/csv/csv2tsv.js",
+		"/home/urban4m/git/delimit/src/convert/json/json.js",
+		"/home/urban4m/git/delimit/test/testConfig.js",
+		"/home/urban4m/git/delimit/test/util.js",
+		"/home/urban4m/git/delimit/src/util.js",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvEmptyRow.tsv",
+		"/home/urban4m/git/delimit/test/loaders.js",
+		"/home/urban4m/git/delimit/delimit.sublime-project",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvDecimalInt.tsv",
+		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvContinue.tsv",
+		"/home/urban4m/.config/sublime-text-3/Packages/User/SideBarEnhancements/Open With/Side Bar.sublime-menu",
+		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.py.backup",
 		"/home/urban4m/Downloads/urban4m-20131210-updates.xml",
 		"/home/urban4m/git/delimit/test/tmp/foobar.foo",
 		"/home/urban4m/git/delimit/test/tmp/t1.sql",
 		"/home/urban4m/git/delimit/test/convert/xls/t1.sql",
-		"/home/urban4m/git/delimit/src/DataSet.js",
-		"/home/urban4m/git/delimit/bin/delimit.js",
 		"/home/urban4m/git/delimit/test/convert/csv/files/csvSimple.csv",
-		"/home/urban4m/git/delimit/index.js",
-		"/home/urban4m/git/delimit/test/file.js",
 		"/home/urban4m/git/delimit/package.json",
-		"/home/urban4m/git/delimit/test/convert/xls/xls2tsv.js",
-		"/home/urban4m/git/delimit/test/convert/xls/xls.js",
 		"/home/urban4m/git/delimit/test/defines.js",
-		"/home/urban4m/git/delimit/src/defines.js",
 		"/home/urban4m/.config/awesome/themes/mine-dark/theme.lua",
 		"/home/urban4m/.config/sublime-text-3/Packages/User/SublimeLinter.sublime-settings",
 		"/home/urban4m/.config/awesome/rc.lua",
@@ -279,49 +275,28 @@
 		"/home/urban4m/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/urban4m/.config/awesome/themes/mine-light/theme.lua",
 		"/home/urban4m/git/delimit/bin/package.json",
-		"/home/urban4m/git/delimit/src/convert/tsv/tsv.js",
-		"/home/urban4m/git/delimit/src/file.js",
-		"/home/urban4m/git/delimit/src/dataType.js",
 		"/home/urban4m/git/delimit/src/convert.js",
-		"/home/urban4m/git/delimit/src/loaders.js",
-		"/home/urban4m/git/delimit/src/latlong.js",
-		"/home/urban4m/git/delimit/src/pgsql.js",
-		"/home/urban4m/git/delimit/src/transformers.js",
-		"/home/urban4m/git/delimit/test/DataSet.js",
-		"/home/urban4m/git/delimit/test/loaders.js",
 		"/home/urban4m/git/delimit/test/pgsql.js",
 		"/home/urban4m/git/delimit/test/transformers.js",
 		"/home/urban4m/git/delimit/test/convert/csv/csv.js",
 		"/home/urban4m/git/delimit/test/convert/csv/csv2tsv.js",
 		"/home/urban4m/git/delimit/test/convert/json/json.js",
-		"/home/urban4m/git/delimit/test/convert/tsv/tsv.js",
-		"/home/urban4m/git/delimit/README.md",
-		"/home/urban4m/git/delimit/LICENSE.txt",
 		"/home/urban4m/git/delimit/src/convert/csv/csv.js",
-		"/home/urban4m/git/delimit/src/convert/json/json.js",
-		"/home/urban4m/git/delimit/test/dataType.js",
 		"/home/urban4m/git/delimit/test/convert/json/files/jsonSimple.json",
-		"/home/urban4m/git/delimit/src/convert/csv/csv2tsv.js",
 		"/home/urban4m/git/delimit/src/convert/csv/pipeCsv2tsv.py",
-		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvMissingHeaders.tsv",
-		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvMissingHeaders2.tsv",
 		"/home/urban4m/git/delimit/node_modules/should/.idea/misc.xml",
 		"/home/urban4m/git/delimit/node_modules/.bin/mocha",
 		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvSimple.tsv",
 		"/home/urban4m/git/delimit/bin/node_modules/optimist/example/line_count_options.js",
 		"/home/urban4m/git/delimit/node_modules/async/LICENSE",
 		"/home/urban4m/git/delimit/tsvToPgSql_0.sql",
-		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvEmptyRow.tsv",
 		"/home/urban4m/git/delimit/node_modules/when/monitor/throttledReporter.js",
 		"/home/urban4m/git/delimit/node_modules/when/monitor/simpleFormatter.js",
 		"/home/urban4m/git/delimit/node_modules/should/should.js",
 		"/home/urban4m/git/delimit/node_modules/when/monitor/simpleReporter.js",
 		"/home/urban4m/git/delimit/node_modules/mocha/lib/test.js",
 		"/home/urban4m/git/delimit/node_modules/mocha/node_modules/jade/lib/nodes/text.js",
-		"/home/urban4m/git/delimit/src/convert/xls/xls.js",
 		"/home/urban4m/git/delimit/test/convert/xls/files/xlsSimple.xls",
-		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvContinue.tsv",
-		"/home/urban4m/git/delimit/src/convert/xls/xls2tsv.js",
 		"/home/urban4m/.config/sublime-text-3/Packages/Schemr/Default (Linux).sublime-keymap",
 		"/home/urban4m/git/delimit/test/convert/tsv/files/tsvSimple1100.tsv",
 		"/home/urban4m/git/delimit/tsvToPgSql_1.sql",
@@ -373,17 +348,7 @@
 		"/home/urban4m/git/auto/eventful2json.js",
 		"/home/urban4m/git/db_auto/bin/real.sql",
 		"/run/user/urban4m/gvfs/sftp:host=10.1.10.181/home/urban4m/tmp.txt",
-		"/home/urban4m/git/db_auto/bin/raw/templates/rawDataset.sql.mustache",
-		"/home/urban4m/git/db_auto/bin/package.json",
-		"/home/urban4m/git/db_copy_mine/db_auto/bin/raw/list-archives.raw.29325.15685.20130808t110436.log",
-		"/home/urban4m/z.js",
-		"/home/urban4m/test/transit/massachusetts-archiver_20130702_0139/routes.csv",
-		"/run/user/urban4m/gvfs/sftp:host=10.1.10.141,user=files/home/urban4m/data/users/files/public/Trevor/Hongs Folder :)/geo_staddr.txt",
-		"/home/urban4m/git/db_auto/bin/u4import.js",
-		"/home/urban4m/git/auto/file2pgsql.js",
-		"/home/urban4m/test/geo/geo_staddr.tsv",
-		"/home/urban4m/git/db_auto/bin/raw/raw.js",
-		"/home/urban4m/test/criminal/ICPSR_27681/DS0001/27681-0001-Data.tsv"
+		"/home/urban4m/git/db_auto/bin/raw/templates/rawDataset.sql.mustache"
 	],
 	"find":
 	{
@@ -394,6 +359,8 @@
 		"height": 94.0,
 		"where_history":
 		[
+			"-node_modules/",
+			"-*node_modules",
 			"",
 			"<open files>",
 			""
@@ -404,6 +371,26 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"only",
+			"();\n",
+			"useHeaders",
+			"for\\(",
+			"if\\(",
+			"void\\('de",
+			"consol",
+			"mainOptions",
+			"retOpt",
+			"options",
+			"));\n",
+			"type",
+			"{\n",
+			"type",
+			"curr",
+			"}\n",
+			"Option",
+			"option",
+			"{};\n",
+			";\n",
 			"header",
 			"theme",
 			"mine",
@@ -511,27 +498,7 @@
 			"runOn",
 			"srid",
 			"options._fileName =",
-			"getFile2Pgsql",
-			"raw",
-			"listFiles",
-			"auto_repo",
-			"listFiles",
-			"list",
-			"debug\\(",
-			"debug",
-			"error",
-			"extractArchives",
-			"debug",
-			"warn",
-			"exit",
-			"walk\\(dir",
-			"isDirectory",
-			"_file",
-			"branchMa",
-			"\\.raw",
-			"debug\\(",
-			"debug",
-			"stats"
+			"getFile2Pgsql"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -539,6 +506,8 @@
 		"regex": true,
 		"replace_history":
 		[
+			"for \\(",
+			"if \\(",
 			"",
 			"===",
 			"+++",
@@ -555,87 +524,29 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "test/convert/xls/xls.js",
+					"file": "test/convert/tsv/files/tsvContinue.tsv",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2236,
+						"buffer_size": 102,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1153,
-								1153
+								92,
+								92
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "src/pgsql.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2519,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2519,
-								2519
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 495.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "test/testConfig.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 397,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								397,
-								397
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -645,20 +556,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "src/util.js",
+					"buffer": 1,
+					"file": "src/file.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2772,
+						"buffer_size": 3867,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1508,
-								1508
+								995,
+								995
 							]
 						],
 						"settings":
@@ -667,33 +578,33 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 450.0,
+						"translation.y": 391.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
-					"buffer": 4,
-					"file": "src/convert/xls/xls.js",
+					"buffer": 2,
+					"file": "test/file.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 662,
+						"buffer_size": 8685,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								266,
-								266
+								1903,
+								1903
 							]
 						],
 						"settings":
@@ -702,127 +613,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 810.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "src/convert/xls/xls2tsv.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1756,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 90.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "src/convert/tsv/tsv.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2792,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1065,
-								1065
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "index.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1348,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								665,
-								665
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 90.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "bin/delimit.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2930,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2281,
-								2281
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 855.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -861,7 +655,7 @@
 		"rows":
 		[
 			0.0,
-			0.455996548749,
+			0.381794650561,
 			1.0
 		]
 	},
@@ -882,6 +676,54 @@
 		"selected_items":
 		[
 			[
+				"file",
+				"test/file.js"
+			],
+			[
+				"tsvcont",
+				"test/convert/tsv/files/tsvContinue.tsv"
+			],
+			[
+				"tsvmissing",
+				"test/convert/tsv/files/tsvMissingHeaders.tsv"
+			],
+			[
+				"load",
+				"src/loaders.js"
+			],
+			[
+				"util",
+				"src/util.js"
+			],
+			[
+				"def",
+				"src/defines.js"
+			],
+			[
+				"texl",
+				"test/convert/xls/xls.js"
+			],
+			[
+				"datatype",
+				"test/dataType.js"
+			],
+			[
+				"datat",
+				"src/dataType.js"
+			],
+			[
+				"defin",
+				"src/defines.js"
+			],
+			[
+				"trans",
+				"src/transformers.js"
+			],
+			[
+				"tsv.js",
+				"src/convert/tsv/tsv.js"
+			],
+			[
 				"tsv",
 				"src/convert/tsv/tsv.js"
 			],
@@ -898,10 +740,6 @@
 				"src/loaders.js"
 			],
 			[
-				"trans",
-				"src/transformers.js"
-			],
-			[
 				"simplet",
 				"test/convert/tsv/files/tsvSimple.tsv"
 			],
@@ -914,10 +752,6 @@
 				"test/convert/tsv/tsv.js"
 			],
 			[
-				"texl",
-				"test/convert/xls/xls.js"
-			],
-			[
 				"xls",
 				"src/convert/xls/xls.js"
 			],
@@ -928,10 +762,6 @@
 			[
 				"u4im",
 				"db_auto/bin/u4import.js"
-			],
-			[
-				"file",
-				"auto/file2pgsql.js"
 			],
 			[
 				"raw",
@@ -1002,8 +832,8 @@
 	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
-	"side_bar_width": 208.0,
+	"side_bar_visible": false,
+	"side_bar_width": 298.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

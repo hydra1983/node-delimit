@@ -1,6 +1,8 @@
 "use strict";
 
-var when = require('when')
+var stream = require('stream')
+, util = require('util')
+, when = require('when')
 , pgsql = require('../../pgsql.js')
 , file = require('../../file.js')
 , loaders = require('../../loaders.js')
@@ -35,6 +37,12 @@ exports.tsvToDataSet = function(filePath, options) {
 };
 
 exports.tsvToPgSql = function(filePath, writeStream, options) {
+
+	var duplexStream = new stream.Duplex();
+
+	util.inherits()
+
+
 	var i, len,
 		tsvLoader = loaders.getTsvLoader(),
 		name = (options.prependString + options.name + options.appendString),

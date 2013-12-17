@@ -5,30 +5,30 @@ var when = require('when')
 , tsv = require('./src/convert/tsv/tsv')
 , csv = require('./src/convert/csv/csv')
 , json = require('./src/convert/json/json')
-, util = require('./src/util');
+, helper = require('./src/helper');
 
 exports.toPgSql = function(convertFrom, file, options) {
-	options = util.getOptions(options);
+	options = helper.getOptions(options);
 
 	var pgsqlPromise;
 
 	switch (convertFrom.toLowerCase()) {
 		case 'xls':
 		case 'xlsx':
-			pgsqlPromise = xls.xlsToPgSql(file, process.stdout, options);
+			pgsqlPromise = xls.xlsToPgSql(file, options);
 			break;
 
 		case 'tsv':
-			pgsqlPromise = tsv.tsvToPgSql(file, process.stdout, options);
+			pgsqlPromise = tsv.tsvToPgSql(file, options);
 			break;
 
 		case 'csv':
-			pgsqlPromise = csv.csvToPgSql(file, process.stdout, options);
+			pgsqlPromise = csv.csvToPgSql(file, options);
 			break;
 
 		case 'json':
 			pgsqlPromise = json.readJson(file).then(function(jsonObj) {
-				return json.jsonToPgSql(jsonObj, process.stdout, options);
+				return json.jsonToPgSql(jsonObj, options);
 			});
 			break;
 
@@ -40,12 +40,12 @@ exports.toPgSql = function(convertFrom, file, options) {
 	return pgsqlPromise;
 };
 
-exports.convertTo = function(convertFrom, convertTo, file, options) {
+exports.convert = function(convertFrom, convertTo, file, options) {
 	var convertPromise;
 
 	switch (convertTo.toLowerCase()) {
 		case 'pgsql':
-			convertPromise = exports.toPgSql(convertFrom, file, options);
+			convertPromise = exports.toPgSql(convertFrom, file, outStream, options);
 			break;
 
 		default:

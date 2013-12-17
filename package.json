@@ -20,10 +20,10 @@
     "lodash": "~2.4.1",
     "should": "~2.1.1",
     "mocha": "~1.15.1",
-    "line-reader": "~0.2.3",
     "chai": "~1.8.1",
     "chai-as-promised": "~4.1.0",
     "mocha-as-promised": "~1.4.1",
-    "main": "0.0.19"
+    "main": "0.0.19",
+    "byline": "~4.1.1"
   }
 }

@@ -60,11 +60,6 @@ describe('file', function() {
 	describe('#toRows()', function() {
 
 		it('take a tsv file path and get the rows it contains', function() {
-
-			options = {
-				headerRow: 0,
-				forceType: false
-			};
 			var headerCount = 0, dataRowCount = 0;
 			return file.toRows(tsvSimple, tsvLoader, options
 			, function headerRowCallback(dataRow) {
@@ -82,10 +77,9 @@ describe('file', function() {
 			});
 		});
 
-		it('should find no header rows', function(done) {
+		it('should find no header rows', function() {
 			options = {
-				headerRow: -1,
-				forceType: false
+				headerRow: -1
 			};
 			var headerCount = 0, dataRowCount = 0;
 			return file.toRows(tsvSimple, tsvLoader, options
@@ -97,20 +91,22 @@ describe('file', function() {
 			});
 		});
 
-		it('should use the provided headers', function(done) {
+		it('should use the provided headers', function() {
 			options = {
 				headerRow: -1,
 				useHeaders: ['one', 'two', 'three', 'four', 'five'],
-				forceType: false
 			};
 
 			var headerRow, headerCount = 0, dataRowCount = 0;
 
 			return file.toRows(tsvMissingHeaders, tsvLoader, options
 			, function headerRowCallback(dataRow) {
-				headerRow = dataRow; ++headerCount;
+				headerRow = dataRow;
+				++headerCount;
 			}
-			, function dataRowCallback(dataRow) { ++dataRowCount; })
+			, function dataRowCallback(dataRow) {
+				++dataRowCount;
+			})
 			.then(function() {
 				headerCount.should.equal(1);
 				dataRowCount.should.equal(4);
@@ -118,11 +114,9 @@ describe('file', function() {
 			});
 		});
 
-		it('should provided headers and ignore current header', function(done) {
+		it('should provided headers and ignore current header', function() {
 			options = {
-				headerRow: 0,
 				useHeaders: ['one', 'two', 'three', 'four', 'five'],
-				forceType: false
 			};
 
 			var headerRow, headerCount = 0, dataRowCount = 0;
@@ -142,9 +136,7 @@ describe('file', function() {
 			});
 		});
 
-		it('should be able to continue / join lines', function(done) {
-
-			options = { headerRow: 0, forceType: false };
+		it('should be able to continue / join lines', function() {
 
 			var headerRow, data = [], headerCount = 0;
 
@@ -196,7 +188,7 @@ describe('file', function() {
 			});
 		});
 
-		it.only('get the proper headers & data types back (decimal integers)', function() {
+		it('get the proper headers & data types back (decimal integers)', function() {
 			options = {
 				headerRow: 0
 			};
