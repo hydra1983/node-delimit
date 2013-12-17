@@ -92,7 +92,7 @@ exports.getOptions = function(givenOpts) {
 	})(givenOpts.ignoreTypes));
 
 	addOption('useHeaders', 'u', false
-	, 'Have we specified out own headers?'
+	, 'Supply your own headers to use vs. ones provided in file.'
 	, (function(useHeaders) {
 		if (useHeaders instanceof Array) { return useHeaders; }
 		if (typeof useHeaders === 'string') { return useHeaders.split(','); }

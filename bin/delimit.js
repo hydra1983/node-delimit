@@ -15,6 +15,10 @@ function buildFlags() {
         flags[item].alias = options[item + '_alias'];
     }
 
+    flags.help = {
+        alias: 'h', describe: 'Display this message.'
+    };
+
     return flags;
 }
 
