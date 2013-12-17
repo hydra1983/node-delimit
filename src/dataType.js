@@ -134,11 +134,9 @@ exports.isStringLat = function(transformer, string) {
 	if (transformer.ignoreType(defines.LAT)) { return false; }
 
 	if (exports.isStringNumeric(transformer, string)) {
-		var parsed = parseFloat(string);
-		if (inLatRange(parsed)) {
-			return true;
-		}
+		return inLatRange(parseFloat(string));
 	}
+
 	return false;
 };
 
@@ -148,7 +146,7 @@ function inLongRange(number) {
 }
 
 exports.isStringLong = function(transformer, string) {
-	if(transformer.ignoreType(defines.LONG)) { return false; }
+	if (transformer.ignoreType(defines.LONG)) { return false; }
 
 	if (exports.isStringNumeric(transformer, string)) {
 		return inLongRange(parseFloat(string));
