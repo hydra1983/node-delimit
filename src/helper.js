@@ -73,7 +73,7 @@ exports.getOptions = function(givenOpts) {
 		? '' : givenOpts.prependString));
 
 	addOption('headerRow', 'H', false
-	, '[DELIMITED FILES ONLY] What row contains header information?'
+	, 'What row contains header information?'
 	, (givenOpts.headerRow = typeof givenOpts.headerRow === 'undefined'
 		? 0 : givenOpts.headerRow));
 
@@ -161,6 +161,20 @@ exports.getOptions = function(givenOpts) {
 	addOption('insertStatements', 'I', true
 	, '[PSQL ONLY] Use insert statements instead of dump format?'
 	, (givenOpts.insertStatements ? true : false));
+
+	addOption('xlsSheetNumbers', 'x', false
+	, '[XLS ONLY] Which sheets to import? Comma separated (default: ALL)'
+	, (function(sheets) {
+		if (sheets instanceof Array) {
+			return sheets.map(function(sheet) {
+				return parseInt(sheet, 10);
+			});
+		}
+		if (typeof sheets !== 'string') { return undefined; }
+		return sheets.split(',').map(function(sheet) {
+			return parseInt(sheet, 10);
+		});
+	})(givenOpts.xlsSheetNumbers));
 
 	return retOpts;
 };

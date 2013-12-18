@@ -3,6 +3,7 @@
 var when = require('when')
 , helper = require('../src/helper')
 , defines = require('../src/defines')
+, assert = require('assert')
 , chai = require('chai')
 , chaiAsPromised = require('chai-as-promised');
 
@@ -96,6 +97,17 @@ describe('helper', function() {
 		it.skip('should set data only');
 		it.skip('should set create only');
 		it.skip('should set insert only');
+
+		it.only('should set xls sheet numbers', function() {
+			var options = helper.getOptions();
+			assert.equal(options.xlsSheetNumbers, undefined);
+			options = helper.getOptions({ xlsSheetNumbers: [1, 2, 3] });
+			options.xlsSheetNumbers.should.eql([1, 2 ,3]);
+			options = helper.getOptions({ xlsSheetNumbers: ['1', '2', '3'] });
+			options.xlsSheetNumbers.should.eql([1, 2 ,3]);
+			options = helper.getOptions({ xlsSheetNumbers: '1,2,3' });
+			options.xlsSheetNumbers.should.eql([1, 2 ,3]);
+		});
 
 	});
 

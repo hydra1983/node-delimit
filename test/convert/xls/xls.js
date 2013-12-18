@@ -23,12 +23,11 @@ describe('xls', function() {
 	describe('#xlsToPgSql()', function() {
 
 		it('should convert an XLS file into PGSQL (one sheet)', function() {
-			var tmpFile = path.join(testConfig.tmpDir,'t1.sql')
-			, ws = fs.createWriteStream(tmpFile);
-			return xls.xlsToPgSql(xlsSimple, ws).then(function() {
-				ws.end();
-				return nodefn.call(fs.readFile, tmpFile, {encoding: 'utf8'})
-				.then(function(data) {
+			return xls.xlsToPgSql(xlsSimple).then(function(pgsqlStream) {
+				var endDefer = when.defer(), data = '';
+				pgsqlStream.on('data', function(chunk) { data += chunk; });
+				pgsqlStream.on('end', endDefer.resolve);
+				return endDefer.promise.then(function() {
 					data.should.equal([
 						'set client_encoding to UTF8;',
 						'set standard_conforming_strings to on;',
@@ -45,18 +44,17 @@ describe('xls', function() {
 						'\\.',
 						'vacuum analyze default_name;\n'
 					].join('\n'));
-					return nodefn.call(fs.unlink, tmpFile);
 				});
 			});
+
 		});
 
-		it.only('should convert an XLS file into PGSQL (two sheets)', function() {
-			var tmpFile = path.join(testConfig.tmpDir,'t2.sql')
-			, ws = fs.createWriteStream(tmpFile);
-			return xls.xlsToPgSql(xlsTwoSheets, ws).then(function() {
-				ws.end();
-				return nodefn.call(fs.readFile, tmpFile, {encoding: 'utf8'})
-				.then(function(data) {
+		it('should convert an XLS file into PGSQL (two sheets)', function() {
+			return xls.xlsToPgSql(xlsTwoSheets).then(function(pgsqlStream) {
+				var endDefer = when.defer(), data = '';
+				pgsqlStream.on('data', function(chunk) { data += chunk; });
+				pgsqlStream.on('end', endDefer.resolve);
+				return endDefer.promise.then(function() {
 					data.should.equal([
 						'set client_encoding to UTF8;',
 						'set standard_conforming_strings to on;',
@@ -86,8 +84,102 @@ describe('xls', function() {
 						'\\.',
 						'vacuum analyze default_name_Sheet2;\n'
 					].join('\n'));
+				});
+			});
+		});
 
-					return nodefn.call(fs.unlink, tmpFile);
+		it('should convert an XLS file into PGSQL (two sheets, ONLY SHEET 1)', function() {
+			return xls.xlsToPgSql(xlsTwoSheets, {
+				xlsSheetNumbers: [ 0 ]
+			}).then(function(pgsqlStream) {
+				var endDefer = when.defer(), data = '';
+				pgsqlStream.on('data', function(chunk) { data += chunk; });
+				pgsqlStream.on('end', endDefer.resolve);
+				return endDefer.promise.then(function() {
+					data.should.equal([
+						'set client_encoding to UTF8;',
+						'set standard_conforming_strings to on;',
+						'create table default_name (',
+						'\tSimple_Text text,',
+						'\tSimple_Int integer,',
+						'\tSimple_Numeric numeric,',
+						'\tSimple_Boolean boolean,',
+						'\tprimary key (Simple_Int)',
+						');',
+						'copy default_name (Simple_Text, Simple_Int, Simple_Numeric, Simple_Boolean) from stdin;',
+						'Hello\t1\t1.1\t1',
+						'World\t2\t2.2\t0',
+						'\\.',
+						'vacuum analyze default_name;\n',
+					].join('\n'));
+				});
+			});
+		});
+
+		it.only('should convert an XLS file into PGSQL (two sheets, ONLY SHEET 2)', function() {
+			return xls.xlsToPgSql(xlsTwoSheets, {
+				xlsSheetNumbers: [ 1 ]
+			}).then(function(pgsqlStream) {
+				var endDefer = when.defer(), data = '';
+				pgsqlStream.on('data', function(chunk) { data += chunk; });
+				pgsqlStream.on('end', endDefer.resolve);
+				return endDefer.promise.then(function() {
+					data.should.equal([
+						'set client_encoding to UTF8;',
+						'set standard_conforming_strings to on;',
+						'create table default_name (',
+						'\tint integer,',
+						'\ttext text',
+						');',
+						'copy default_name (int, text) from stdin;',
+						'1\ttest',
+						'2\tstring',
+						'4\there',
+						'1\tyo',
+						'\\.',
+						'vacuum analyze default_name;\n'
+					].join('\n'));
+				});
+			});
+		});
+
+		it.only('should convert an XLS file into PGSQL (two sheets, specifying both)', function() {
+			return xls.xlsToPgSql(xlsTwoSheets, {
+				xlsSheetNumbers: [ 0, 1 ]
+			}).then(function(pgsqlStream) {
+				var endDefer = when.defer(), data = '';
+				pgsqlStream.on('data', function(chunk) { data += chunk; });
+				pgsqlStream.on('end', endDefer.resolve);
+				return endDefer.promise.then(function() {
+					data.should.equal([
+						'set client_encoding to UTF8;',
+						'set standard_conforming_strings to on;',
+						'create table default_name_Sheet1 (',
+						'\tSimple_Text text,',
+						'\tSimple_Int integer,',
+						'\tSimple_Numeric numeric,',
+						'\tSimple_Boolean boolean,',
+						'\tprimary key (Simple_Int)',
+						');',
+						'copy default_name_Sheet1 (Simple_Text, Simple_Int, Simple_Numeric, Simple_Boolean) from stdin;',
+						'Hello\t1\t1.1\t1',
+						'World\t2\t2.2\t0',
+						'\\.',
+						'vacuum analyze default_name_Sheet1;',
+						'set client_encoding to UTF8;',
+						'set standard_conforming_strings to on;',
+						'create table default_name_Sheet2 (',
+						'\tint integer,',
+						'\ttext text',
+						');',
+						'copy default_name_Sheet2 (int, text) from stdin;',
+						'1\ttest',
+						'2\tstring',
+						'4\there',
+						'1\tyo',
+						'\\.',
+						'vacuum analyze default_name_Sheet2;\n'
+					].join('\n'));
 				});
 			});
 		});

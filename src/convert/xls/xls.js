@@ -1,6 +1,8 @@
 "use strict";
 
 var when = require('when')
+, stream = require('stream')
+, util = require('util')
 , sequence = require('when/sequence')
 , transformers = require('../../transformers.js')
 , tsv = require('../tsv/tsv.js')
@@ -8,10 +10,18 @@ var when = require('when')
 , _ = require('lodash')
 , helper = require('../../helper');
 
-exports.xlsToPgSql = function(filePath, writeStream, options) {
+exports.xlsToPgSql = function(filePath, options) {
 	options = helper.getOptions(options);
 
-	return xls2tsv(filePath).then(function(info) {
+	// We need our own xls stream to combine the streams given to us from each
+	// sheet that may exist in the xls file
+	util.inherits(XlsPgsqlStream, stream.Readable);
+	function XlsPgsqlStream() { stream.Readable.call(this); }
+	XlsPgsqlStream.prototype._read = function() {};
+
+	var xlsPgsqlStream = new XlsPgsqlStream();
+
+	return xls2tsv(filePath, options.xlsSheetNumbers).then(function(info) {
 
 		return sequence(info.files.map(function(file) {
 			var modifiedOptions = _.clone(options);
@@ -23,8 +33,20 @@ exports.xlsToPgSql = function(filePath, writeStream, options) {
 			}
 
 			return function() {
-				return tsv.tsvToPgSql(file.path, writeStream, modifiedOptions);
+				return tsv.tsvToPgSql(file.path, modifiedOptions)
+				.then(function(pgsqlStream) {
+					var defer = when.defer();
+					pgsqlStream.on('end', defer.resolve);
+					pgsqlStream.on('data', function(chunk) {
+						xlsPgsqlStream.push(chunk);
+					});
+					return defer.promise;
+				});
 			};
-		}));
+
+		})).then(function() {
+			xlsPgsqlStream.push(null); // end the read stream
+			return xlsPgsqlStream;
+		});
 	});
 };
