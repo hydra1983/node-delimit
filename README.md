@@ -48,8 +48,9 @@ vacuum analyze default_name;
 
     npm install --save delimit
 
-
 Optional: Use `-g` to access the delimit cli script.
+
+You also need to have Python 2 in your path along with the [xlrd](https://pypi.python.org/pypi/xlrd) package to handle excel spreadsheets.
 
 ## As a NodeJS module
 
@@ -71,7 +72,7 @@ delimit.convertStream('csv', 'pgsql', __dirname + '/files/csvSimple.csv')
 
 #### **`delimit.convertStream(convertFrom, convertTo, filePath [, options])`**
 
-Converts one file format into another, and returns a stream that will return the converted output.
+Converts one file format into another. The input data can be in the form of a file path or a stream. This function will return a stream that that contains the converted output.
 
 *Supported `convertFrom` values:*
 

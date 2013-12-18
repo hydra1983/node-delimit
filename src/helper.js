@@ -1,6 +1,10 @@
 "use strict";
 
-var defines = require('./defines');
+var defines = require('./defines')
+, fs = require('fs')
+, when = require('when')
+, callbacks = require('when/callbacks')
+, stream = require('stream');
 
 exports.normalizeString = function(string) {
 	string = '' + string; // turn into a string
@@ -177,4 +181,18 @@ exports.getOptions = function(givenOpts) {
 	})(givenOpts.xlsSheetNumbers));
 
 	return retOpts;
+};
+
+exports.getReadableStream = function(filePathOrStream) {
+	if (filePathOrStream instanceof stream.Readable) {
+		return when.resolve(filePathOrStream);
+	}
+
+	return callbacks.call(fs.exists, filePathOrStream).then(function(exists) {
+		if (!exists) {
+			return when.reject(new Error(
+				'File ' + filePathOrStream + ' does not exist'));
+		}
+		return when.resolve(fs.createReadStream(filePathOrStream));
+	});
 };

@@ -24,7 +24,7 @@ describe('tsv', function() {
 
 		it('should convert a TSV file into a DataSet (simples)', function() {
 
-			return tsv.tsvToDataSet(tsvSimple)
+			return tsv.tsvToDataSet(fs.createReadStream(tsvSimple))
 			.then(function(dataset) {
 				dataset.getHeaders().should.eql([
 				   'Simple_Text', 'Simple_Int', 'Simple_Numeric',
@@ -48,7 +48,7 @@ describe('tsv', function() {
 		});
 
 		it('should convert a TSV file into a DataSet (simple1100Lines)', function() {
-			return tsv.tsvToDataSet(tsvSimple1100)
+			return tsv.tsvToDataSet(fs.createReadStream(tsvSimple1100))
 			.then(function(dataset) {
 				dataset.getHeaders().should.eql([
 				   'Simple_Text', 'Simple_Int',
@@ -63,7 +63,7 @@ describe('tsv', function() {
 		});
 
 		it('should convert a TSV file into a DataSet (skip empty header names)', function() {
-			return tsv.tsvToDataSet(tsvMissingHeaders, {
+			return tsv.tsvToDataSet(fs.createReadStream(tsvMissingHeaders), {
 				ignoreEmptyHeaders: true
 			})
 			.then(function(dataset) {
@@ -83,7 +83,7 @@ describe('tsv', function() {
 		});
 
 		it('should convert a TSV file into a DataSet (skip empty header names more obscure)', function() {
-			return tsv.tsvToDataSet(tsvMissingHeaders2, {
+			return tsv.tsvToDataSet(fs.createReadStream(tsvMissingHeaders2), {
 				ignoreEmptyHeaders: true
 			})
 			.then(function(dataset) {
@@ -98,7 +98,7 @@ describe('tsv', function() {
 		});
 
 		it('should convert a TSV file into a DataSet (allow & replace empty header names)', function() {
-			return tsv.tsvToDataSet(tsvMissingHeaders)
+			return tsv.tsvToDataSet(fs.createReadStream(tsvMissingHeaders))
 			.then(function(dataset) {
 				dataset.getHeaders().should.eql([
 				   'test_1', 'column_2', 'test_3'
@@ -117,10 +117,10 @@ describe('tsv', function() {
 
 	});
 
-	describe('#tsvToPgSql()', function() {
+	describe('#tsvToPgsqlStream()', function() {
 
 		it('should convert a TSV file into PGSQL (simple)', function() {
-			return tsv.tsvToPgSql(tsvSimple)
+			return tsv.tsvToPgsqlStream(fs.createReadStream(tsvSimple))
 			.then(function(pgsqlStream) {
 				var endDefer = when.defer(), data = '';
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
@@ -132,9 +132,9 @@ describe('tsv', function() {
 		});
 
 		it('should convert a TSV file into PGSQL (skip empty header names)', function(done) {
-			return tsv.tsvToPgSql(tsvMissingHeaders, {
-				ignoreEmptyHeaders: true
-			}).then(function(pgsqlStream) {
+			return tsv.tsvToPgsqlStream(fs.createReadStream(tsvMissingHeaders)
+			, { ignoreEmptyHeaders: true })
+			.then(function(pgsqlStream) {
 				var endDefer = when.defer(), data = '';
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
@@ -147,7 +147,7 @@ describe('tsv', function() {
 		});
 
 		it('should only output data SQL (data only = true)', function(done) {
-			return tsv.tsvToPgSql(tsvSimple, {
+			return tsv.tsvToPgsqlStream(fs.createReadStream(tsvSimple), {
 				ignoreEmptyHeaders: true,
 				dataOnly: true
 			}).then(function(pgsqlStream) {

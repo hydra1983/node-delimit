@@ -1,29 +1,27 @@
 "use strict";
 
 var fs = require('fs')
+, path = require('path')
+, stream = require('stream')
 , when = require('when')
-, exec = require('child_process').exec;
+, callbacks = require('when/callbacks')
+, helper = require('../../helper')
+, spawn = require('child_process').spawn;
 
-module.exports = function(filePath) {
-	var defer = when.defer();
-
-	fs.exists(filePath, function(exists) {
-		if (!exists) {
-			return defer.reject(new Error(
-				'File ' + filePath + ' does not exist'));
-		}
-
-		var call = 'python ' + __dirname + '/csv2tsv.py ' + filePath;
-		exec(call, function(error, stdout, stderr) {
-			return error
-				? defer.reject(new Error(
-					'Failed to convert CSV to TSV\n' +
-					'stderr:\n' + stderr + '\n' +
-					'stack:\n' + (error.stack || error)
-				))
-				: defer.resolve(stdout);
-		});
+module.exports = function(filePathOrStream) {
+	return helper.getReadableStream(filePathOrStream).then(function(csvStream) {
+		var csv2tsv = spawn(path.join(__dirname, 'pipeCsv2tsv.py'));
+		csvStream.pipe(csv2tsv.stdin);
+		return csv2tsv.stdout;
 	});
-
-	return defer.promise;
 };
+
+require('main')(module)
+.run(function($) {
+	$.assert.argsLen(1)
+	module.exports($(0)).then(function(tsvStream) {
+		tsvStream.pipe(process.stdout);
+	}).otherwise(function(error) {
+		console.error(error.stack || error); void('debug');
+	})
+});
