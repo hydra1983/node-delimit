@@ -2,6 +2,32 @@
 
 var defines = require('./defines');
 
+exports.normalizeString = function(string) {
+	string = '' + string; // turn into a string
+	// Remove surrounding spaces
+	string = string.trim();
+	// Replace % with "percent"
+	string = string.replace(/%/g, "percent");
+	// Replace all spaces with underscores
+	string = string.replace(/ /g, "_");
+	// Remove unwanted characters
+	string = string.replace(/[^A-Za-z0-9_]/g, "");
+	// Remove any double and trailing underscores
+	string = string.replace(/__+/g, '_').replace(/_*$/g, '');
+	return string;
+};
+
+exports.normalizeHeader = function(header) {
+	var normalized = exports.normalizeString(header);
+
+	// look for headers starting with a number
+	if (normalized.match(/^\d/)) {
+		normalized = "column_" + normalized;
+	}
+
+	return normalized;
+};
+
 exports.getOptions = function(givenOpts) {
 
 	// no need to get the options if we have already inspected it previously
@@ -63,8 +89,12 @@ exports.getOptions = function(givenOpts) {
 		// if it's already an object, convert to the proper defines
 		if (typeof forceTypes === 'object') {
 			for (var column_name in forceTypes) {
-				forceTypes[column_name] = defines.getDefine(
+				var normalizedName = exports.normalizeHeader(column_name);
+				forceTypes[normalizedName] = defines.getDefine(
 					forceTypes[column_name]);
+				if (normalizedName !== column_name) {
+					delete forceTypes[column_name];
+				}
 			}
 			return forceTypes;
 		}
@@ -76,7 +106,7 @@ exports.getOptions = function(givenOpts) {
 
 		return forceTypes.split(',').reduce(function(objForceTypes, curr) {
 			var split = curr.split(':')
-			, columnName = split[0]
+			, columnName = exports.normalizeHeader(split[0])
 			, forceType = split[1].toUpperCase();
 			if (typeof defines[forceType] !== 'undefined') {
 				objForceTypes[columnName] = defines.getDefine(

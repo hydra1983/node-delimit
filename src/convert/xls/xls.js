@@ -19,7 +19,7 @@ exports.xlsToPgSql = function(filePath, writeStream, options) {
 			// append sheet name if there is more than one file
 			if (info.files.length > 1) {
 				modifiedOptions.name = options.name + "_" +
-					transformers.normalizeString(file.sheetName);
+					helper.normalizeString(file.sheetName);
 			}
 
 			return function() {

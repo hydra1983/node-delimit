@@ -206,7 +206,9 @@ describe('file', function() {
 		it('should force a particular data type', function() {
 			options = {
 				headerRow: 0,
-				forceType: defines.TEXT
+				forceTypes: {
+					'Simple_Int': defines.TEXT
+				}
 			};
 			return file.getAttributes(
 				tsvSimple, tsvLoader, datasetTransformer, options
@@ -217,9 +219,9 @@ describe('file', function() {
 					'Simple_Primary', 'Simple_Zip'
 				]);
 				fileAttributes.dataTypes.should.eql([
-					defines.TEXT, defines.TEXT, defines.TEXT,
-					defines.TEXT, defines.TEXT, defines.TEXT,
-					defines.TEXT, defines.TEXT
+					defines.TEXT, defines.TEXT, defines.NUMERIC,
+					defines.BOOLEAN, defines.LAT, defines.LONG,
+					defines.PRIMARY_INTEGER, defines.ZIP
 				]);
 				fileAttributes.ignoreColumns.length.should.equal(0);
 			});
@@ -307,6 +309,33 @@ describe('file', function() {
 			});
 		});
 
+	});
+
+	describe('#removeIndexes()', function() {
+		it('should remove the indexes provided from the array (first section)', function() {
+			file.removeIndexes([0, 1, 2], ['0', '1', '2', '3'])
+				.should.eql(['3']);
+		});
+		it('should remove the indexes provided from the array (end section)', function() {
+			file.removeIndexes([1, 2, 3], ['0', '1', '2', '3'])
+				.should.eql(['0']);
+		});
+		it('should remove the indexes provided from the array (mid section)', function() {
+			file.removeIndexes([1, 2], ['0', '1', '2', '3'])
+				.should.eql(['0', '3']);
+		});
+		it('should remove the indexes provided from the array (mixed)', function() {
+			file.removeIndexes([1, 0, 3], ['0', '1', '2', '3'])
+				.should.eql(['2']);
+		});
+		it('should not remove any indexes', function() {
+			file.removeIndexes([], ['0', '1', '2', '3'])
+				.should.eql(['0', '1', '2', '3']);
+			(function() {
+				file.removeIndexes(undefined, ['0', '1', '2', '3'])
+					.should.eql(['0', '1', '2', '3']);
+			}).should.throw;
+		});
 	});
 
 });

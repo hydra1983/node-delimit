@@ -65,6 +65,31 @@ describe('helper', function() {
 			});
 		});
 
+		it('should set normalize strings (object)', function() {
+			var options = helper.getOptions({
+				forceTypes: {
+					'foo bar': 'boolean',
+					'0': 'text'
+				}
+			});
+
+			options.forceTypes.should.deep.eql({
+				'foo_bar': defines.BOOLEAN,
+				'column_0': defines.TEXT
+			});
+		});
+
+		it('should set force types (string)', function() {
+			var options = helper.getOptions({
+				forceTypes: 'foo bar:boolean,0:text'
+			});
+
+			options.forceTypes.should.deep.eql({
+				'foo_bar': defines.BOOLEAN,
+				'column_0': defines.TEXT
+			});
+		});
+
 		it.skip('should set ignore types');
 		it.skip('should set the headers to use');
 		it.skip('should set maintain headers');
@@ -72,6 +97,28 @@ describe('helper', function() {
 		it.skip('should set create only');
 		it.skip('should set insert only');
 
+	});
+
+	describe('#normalizeString()', function() {
+		it('should remove all surrounding whitespace', function() {
+			helper.normalizeString("         column_name      ")
+				.should.equal("column_name");
+		});
+		it('should replace all spaces with underscores', function() {
+			helper.normalizeString("column name")
+				.should.equal("column_name");
+		});
+		it('should remove all characters that are not [A-Za-z09_]', function() {
+			helper.normalizeString("!#!#!#column_name@@@@@@####")
+				.should.equal("column_name");
+		});
+	});
+
+	describe('#normalizeHeader()', function() {
+		it('should replace all header names starting with a number', function() {
+			var headers = "88";
+			helper.normalizeHeader(headers).should.eql("column_88");
+		});
 	});
 
 });

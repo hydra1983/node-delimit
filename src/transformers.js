@@ -1,48 +1,7 @@
 "use strict";
 
-var defines = require('./defines.js');
-
-exports.removeIndexes = function(indexes, arr) {
-	var arrObj = {};
-	var i, len;
-	for (i = 0, len = arr.length; i < len; ++i) { arrObj[i] = arr[i]; }
-	for (i = 0, len = indexes.length; i < len; ++i) {
-		delete arrObj[indexes[i]];
-	}
-	var ret = [];
-	for (i = 0, len = arr.length; i < len; ++i) {
-		if (typeof arrObj[i] !== 'undefined') {
-			ret.push(arrObj[i]);
-		}
-	}
-	return ret;
-};
-
-exports.normalizeString = function(string) {
-	string = '' + string; // turn into a string
-	// Remove surrounding spaces
-	string = string.trim();
-	// Replace % with "percent"
-	string = string.replace(/%/g, "percent");
-	// Replace all spaces with underscores
-	string = string.replace(/ /g, "_");
-	// Remove unwanted characters
-	string = string.replace(/[^A-Za-z0-9_]/g, "");
-	// Remove any double and trailing underscores
-	string = string.replace(/__+/g, '_').replace(/_*$/g, '');
-	return string;
-};
-
-exports.normalizeHeader = function(header) {
-	var normalized = exports.normalizeString(header);
-
-	// look for headers starting with a number
-	if (normalized.match(/^\d/)) {
-		normalized = "column_" + normalized;
-	}
-
-	return normalized;
-};
+var defines = require('./defines.js')
+, helper = require('./helper');
 
 function getDefaultTransformer(options) {
 	options = options || {};
@@ -177,7 +136,7 @@ exports.getPgSqlTransformer = function(options) {
 				case defines.ZIP: return 'zip';
 			}
 		}
-		return exports.normalizeHeader(header);
+		return helper.normalizeHeader(header);
 	};
 
 	return transformer;
