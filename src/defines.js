@@ -17,7 +17,7 @@ exports.getDefine = function(thing) {
 		return thing;
 	}
 
-	switch((thing + '').toUpperCase()) {
+	switch ((thing + '').toUpperCase()) {
 		case 'UNKNOWN': return exports.UNKNOWN;
 		case 'BOOLEAN': return exports.BOOLEAN;
 		case 'INTEGER': return exports.INTEGER;

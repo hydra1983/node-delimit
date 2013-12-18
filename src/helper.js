@@ -1,5 +1,7 @@
 "use strict";
 
+var defines = require('./defines');
+
 exports.getOptions = function(givenOpts) {
 
 	// no need to get the options if we have already inspected it previously
@@ -57,20 +59,34 @@ exports.getOptions = function(givenOpts) {
 	, 'Force a type for a given column? (comma separated)\n' +
 		"e.g. 'column_name:boolean,another_column:text'"
 	, (function(forceTypes) {
-		if (typeof forceTypes === 'object') { return forceTypes; }
-		if (typeof forceTypes !== 'string') { return undefined; }
+
+		// if it's already an object, convert to the proper defines
+		if (typeof forceTypes === 'object') {
+			for (var column_name in forceTypes) {
+				forceTypes[column_name] = defines.getDefine(
+					forceTypes[column_name]);
+			}
+			return forceTypes;
+		}
+
+		// if it's not a string, nothing we can do about it...
+		if (typeof forceTypes !== 'string') {
+			return undefined;
+		}
 
 		return forceTypes.split(',').reduce(function(objForceTypes, curr) {
 			var split = curr.split(':')
 			, columnName = split[0]
 			, forceType = split[1].toUpperCase();
 			if (typeof defines[forceType] !== 'undefined') {
-				objForceTypes[columnName] = defines[forceType];
+				objForceTypes[columnName] = defines.getDefine(
+					defines[forceType]);
 			} else {
 				console.error('W:', forceType, 'is not a valid forceType');
 			}
 			return objForceTypes;
 		}, {});
+
 	})(givenOpts.forceTypes));
 
 	addOption('ignoreTypes', 't', false

@@ -1,8 +1,8 @@
 "use strict";
 
 var when = require('when')
-, helper = require('../src/helper.js')
-, defines = require('../src/defines.js')
+, helper = require('../src/helper')
+, defines = require('../src/defines')
 , chai = require('chai')
 , chaiAsPromised = require('chai-as-promised');
 
@@ -15,7 +15,7 @@ describe('helper', function() {
 	describe('#getOptions()', function() {
 
 		it('should return the correct defaults', function() {
-			var options = util.getOptions();
+			var options = helper.getOptions();
 
 			options.should.deep.eql({
 				name: 'default_name',
@@ -38,7 +38,33 @@ describe('helper', function() {
 		it.skip('should set a prepend string');
 		it.skip('should set the header row');
 		it.skip('should set ignoreEmptyHeaders');
-		it.skip('should set force types');
+
+		it('should set force types (object passed in)', function() {
+
+			var options = helper.getOptions({
+				forceTypes: {
+					'foo': 'boolean',
+					'bar': 'text'
+				}
+			});
+
+			options.forceTypes.should.deep.eql({
+				'foo': defines.BOOLEAN,
+				'bar': defines.TEXT
+			});
+		});
+
+		it('should set force types (string passed in)', function() {
+			var options = helper.getOptions({
+				forceTypes: 'foo:boolean,bar:text'
+			});
+
+			options.forceTypes.should.deep.eql({
+				'foo': defines.BOOLEAN,
+				'bar': defines.TEXT
+			});
+		});
+
 		it.skip('should set ignore types');
 		it.skip('should set the headers to use');
 		it.skip('should set maintain headers');
