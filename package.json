@@ -13,7 +13,7 @@
     "delimit": "./bin/delimit.js"
   },
   "author": "Trevor Senior <trevor@tsenior.com> (http://tsenior.com/)",
-  "license": "BSD",
+  "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {
     "when": "~2.7.0",
