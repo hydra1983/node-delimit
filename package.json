@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "find test/ -name '*.js' | while read file; do mocha $file; [ $? -ne 0 ] && { exit $?; }; done"
+    "test": "find test/ -name '*.js' | while read file; do echo $file; mocha $file; [ $? -ne 0 ] && { exit $?; }; done; exit 0"
   },
   "bin": {
     "delimit": "./bin/delimit.js"
