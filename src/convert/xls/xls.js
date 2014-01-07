@@ -33,7 +33,7 @@ exports.xlsToPgSql = function(filePath, options) {
 			}
 
 			return function() {
-				return tsv.tsvToPgSql(file.path, modifiedOptions)
+				return tsv.tsvToPgsqlStream(file.path, modifiedOptions)
 				.then(function(pgsqlStream) {
 					var defer = when.defer();
 					pgsqlStream.on('end', defer.resolve);

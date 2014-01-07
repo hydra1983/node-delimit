@@ -116,7 +116,7 @@ describe('xls', function() {
 			});
 		});
 
-		it.only('should convert an XLS file into PGSQL (two sheets, ONLY SHEET 2)', function() {
+		it('should convert an XLS file into PGSQL (two sheets, ONLY SHEET 2)', function() {
 			return xls.xlsToPgSql(xlsTwoSheets, {
 				xlsSheetNumbers: [ 1 ]
 			}).then(function(pgsqlStream) {
@@ -143,7 +143,7 @@ describe('xls', function() {
 			});
 		});
 
-		it.only('should convert an XLS file into PGSQL (two sheets, specifying both)', function() {
+		it('should convert an XLS file into PGSQL (two sheets, specifying both)', function() {
 			return xls.xlsToPgSql(xlsTwoSheets, {
 				xlsSheetNumbers: [ 0, 1 ]
 			}).then(function(pgsqlStream) {
