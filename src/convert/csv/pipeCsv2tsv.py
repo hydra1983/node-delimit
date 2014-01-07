@@ -36,7 +36,7 @@ class ReadlineIterator(object):
 
 def output_tsv(io_stream, dialect):
     reader = csv.reader(ReadlineIterator(io_stream), dialect)
-    writer = csv.writer(sys.stdout, delimiter="\t")
+    writer = csv.writer(sys.stdout, delimiter="\t", lineterminator="\n")
     for row in reader:
         writer.writerow(row)
 

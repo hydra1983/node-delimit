@@ -17,14 +17,19 @@ describe('csv2tsv', function() {
 	describe('#csv2tsv()', function() {
 
 		it('should create the temporary tsv file', function() {
-			return csv2tsv(csvSimple).then(function(tempPath) {
-				var defer = when.defer();
-				fs.exists(tempPath, defer.resolve);
-				return defer.promise.then(function(exists) {
-					exists.should.be.true;
-					var defer = when.defer();
-					fs.unlink(tempPath, defer.resolve);
-					return defer.promise;
+			return csv2tsv(csvSimple).then(function(tsvStream) {
+
+				var endDefer = when.defer(), data = '';
+				tsvStream.on('data', function(chunk) { data += chunk; });
+				tsvStream.on('end', endDefer.resolve);
+
+				return endDefer.promise.then(function() {
+					data.should.equal([
+						'First Name\tLast Name',
+						'Trevor\tSenior',
+						'James\tNolan',
+						'Henry\tSmith\n'
+					].join('\n'));
 				});
 			});
 		});
