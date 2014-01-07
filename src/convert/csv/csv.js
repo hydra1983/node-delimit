@@ -5,6 +5,6 @@ var csv2tsv = require('./csv2tsv.js')
 
 exports.csvToPgSql = function(filePathOrStream, options) {
 	return csv2tsv(filePathOrStream).then(function(tsvStream) {
-		return tsv.tsvToPgSql(tsvStream, options);
+		return tsv.tsvToPgsqlStream(tsvStream, options);
 	});
 };

@@ -28,7 +28,8 @@ describe('csv2tsv', function() {
 						'First Name\tLast Name',
 						'Trevor\tSenior',
 						'James\tNolan',
-						'Henry\tSmith\n'
+						'Henry\tSmith',
+						''
 					].join('\n'));
 				});
 			});

@@ -25,17 +25,29 @@ describe('csv', function() {
 	});
 
 	it('should convert a CSV file into PGSQL (simple)', function() {
-		var ws = fs.createWriteStream('out_csv_0.sql');
-		return csv.csvToPgSql(csvSimple, ws, options)
-		.then(function() {
-			ws.end();
-			return nodefn.call(
-				fs.readFile, 'out_csv_0.sql', {encoding: 'UTF8'}
-			).then(function(data) {
-				data.should.be.ok;
-				var defer = when.defer();
-				fs.unlink('out_csv_0.sql', defer.resolve);
-				return defer.promise;
+
+		return csv.csvToPgSql(csvSimple, options)
+		.then(function(pgsqlStream) {
+			var endDefer = when.defer(), data = '';
+			pgsqlStream.on('data', function(chunk) { data += chunk; });
+			pgsqlStream.on('end', endDefer.resolve);
+
+			return endDefer.promise.then(function() {
+				data.should.equal([
+					'set client_encoding to UTF8;',
+					'set standard_conforming_strings to on;',
+					'create table default_name (',
+					'	First_Name text,',
+					'	Last_Name text',
+					');',
+					'copy default_name (First_Name, Last_Name) from stdin;',
+					'Trevor	Senior',
+					'James	Nolan',
+					'Henry	Smith',
+					'\\.',
+					'vacuum analyze default_name;',
+					''
+				].join('\n'));
 			});
 		});
 	});
