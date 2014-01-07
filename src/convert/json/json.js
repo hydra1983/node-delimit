@@ -8,7 +8,6 @@ var fs = require('fs')
 , defines = require('../../defines.js')
 , pgsql = require('../../pgsql.js')
 , transformers = require('../../transformers.js')
-, async = require('async')
 , dataType = require('../../dataType.js');
 
 var util = require('util');
