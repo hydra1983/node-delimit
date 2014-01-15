@@ -80,7 +80,7 @@ Converts one file format into another. The input data can be in the form of a fi
 
 *Supported `convertTo` values:*
 
-    'pgsql'
+    'tsv', 'pgsql'
 
 *`options` (pass in any of these as object values)*
 

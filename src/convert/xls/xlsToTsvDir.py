@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# Converts a spreadsheet into multiple TSV files (one for each sheet)
+
 import sys
 import tempfile
 import csv
@@ -40,7 +42,7 @@ for i, sheet in enumerate(wb.sheets()):
                     fixed = item
 
                 fixed = fixed.encode('utf8')
-                fixed = fixed.replace('\t', ' ')  # replace tabs with spaces
+                fixed = fixed.replace('\t', '\\t')  # replace tabs with escaped tabs
                 fixedRow.append(fixed)
             writer.writerow(fixedRow)
 

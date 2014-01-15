@@ -4,21 +4,22 @@ var fs = require('fs')
 , path = require('path')
 , exec = require('child_process').exec
 , when = require('when')
+, callbacks = require('when/callbacks')
 , nodefn = require('when/node/function');
 
-function xls2tsv(filePath, sheetNumbersToGrab) {
+function xlsToTsvDir(filePath, sheetNumbersToGrab) {
 	sheetNumbersToGrab = sheetNumbersToGrab || [];
 
-	var defer = when.defer();
-	fs.exists(filePath, function(exists) {
+	return callbacks.call(fs.exists, filePath).then(function(exists) {
 		if (!exists) {
-			return defer.reject(new Error(
-				'File ' + filePath + ' does not exist'));
+			return when.reject(new Error(filePath + ' does not exist'));
 		}
 
-		var call = 'python ' + __dirname + '/xls2tsv.py ' + filePath + ' ' +
+		var scriptPath = path.join(__dirname, 'xlsToTsvDir.py');
+		var call = 'python ' + scriptPath + " '" + filePath + "' " +
 			sheetNumbersToGrab.join(' ');
 
+		var defer = when.defer();
 		exec(call, function(error, stdout, stderr) {
 			return (error === null)
 				? defer.resolve(stdout)
@@ -26,14 +27,12 @@ function xls2tsv(filePath, sheetNumbersToGrab) {
 					'There was a problem parsing the file ' + filePath +
 					'\nstderr\n:' + stderr));
 		});
+		return defer.promise;
 	});
-	return defer.promise;
 }
 
 function getTsvFilePaths(tempDir) {
-	var fsExistsDefer = when.defer();
-	fs.exists(tempDir, fsExistsDefer.resolve);
-	return fsExistsDefer.promise.then(function(exists) {
+	return callbacks.call(fs.exists, tempDir).then(function(exists) {
 		if (!exists) {
 			return when.reject(new Error(
 				'Directory ' + tempDir + ' does not exist'));
@@ -48,7 +47,8 @@ function getTsvFilePaths(tempDir) {
 
 module.exports = function(filePath, sheetNumbersToGrab) {
 	var info = {};
-	return xls2tsv(filePath, sheetNumbersToGrab).then(function(tempDir) {
+	return xlsToTsvDir(filePath, sheetNumbersToGrab)
+	.then(function(tempDir) {
 		info.tempDir = tempDir;
 		info.files = [];
 		return getTsvFilePaths(tempDir).then(function(filePaths) {
@@ -58,10 +58,12 @@ module.exports = function(filePath, sheetNumbersToGrab) {
 			return info;
 		});
 	});
-}
+};
+
+// attach to exports after setting module.exports = fn()
+module.exports.xlsToTsvDir = xlsToTsvDir;
 
 // expose private functions for tests
 module.exports.test = {
-	xls2tsv: xls2tsv,
 	getTsvFilePaths: getTsvFilePaths
 };

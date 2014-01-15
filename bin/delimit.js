@@ -30,7 +30,7 @@ require('main')(module)
     '  - csv, tsv, xls, xlsx, json',
     '',
     'Convert To Valid Values:',
-    '  - pgsql',
+    '  - tsv, pgsql',
     '',
     'If specifying column types for a flag, the following values are valid:',
     '',

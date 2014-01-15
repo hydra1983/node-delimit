@@ -24,31 +24,58 @@ describe('csv', function() {
 		};
 	});
 
-	it('should convert a CSV file into PGSQL (simple)', function() {
+	describe('#csv2tsv()', function() {
 
-		return csv.csvToPgSql(csvSimple, options)
-		.then(function(pgsqlStream) {
-			var endDefer = when.defer(), data = '';
-			pgsqlStream.on('data', function(chunk) { data += chunk; });
-			pgsqlStream.on('end', endDefer.resolve);
+		it('should create a valid tsv stream', function() {
+			return csv.csvToTsv(csvSimple).then(function(tsvStream) {
 
-			return endDefer.promise.then(function() {
-				data.should.equal([
-					'set client_encoding to UTF8;',
-					'set standard_conforming_strings to on;',
-					'create table default_name (',
-					'	First_Name text,',
-					'	Last_Name text',
-					');',
-					'copy default_name (First_Name, Last_Name) from stdin;',
-					'Trevor	Senior',
-					'James	Nolan',
-					'Henry	Smith',
-					'\\.',
-					'vacuum analyze default_name;',
-					''
-				].join('\n'));
+				var endDefer = when.defer(), data = '';
+				tsvStream.on('data', function(chunk) { data += chunk; });
+				tsvStream.on('end', endDefer.resolve);
+
+				return endDefer.promise.then(function() {
+					data.should.equal([
+						'First Name\tLast Name',
+						'Trevor\tSenior',
+						'James\tNolan',
+						'Henry\tSmith',
+						''
+					].join('\n'));
+				});
 			});
+		});
+
+	});
+
+	describe('#csv2PgSql()', function() {
+
+		it('should convert a simple CSV file into a PGSQL stream', function() {
+
+			return csv.csvToPgSql(csvSimple, options)
+			.then(function(pgsqlStream) {
+				var endDefer = when.defer(), data = '';
+				pgsqlStream.on('data', function(chunk) { data += chunk; });
+				pgsqlStream.on('end', endDefer.resolve);
+
+				return endDefer.promise.then(function() {
+					data.should.equal([
+						'set client_encoding to UTF8;',
+						'set standard_conforming_strings to on;',
+						'create table default_name (',
+						'	First_Name text,',
+						'	Last_Name text',
+						');',
+						'copy default_name (First_Name, Last_Name) from stdin;',
+						'Trevor	Senior',
+						'James	Nolan',
+						'Henry	Smith',
+						'\\.',
+						'vacuum analyze default_name;',
+						''
+					].join('\n'));
+				});
+			});
+
 		});
 	});
 
