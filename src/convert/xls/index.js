@@ -5,12 +5,12 @@ var when = require('when')
 , util = require('util')
 , sequence = require('when/sequence')
 , transformers = require('../../transformers.js')
-, tsv = require('../tsv/tsv.js')
+, tsv = require('../tsv')
 , xls2tsv = require('./xls2tsv.js')
 , _ = require('lodash')
 , helper = require('../../helper');
 
-exports.xlsToPgSql = function(filePath, options) {
+exports.xlsToPgSqlStream = function(filePath, options) {
 	options = helper.getOptions(options);
 
 	// We need our own xls stream to combine the streams given to us from each

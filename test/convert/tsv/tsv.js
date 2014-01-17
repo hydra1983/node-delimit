@@ -3,8 +3,8 @@
 var fs = require('fs')
 , when = require('when')
 , nodefn = require('when/node/function')
-, tsv = require('../../../src/convert/tsv/tsv.js')
-, defines = require('../../../src/defines.js')
+, tsv = require('../../../src/convert/tsv')
+, defines = require('../../../src/defines')
 , chai = require('chai')
 , chaiAsPromised = require('chai-as-promised');
 

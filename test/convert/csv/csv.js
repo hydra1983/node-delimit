@@ -3,7 +3,7 @@
 var fs = require('fs')
 , when = require('when')
 , nodefn = require('when/node/function')
-, csv = require('../../../src/convert/csv/csv.js')
+, csv = require('../../../src/convert/csv')
 , defines = require('../../../src/defines.js')
 , chai = require('chai')
 , chaiAsPromised = require('chai-as-promised');
@@ -27,7 +27,7 @@ describe('csv', function() {
 	describe('#csv2tsv()', function() {
 
 		it('should create a valid tsv stream', function() {
-			return csv.csvToTsv(csvSimple).then(function(tsvStream) {
+			return csv.csvToTsvStream(csvSimple).then(function(tsvStream) {
 
 				var endDefer = when.defer(), data = '';
 				tsvStream.on('data', function(chunk) { data += chunk; });
@@ -51,7 +51,7 @@ describe('csv', function() {
 
 		it('should convert a simple CSV file into a PGSQL stream', function() {
 
-			return csv.csvToPgSql(csvSimple, options)
+			return csv.csvToPgSqlStream(csvSimple, options)
 			.then(function(pgsqlStream) {
 				var endDefer = when.defer(), data = '';
 				pgsqlStream.on('data', function(chunk) { data += chunk; });

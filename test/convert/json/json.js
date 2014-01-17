@@ -3,9 +3,9 @@
 var fs = require('fs')
 , when = require('when')
 , nodefn = require('when/node/function')
-, json = require('../../../src/convert/json/json.js')
-, DataSet = require('../../../src/DataSet.js')
-, defines = require('../../../src/defines.js')
+, json = require('../../../src/convert/json')
+, DataSet = require('../../../src/DataSet')
+, defines = require('../../../src/defines')
 , chai = require('chai')
 , chaiAsPromised = require('chai-as-promised');
 

@@ -1,10 +1,10 @@
 "use strict";
 
 var when = require('when')
-, xls = require('./src/convert/xls/xls')
-, tsv = require('./src/convert/tsv/tsv')
-, csv = require('./src/convert/csv/csv')
-, json = require('./src/convert/json/json')
+, xls = require('./src/convert/xls')
+, tsv = require('./src/convert/tsv')
+, csv = require('./src/convert/csv')
+, json = require('./src/convert/json')
 , helper = require('./src/helper');
 
 exports.toPgSql = function(convertFrom, fileOrStream, options) {
@@ -15,15 +15,15 @@ exports.toPgSql = function(convertFrom, fileOrStream, options) {
 	switch (convertFrom.toLowerCase()) {
 		case 'xls':
 		case 'xlsx':
-			pgsqlStreamPromise = xls.xlsToPgSql(fileOrStream, options);
+			pgsqlStreamPromise = xls.xlsToPgSqlStream(fileOrStream, options);
 			break;
 
 		case 'tsv':
-			pgsqlStreamPromise = tsv.tsvToPgSql(fileOrStream, options);
+			pgsqlStreamPromise = tsv.tsvToPgsqlStream(fileOrStream, options);
 			break;
 
 		case 'csv':
-			pgsqlStreamPromise = csv.csvToPgSql(fileOrStream, options);
+			pgsqlStreamPromise = csv.csvToPgSqlStream(fileOrStream, options);
 			break;
 
 		case 'json':

@@ -4,8 +4,8 @@ var fs = require('fs')
 , path = require('path')
 , when = require('when')
 , nodefn = require('when/node/function')
-, xls = require('../../../src/convert/xls/xls.js')
-, defines = require('../../../src/defines.js')
+, xls = require('../../../src/convert/xls')
+, defines = require('../../../src/defines')
 , chai = require('chai')
 , chaiAsPromised = require('chai-as-promised')
 , testConfig = require('../../testConfig');
@@ -23,7 +23,7 @@ describe('xls', function() {
 	describe('#xlsToPgSql()', function() {
 
 		it('should convert an XLS file into PGSQL (one sheet)', function() {
-			return xls.xlsToPgSql(xlsSimple).then(function(pgsqlStream) {
+			return xls.xlsToPgSqlStream(xlsSimple).then(function(pgsqlStream) {
 				var endDefer = when.defer(), data = '';
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
@@ -50,7 +50,7 @@ describe('xls', function() {
 		});
 
 		it('should convert an XLS file into PGSQL (two sheets)', function() {
-			return xls.xlsToPgSql(xlsTwoSheets).then(function(pgsqlStream) {
+			return xls.xlsToPgSqlStream(xlsTwoSheets).then(function(pgsqlStream) {
 				var endDefer = when.defer(), data = '';
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
@@ -89,7 +89,7 @@ describe('xls', function() {
 		});
 
 		it('should convert an XLS file into PGSQL (two sheets, ONLY SHEET 1)', function() {
-			return xls.xlsToPgSql(xlsTwoSheets, {
+			return xls.xlsToPgSqlStream(xlsTwoSheets, {
 				xlsSheetNumbers: [ 0 ]
 			}).then(function(pgsqlStream) {
 				var endDefer = when.defer(), data = '';
@@ -117,7 +117,7 @@ describe('xls', function() {
 		});
 
 		it('should convert an XLS file into PGSQL (two sheets, ONLY SHEET 2)', function() {
-			return xls.xlsToPgSql(xlsTwoSheets, {
+			return xls.xlsToPgSqlStream(xlsTwoSheets, {
 				xlsSheetNumbers: [ 1 ]
 			}).then(function(pgsqlStream) {
 				var endDefer = when.defer(), data = '';
@@ -144,7 +144,7 @@ describe('xls', function() {
 		});
 
 		it('should convert an XLS file into PGSQL (two sheets, specifying both)', function() {
-			return xls.xlsToPgSql(xlsTwoSheets, {
+			return xls.xlsToPgSqlStream(xlsTwoSheets, {
 				xlsSheetNumbers: [ 0, 1 ]
 			}).then(function(pgsqlStream) {
 				var endDefer = when.defer(), data = '';

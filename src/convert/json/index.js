@@ -4,11 +4,11 @@ var fs = require('fs')
 , when = require('when')
 , nodefn = require('when/node/function')
 , sequence = require('when/sequence')
-, DataSet = require('../../DataSet.js')
-, defines = require('../../defines.js')
-, pgsql = require('../../pgsql.js')
-, transformers = require('../../transformers.js')
-, dataType = require('../../dataType.js');
+, DataSet = require('../../DataSet')
+, defines = require('../../defines')
+, pgsql = require('../../pgsql')
+, transformers = require('../../transformers')
+, dataType = require('../../dataType');
 
 var util = require('util');
 
