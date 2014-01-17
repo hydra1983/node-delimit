@@ -71,12 +71,8 @@ exports.tsvToPgsqlStream = function(pathOrStream, options) {
 
 
 	/*
-
-		!!! THIS CODE RUNS IN THE BACKGROUND !!!
-
-		This function does NOT return a promise - it returns a stream.
-		The following code pushes things onto that stream
-
+		This following code does NOT *return* a promise - it only interfaces
+		with the stream that we return at the bottom (see last line in here)
 	*/
 
 	helper.getReadableStream(pathOrStream).then(function(tsvStream) {
@@ -165,5 +161,5 @@ exports.tsvToPgsqlStream = function(pathOrStream, options) {
 
 	// return the stream - it's contents will be populated as the above code
 	// churns
-	return pgsqlStream;
+	return when.resolve(pgsqlStream);
 };

@@ -21,7 +21,12 @@ exports.xlsToPgSqlStream = function(filePath, options) {
 
 	var xlsPgsqlStream = new XlsPgsqlStream();
 
-	return xls2tsv(filePath, options.xlsSheetNumbers).then(function(info) {
+	/*
+		This following code does NOT *return* a promise - it only interfaces
+		with the stream that we return at the bottom (see last line in here)
+	*/
+
+	xls2tsv(filePath, options.xlsSheetNumbers).then(function(info) {
 
 		return sequence(info.files.map(function(file) {
 			var modifiedOptions = _.clone(options);
@@ -46,7 +51,8 @@ exports.xlsToPgSqlStream = function(filePath, options) {
 
 		})).then(function() {
 			xlsPgsqlStream.push(null); // end the read stream
-			return xlsPgsqlStream;
 		});
 	});
+
+	return when.resolve(xlsPgsqlStream);
 };

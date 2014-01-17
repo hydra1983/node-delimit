@@ -24,13 +24,15 @@ function buildFlags() {
 
 require('main')(module)
 .usage(
-    'Usage: ./delimit [-flags] <convertFrom> <convertTo> <inputFile>',
+    'Usage: ./delimit [-flags] <convertFrom> <convertTo> [<inputFile>]',
     '',
     'Convert From Valid Values:',
     '  - csv, tsv, xls, xlsx, json',
     '',
     'Convert To Valid Values:',
     '  - tsv, pgsql',
+    '',
+    'If no <inputFile> is specified, data is read from stdin',
     '',
     'If specifying column types for a flag, the following values are valid:',
     '',
@@ -62,11 +64,14 @@ require('main')(module)
 .flags(buildFlags())
 .run(function($) {
     if ($('help')) { $.cerr($.help).exit(); }
-    $.assert.argsLen(3);
-    var outStream =
-        delimit.convertStream($(0), $(1), $(2), $.flags).pipe(process.stdout);
-    outStream.on('end', $.exit);
-    outStream.on('error', function(error) {
+    $.assert.argsLenGe(2);
+    delimit.convertStream($(0), $(1), $(2) || process.stdin, $.flags)
+    .then(function(outStream) {
+        var defer = when.defer();
+        outStream.on('end', defer.resolve);
+        outStream.on('error', defer.reject);
+        return defer.promise;
+    }).otherwise(function(error) {
         $.cerr(error.stack || error).exit(1);
     });
 });

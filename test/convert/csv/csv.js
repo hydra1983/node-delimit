@@ -28,8 +28,9 @@ describe('csv', function() {
 
 		it('should create a valid tsv stream', function() {
 			return csv.csvToTsvStream(csvSimple).then(function(tsvStream) {
+				var endDefer = when.defer()
+				, data = '';
 
-				var endDefer = when.defer(), data = '';
 				tsvStream.on('data', function(chunk) { data += chunk; });
 				tsvStream.on('end', endDefer.resolve);
 
@@ -51,9 +52,10 @@ describe('csv', function() {
 
 		it('should convert a simple CSV file into a PGSQL stream', function() {
 
-			return csv.csvToPgSqlStream(csvSimple, options)
-			.then(function(pgsqlStream) {
-				var endDefer = when.defer(), data = '';
+			return csv.csvToPgSqlStream(csvSimple, options).then(function(pgsqlStream) {
+				var endDefer = when.defer()
+				, data = '';
+
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
 

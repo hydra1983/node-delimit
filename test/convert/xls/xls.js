@@ -24,9 +24,12 @@ describe('xls', function() {
 
 		it('should convert an XLS file into PGSQL (one sheet)', function() {
 			return xls.xlsToPgSqlStream(xlsSimple).then(function(pgsqlStream) {
-				var endDefer = when.defer(), data = '';
+				var endDefer = when.defer()
+				, data = '';
+
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
+
 				return endDefer.promise.then(function() {
 					data.should.equal([
 						'set client_encoding to UTF8;',
@@ -45,15 +48,17 @@ describe('xls', function() {
 						'vacuum analyze default_name;\n'
 					].join('\n'));
 				});
-			});
-
+			})
 		});
 
 		it('should convert an XLS file into PGSQL (two sheets)', function() {
 			return xls.xlsToPgSqlStream(xlsTwoSheets).then(function(pgsqlStream) {
-				var endDefer = when.defer(), data = '';
+				var endDefer = when.defer()
+				, data = '';
+
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
+
 				return endDefer.promise.then(function() {
 					data.should.equal([
 						'set client_encoding to UTF8;',
@@ -85,16 +90,21 @@ describe('xls', function() {
 						'vacuum analyze default_name_Sheet2;\n'
 					].join('\n'));
 				});
+
 			});
 		});
 
 		it('should convert an XLS file into PGSQL (two sheets, ONLY SHEET 1)', function() {
 			return xls.xlsToPgSqlStream(xlsTwoSheets, {
 				xlsSheetNumbers: [ 0 ]
-			}).then(function(pgsqlStream) {
-				var endDefer = when.defer(), data = '';
+			})
+			.then(function(pgsqlStream) {
+				var endDefer = when.defer()
+				, data = '';
+
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
+
 				return endDefer.promise.then(function() {
 					data.should.equal([
 						'set client_encoding to UTF8;',
@@ -118,11 +128,15 @@ describe('xls', function() {
 
 		it('should convert an XLS file into PGSQL (two sheets, ONLY SHEET 2)', function() {
 			return xls.xlsToPgSqlStream(xlsTwoSheets, {
-				xlsSheetNumbers: [ 1 ]
-			}).then(function(pgsqlStream) {
-				var endDefer = when.defer(), data = '';
+					xlsSheetNumbers: [ 1 ]
+			})
+			.then(function(pgsqlStream) {
+				var endDefer = when.defer()
+				, data = '';
+
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
+
 				return endDefer.promise.then(function() {
 					data.should.equal([
 						'set client_encoding to UTF8;',
@@ -147,9 +161,12 @@ describe('xls', function() {
 			return xls.xlsToPgSqlStream(xlsTwoSheets, {
 				xlsSheetNumbers: [ 0, 1 ]
 			}).then(function(pgsqlStream) {
-				var endDefer = when.defer(), data = '';
+				var endDefer = when.defer()
+				, data = '';
+
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
+
 				return endDefer.promise.then(function() {
 					data.should.equal([
 						'set client_encoding to UTF8;',

@@ -122,7 +122,9 @@ describe('tsv', function() {
 		it('should convert a TSV file into PGSQL (simple)', function() {
 			return tsv.tsvToPgsqlStream(fs.createReadStream(tsvSimple))
 			.then(function(pgsqlStream) {
-				var endDefer = when.defer(), data = '';
+				var endDefer = when.defer()
+				, data = '';
+
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
 				return endDefer.promise.then(function() {
@@ -132,10 +134,13 @@ describe('tsv', function() {
 		});
 
 		it('should convert a TSV file into PGSQL (skip empty header names)', function(done) {
-			return tsv.tsvToPgsqlStream(fs.createReadStream(tsvMissingHeaders)
-			, { ignoreEmptyHeaders: true })
+			return tsv.tsvToPgsqlStream(
+				fs.createReadStream(tsvMissingHeaders),
+				{ ignoreEmptyHeaders: true })
 			.then(function(pgsqlStream) {
-				var endDefer = when.defer(), data = '';
+				var endDefer = when.defer()
+				, data = '';
+
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
 				return endDefer.promise.then(function() {
@@ -148,10 +153,12 @@ describe('tsv', function() {
 
 		it('should only output data SQL (data only = true)', function(done) {
 			return tsv.tsvToPgsqlStream(fs.createReadStream(tsvSimple), {
-				ignoreEmptyHeaders: true,
-				dataOnly: true
+					ignoreEmptyHeaders: true,
+					dataOnly: true
 			}).then(function(pgsqlStream) {
-				var endDefer = when.defer(), data = '';
+				var endDefer = when.defer()
+				, data = '';
+
 				pgsqlStream.on('data', function(chunk) { data += chunk; });
 				pgsqlStream.on('end', endDefer.resolve);
 				return endDefer.promise.then(function() {
