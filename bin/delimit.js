@@ -63,12 +63,10 @@ require('main')(module)
 .run(function($) {
     if ($('help')) { $.cerr($.help).exit(); }
     $.assert.argsLen(3);
-    delimit.convertStream($(0), $(1), $(2), $.flags)
-    .then(function(pgsqlStream) {
-        pgsqlStream.pipe(process.stdout);
-        pgsqlStream.on('end', $.exit);
-    })
-    .otherwise(function(error) {
+    var outStream =
+        delimit.convertStream($(0), $(1), $(2), $.flags).pipe(process.stdout);
+    outStream.on('end', $.exit);
+    outStream.on('error', function(error) {
         $.cerr(error.stack || error).exit(1);
     });
 });
