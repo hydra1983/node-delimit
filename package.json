@@ -27,5 +27,9 @@
     "chai-as-promised": "~4.1.0",
     "mocha": "~1.17.0",
     "mocha-as-promised": "~2.0.0"
-  }
+  },
+  "keywords": [
+    "delimit", "convert", "csv", "tsv", "xls", "xlsx", "excel",
+    "pg", "pgsql", "sql"
+  ]
 }
