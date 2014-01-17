@@ -43,35 +43,34 @@ exports.toPgSql = function(convertFrom, fileOrStream, options) {
 exports.toTsv = function(convertFrom, fileOrStream, options) {
 	options = helper.getOptions(options);
 
-	var pgsqlStreamPromise;
+	var tsvStreamPromise;
 
 	switch (convertFrom.toLowerCase()) {
 		case 'xls':
 		case 'xlsx':
-			pgsqlStreamPromise = when.reject(new Error(
+			tsvStreamPromise = when.reject(new Error(
 				'Can not convert XLS to TSV at the moment.'));
 			break;
 
 		case 'tsv':
-			pgsqlStreamPromise = helper.getReadableStream(fileOrStream);
+			tsvStreamPromise = helper.getReadableStream(fileOrStream);
 			break;
 
 		case 'csv':
-			pgsqlStreamPromise = csv.csvToPgSql(fileOrStream, options);
+			tsvStreamPromise = csv.csvToTsvStream(fileOrStream);
 			break;
 
 		case 'json':
-			pgsqlStreamPromise = json.readJson(fileOrStream).then(function(jsonObj) {
-				return json.jsonToPgSql(jsonObj, options);
-			});
+			tsvStreamPromise = when.reject(new Error(
+				'Can not convert JSON to TSV at the moment.'));
 			break;
 
 		default:
-			pgsqlStreamPromise = when.reject(new Error(
+			tsvStreamPromise = when.reject(new Error(
 				"Invalid <convertFrom> specified '" + convertFrom + "'"));
 	}
 
-	return pgsqlStreamPromise;
+	return tsvStreamPromise;
 };
 
 exports.convertStream = function(convertFrom, convertTo, fileOrStream, options) {
