@@ -2,7 +2,8 @@
 "use strict";
 
 var delimit = require('../index.js')
-, helper = require('../src/helper');
+, helper = require('../src/helper')
+, when = require('when');
 
 function buildFlags() {
     var options = helper.getOptions()
@@ -68,6 +69,7 @@ require('main')(module)
     delimit.convertStream($(0), $(1), $(2) || process.stdin, $.flags)
     .then(function(outStream) {
         var defer = when.defer();
+        outStream.pipe(process.stdout);
         outStream.on('end', defer.resolve);
         outStream.on('error', defer.reject);
         return defer.promise;
