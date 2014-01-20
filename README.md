@@ -1,10 +1,26 @@
 # delimit
 
-Convert delimited files (csv, tsv, xls, etc) into other formats.
+Convert delimited files (csv, tsv, xls, etc) into other formats. Currently supported formats:
+
+```
+ _______________
+| FROM  |  TO:  |
+|-------|-------|
+|  tsv  |  tsv  |
+|  csv  | pgsql |
+|  xls  |       |
+|  xlsx |       |
+|_______|_______|
+
+```
 
 ## Example converting a CSV file to PGSQL
 
-Given the following CSV file:
+Issuing the following command:
+
+    ./delimit csv pgsql /path/to/file.csv
+
+Given the following CSV file contents:
 
     ID,FirstName,LastName,Code,Position1,Position2,LikesCats,CatsOwned,SomethingElse
     1,Trevor,Senior,00000,89.999,179.999,true,0,1.1
@@ -12,10 +28,6 @@ Given the following CSV file:
     4,Nolan,Johnson,000000000,89.999,179.999,0,1,5.5
     5,Gregg,Fuller,12345,89.999,179.999,1,0,4.4
     8,Wilson,Thomas,123456789,89.999,179.999,yes,100,13.37
-
-Issuing the following command:
-
-    ./delimit csv pgsql <fileName>
 
 We end up with the following result:
 
