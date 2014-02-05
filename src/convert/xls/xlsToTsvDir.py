@@ -2,12 +2,21 @@
 
 # Converts a spreadsheet into multiple TSV files (one for each sheet)
 
+
 import sys
+from StringIO import StringIO
+
+# don't allow xlrd to write anything to standard output.
+# needed to suppress any warnings that *should* be on
+# stderr...
+actualStdout = sys.stdout
+sys.stdout = StringIO()
+
 import tempfile
 import csv
 import re
 import xlrd
-from StringIO import StringIO
+
 
 def normalize(string):
     if string is None:
@@ -17,14 +26,9 @@ def normalize(string):
     return string
 
 
-# don't allow xlrd to write anything to standard output.
-# needed to surpress any warnings that *should* be on
-# stderr...
-actualStdout = sys.stdout
-sys.stdout = StringIO()
-wb = xlrd.open_workbook(sys.argv[1])
-sys.stdout = actualStdout
 
+
+wb = xlrd.open_workbook(sys.argv[1])
 
 # grab the remaining arguments as the sheet numbers we want to grab
 valid_sheet_numbers = dict(zip(sys.argv[2:], sys.argv[2:]))
@@ -56,6 +60,7 @@ for i, sheet in enumerate(wb.sheets()):
                 fixedRow.append(fixed)
             writer.writerow(fixedRow)
 
+sys.stdout = actualStdout
 sys.stdout.write(tdir_path)
 sys.stdout.flush()
 sys.exit(0)
