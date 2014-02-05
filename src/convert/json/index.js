@@ -15,12 +15,11 @@ var util = require('util');
 exports.readJson = function(jsonFile, callback) {
 	return nodefn.call(fs.readFile, jsonFile, { encoding: 'utf8' })
 	.then(function(jsonString) {
-		var parsedJson;
-		try { parsedJson = JSON.parse(jsonString); }
+		try { var parsedJson = JSON.parse(jsonString); }
 		catch(error) { return when.reject(error); }
 		return parsedJson;
 	});
-};
+}
 
 exports.jsonToDataSet = function(parsedJson, options)  {
 	var dataset = new DataSet();
@@ -91,7 +90,7 @@ exports.processSingleDataset = function(dataset, transformer, writeStream, optio
 		var footer = '';
 
 		if (!options.createOnly && !options.insertStatements) {
-			footer += pgsql.getCopyFooterSql();
+		    footer += pgsql.getCopyFooterSql();
 		}
 
 		footer += pgsql.getFooterSql(name);

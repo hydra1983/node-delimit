@@ -43,7 +43,7 @@ function getTsvFilePaths(tempDir) {
 			});
 		});
 	});
-}
+};
 
 module.exports = function(filePath, sheetNumbersToGrab) {
 	var info = {};

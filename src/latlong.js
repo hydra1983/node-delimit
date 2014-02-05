@@ -13,7 +13,7 @@
 	0 0 0
 
 	Use: "+" for N Lat or E Long
-		"-" for S Lat or W Long.
+		 "-" for S Lat or W Long.
 
 	Assumes the format is in regular expression: (\+?-?)(\d+) *([NSEW]?)(°?) *(\d+) *' *(\d+\.?\d*) *"
 	group(n) = ... (see below where they're pulled out)
