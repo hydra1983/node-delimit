@@ -7,6 +7,7 @@ import tempfile
 import csv
 import re
 import xlrd
+from StringIO import StringIO
 
 def normalize(string):
     if string is None:
