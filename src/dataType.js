@@ -39,7 +39,9 @@ exports.isStringBoolean = function(transformer, string, oldString) {
 exports.isStringBigInteger = function(transformer, string, kickLeadingZeros) {
 	if (transformer.ignoreType(defines.BIGINTEGER)) { return false; }
 
-	try { var parsed = '' + parseFloat(string); } catch (e) { return false; }
+	var parsed;
+
+	try { parsed = '' + parseFloat(string); } catch (e) { return false; }
 
 	var isInt = parsed.match(/^-?\d+(?:\.0+)?$/) ? true : false;
 
@@ -65,7 +67,9 @@ exports.isStringInteger = function(transformer, string, kickLeadingZeros) {
 	// edge case. Any string with two "-"'s is invalid
 	if (string.match(/.*-.*-/)) { return false; }
 
-	try { var parsed = '' + parseFloat(string); } catch (e) { return false; }
+	var parsed;
+
+	try { parsed = '' + parseFloat(string); } catch (e) { return false; }
 
 	var isInt = parsed.match(/^-?\d+(?:\.0+)?$/) ? true : false;
 
@@ -94,8 +98,9 @@ exports.isStringPrimaryInteger = function(transformer, string, oldString) {
 
 	var oldStringIsInt = exports.isStringInteger(transformer, oldString || '');
 	if (stringIsInt && oldStringIsInt) {
+		var isGreater;
 		try {
-			var isGreater = parseInt(string, 10) > parseInt(oldString, 10);
+			isGreater = parseInt(string, 10) > parseInt(oldString, 10);
 		} catch (e) {}
 		return isGreater || false;
 	}
@@ -106,17 +111,19 @@ exports.isStringPrimaryInteger = function(transformer, string, oldString) {
 exports.isStringNumeric = function(transformer, string) {
 	if (transformer.ignoreType(defines.NUMERIC)) { return false; }
 
-	try { var parsed = '' + parseFloat(string); } catch (e) { return false; }
+	var parsed;
+
+	try { parsed = '' + parseFloat(string); } catch (e) { return false; }
 
 	// If the string has a SINGLE decimal place in it && parsed is a numeric
 	return string.split('.').length == 2 &&
-		   parsed.match(/^-?\d*\.?\d+$/) ? true : false;
+		parsed.match(/^-?\d*\.?\d+$/) ? true : false;
 };
 
 exports.isStringNumber = function(transformer, string) {
 	return exports.isStringInteger(transformer, string) ||
-		   exports.isStringBigInteger(transformer, string) ||
-		   exports.isStringNumeric(transformer, string);
+		exports.isStringBigInteger(transformer, string) ||
+		exports.isStringNumeric(transformer, string);
 };
 
 exports.isStringZip = function(transformer, string) {
@@ -142,7 +149,7 @@ exports.isStringLat = function(transformer, string) {
 
 function inLongRange(number) {
 	if (typeof number === 'string') { number = parseFloat(number); }
-	return number >= -180 && number <= 180
+	return number >= -180 && number <= 180;
 }
 
 exports.isStringLong = function(transformer, string) {

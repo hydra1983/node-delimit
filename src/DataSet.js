@@ -169,9 +169,10 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 
 		if (this._dataRange === -1) {
 			this._data.push(dataRow);
-			this._dataRange = getDataRange(this._headers,
-										   this._dataTypes,
-										   this._data);
+			this._dataRange = getDataRange(
+				this._headers,
+				this._dataTypes,
+				this._data);
 		}
 		else if (dataRow.length === this._dataRange) {
 			this._data.push(dataRow);
@@ -184,7 +185,7 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 	// "Pure" Setter methods, e.g. Change the entire variable
 	this.setName = function(name) {
 		this._name = name;
-	}
+	};
 
 	this.setPrimaryColumn = function(primaryColumn) {
 		if (primaryColumn < 0 || primaryColumn >= this._dataRange) {
@@ -198,9 +199,10 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 
 		if (this._dataRange === -1) {
 			this._headers = headers;
-			this._dataRange = getDataRange(this._headers,
-										   this._dataTypes,
-										   this._data);
+			this._dataRange = getDataRange(
+				this._headers,
+				this._dataTypes,
+				this._data);
 			return;
 		}
 
@@ -217,9 +219,10 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 
 		if (this._dataRange === -1) {
 			this._dataTypes = dataTypes;
-			this._dataRange = getDataRange(this._headers,
-										   this._dataTypes,
-										   this._data);
+			this._dataRange = getDataRange(
+				this._headers,
+				this._dataTypes,
+				this._data);
 			return;
 		}
 
@@ -235,9 +238,10 @@ function DataSet(headers, dataTypes, data, primaryColumn, name) {
 
 		if (this._dataRange === -1) {
 			this._data = data;
-			this._dataRange = getDataRange(this._headers,
-										   this._dataTypes,
-										   this._data);
+			this._dataRange = getDataRange(
+				this._headers,
+				this._dataTypes,
+				this._data);
 			return;
 		}
 
