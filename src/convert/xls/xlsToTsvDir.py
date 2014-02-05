@@ -15,7 +15,16 @@ def normalize(string):
         return ""
     return string
 
+
+# don't allow xlrd to write anything to standard output.
+# needed to surpress any warnings that *should* be on
+# stderr...
+actualStdout = sys.stdout
+sys.stdout = StringIO()
 wb = xlrd.open_workbook(sys.argv[1])
+sys.stdout = actualStdout
+
+
 # grab the remaining arguments as the sheet numbers we want to grab
 valid_sheet_numbers = dict(zip(sys.argv[2:], sys.argv[2:]))
 
