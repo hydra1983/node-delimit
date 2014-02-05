@@ -4,7 +4,7 @@ var defines = require('./defines.js');
 
 exports.getHeaderSql = function(tablename) {
 	return "set client_encoding to UTF8;\n" +
-		   "set standard_conforming_strings to on;\n";
+		"set standard_conforming_strings to on;\n";
 };
 
 exports.getFooterSql = function(tablename) {

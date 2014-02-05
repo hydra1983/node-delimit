@@ -25,12 +25,12 @@ exports.getTsvLoader = function() {
 		var continuesAgain = loader.lineContinues(rowString);
 
 		return closeQuote && !continuesAgain;
-	}
+	};
 
 	loader.toDataRow = function(rowString) {
 
 		// remove any quotes that surround text with newlines
-		rowString = rowString.replace(/"(.*\n(?:\n|.)*)"/, '$1')
+		rowString = rowString.replace(/"(.*\n(?:\n|.)*)"/, '$1');
 
 		// convert fancy quotes into normal ones
 		rowString = rowString.replace(/\u2018/g, "'");

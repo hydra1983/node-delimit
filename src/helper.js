@@ -133,9 +133,9 @@ exports.getOptions = function(givenOpts) {
 		return ignoreTypes.split(',').reduce(function(arrIgnoreTypes, itype) {
 			itype = itype.toUpperCase();
 			if (typeof defines[itype] !== 'undefined') {
-				arrIgnoreTypes.push(itype)
+				arrIgnoreTypes.push(itype);
 			} else {
-				console.error('W:', forceType, 'is not a valid ignoreType');
+				console.error('W:', itype, 'is not a valid ignoreType');
 			}
 			return arrIgnoreTypes;
 		}, []);

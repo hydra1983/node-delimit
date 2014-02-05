@@ -90,7 +90,7 @@ exports.processSingleDataset = function(dataset, transformer, writeStream, optio
 		var footer = '';
 
 		if (!options.createOnly && !options.insertStatements) {
-		    footer += pgsql.getCopyFooterSql();
+			footer += pgsql.getCopyFooterSql();
 		}
 
 		footer += pgsql.getFooterSql(name);
