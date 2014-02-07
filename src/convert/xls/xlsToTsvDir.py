@@ -2,7 +2,6 @@
 
 # Converts a spreadsheet into multiple TSV files (one for each sheet)
 
-
 import sys
 from StringIO import StringIO
 
@@ -17,16 +16,12 @@ import csv
 import re
 import xlrd
 
-
 def normalize(string):
     if string is None:
         return ""
     if re.search(r'None(\.\d+)?', string):
         return ""
     return string
-
-
-
 
 wb = xlrd.open_workbook(sys.argv[1])
 

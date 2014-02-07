@@ -53,7 +53,9 @@ exports.toRows = function(rowStream, loader, options, headerRowHook, dataRowHook
 
 	lineStream.on('data', function(rawLine) {
 
-		joinedLine = joinedLine === '' ? rawLine : joinedLine + '\n' + rawLine;
+		joinedLine = joinedLine === ''
+			? rawLine
+			: joinedLine + '\n' + rawLine;
 
 		// If we were told to not end the line, check if that is still the case
 		if (!endLine) {

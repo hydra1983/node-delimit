@@ -1,58 +1,115 @@
 "use strict";
 
-var when = require('when')
+var fs = require('fs')
+, fse = require('fs-extra')
+, path = require('path')
+, when = require('when')
+, exec = require('child_process').exec
+, nodefn = require('when/node/function')
+, callbacks = require('when/callbacks')
 , stream = require('stream')
-, util = require('util')
+, split = require('split')
 , sequence = require('when/sequence')
 , transformers = require('../../transformers.js')
 , tsv = require('../tsv')
-, xls2tsv = require('./xls2tsv.js')
 , _ = require('lodash')
 , helper = require('../../helper');
 
-exports.xlsToPgSqlStream = function(filePath, options) {
-	options = helper.getOptions(options);
+exports._test = {
+	toTsvDir: toTsvDir,
+	getTsvFilePaths: getTsvFilePaths,
+	convertAndGetInfo: convertAndGetInfo
+};
 
-	// We need our own xls stream to combine the streams given to us from each
-	// sheet that may exist in the xls file
-	util.inherits(XlsPgsqlStream, stream.Readable);
-	function XlsPgsqlStream() { stream.Readable.call(this); }
-	XlsPgsqlStream.prototype._read = function() {};
+function toTsvDir(filePath, sheetNumbersToGrab) {
+	sheetNumbersToGrab = sheetNumbersToGrab || [];
 
-	var xlsPgsqlStream = new XlsPgsqlStream();
+	return callbacks.call(fs.exists, filePath).then(function(exists) {
+		if (!exists) {
+			return when.reject(new Error(filePath + ' does not exist'));
+		}
 
-	/*
-		This following code does NOT *return* a promise - it only interfaces
-		with the stream that we return at the bottom (see last line in here)
-	*/
+		var scriptPath = path.join(__dirname, 'xlsToTsvDir.py');
+		var call = 'python ' + scriptPath + " '" + filePath + "' " +
+			sheetNumbersToGrab.join(' ');
 
-	xls2tsv(filePath, options.xlsSheetNumbers).then(function(info) {
+		var defer = when.defer();
+		exec(call, function(error, stdout, stderr) {
+			return (error === null)
+				? defer.resolve(stdout)
+				: defer.reject(new Error(
+					'There was a problem parsing the file ' + filePath +
+					'\nstderr\n:' + stderr));
+		});
+		return defer.promise;
+	});
+}
 
-		return sequence(info.files.map(function(file) {
-			var modifiedOptions = _.clone(options);
-
-			// append sheet name if there is more than one file
-			if (info.files.length > 1) {
-				modifiedOptions.name = options.name + "_" +
-					helper.normalizeString(file.sheetName);
-			}
-
-			return function() {
-				return tsv.tsvToPgsqlStream(file.path, modifiedOptions)
-				.then(function(pgsqlStream) {
-					var defer = when.defer();
-					pgsqlStream.on('end', defer.resolve);
-					pgsqlStream.on('data', function(chunk) {
-						xlsPgsqlStream.push(chunk);
-					});
-					return defer.promise;
-				});
-			};
-
-		})).then(function() {
-			xlsPgsqlStream.push(null); // end the read stream
+function getTsvFilePaths(tempDir) {
+	return callbacks.call(fs.exists, tempDir).then(function(exists) {
+		if (!exists) {
+			return when.reject(new Error(
+				'Directory ' + tempDir + ' does not exist'));
+		}
+		return nodefn.call(fs.readdir, tempDir).then(function(files) {
+			return files.map(function(file) {
+				return path.join(tempDir, file);
+			});
 		});
 	});
+}
 
-	return when.resolve(xlsPgsqlStream);
+function convertAndGetInfo(filePath, sheetNumbersToGrab) {
+	var info = {};
+	return toTsvDir(filePath, sheetNumbersToGrab).then(function(tempDir) {
+		info.tempDir = tempDir;
+		info.files = [];
+		return getTsvFilePaths(tempDir).then(function(filePaths) {
+			info.files = filePaths.map(function(filePath) {
+				return { path: filePath, sheetName: filePath.split('.')[1] };
+			});
+			return info;
+		});
+	});
+}
+
+// Takes an xls & converts it into a single tsv stream.
+exports.toTsvStream = function(filePath, sheetNumbersToGrab) {
+	return convertAndGetInfo(filePath, sheetNumbersToGrab).then(function(info) {
+
+		var currSheet = 0
+		, currTsvStream = fs.createReadStream(info.files[currSheet].path)
+		, readReady = when.defer();
+
+		currTsvStream.on('readable', readReady.resolve);
+		return readReady.promise.then(function() {
+
+			var rs = new stream.Readable();
+
+			rs._read = function() {
+				var chunk = currTsvStream.read();
+
+				if (chunk === null && ++currSheet < info.files.length) {
+					currTsvStream = fs.createReadStream(info.files[currSheet].path);
+					return rs._read();
+				}
+
+				rs.push(chunk);
+			};
+
+			// cleanup the tmp dir
+			rs.on('end', function() {
+				fse.remove(info.tempDir);
+			});
+
+			return rs;
+		});
+
+	});
+};
+
+exports.toPgSqlStream = function(filePath, options) {
+	options = helper.getOptions(options);
+	var tsvStream = exports.toTsvStream(filePath, options.xlsSheetNumbers);
+	return tsv.toPgsqlStream(tsvStream, options);
 };

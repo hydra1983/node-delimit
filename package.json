@@ -20,7 +20,9 @@
     "lodash": "~2.4.1",
     "byline": "~4.1.1",
     "temp": "~0.6.0",
-    "main": "0.0.21"
+    "main": "0.0.21",
+    "split": "~0.3.0",
+    "fs-extra": "~0.8.1"
   },
   "devDependencies": {
     "chai": "~1.8.1",
@@ -29,7 +31,15 @@
     "mocha-as-promised": "~2.0.0"
   },
   "keywords": [
-    "delimit", "convert", "csv", "tsv", "xls", "xlsx", "excel",
-    "pg", "pgsql", "sql"
+    "delimit",
+    "convert",
+    "csv",
+    "tsv",
+    "xls",
+    "xlsx",
+    "excel",
+    "pg",
+    "pgsql",
+    "sql"
   ]
 }
