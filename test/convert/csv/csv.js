@@ -12,6 +12,10 @@ chai.Should();
 chai.use(chaiAsPromised);
 require("mocha-as-promised")();
 
+/* global describe */
+/* global it */
+/* global beforeEach */
+
 describe('csv', function() {
 
 	var options
@@ -20,14 +24,14 @@ describe('csv', function() {
 	beforeEach(function() {
 		options = {
 			tablename: 'trevor.test',
-			headerRow: 0
+			headerRow: 1
 		};
 	});
 
 	describe('#csv2tsv()', function() {
 
 		it('should create a valid tsv stream', function() {
-			return csv.csvToTsvStream(csvSimple).then(function(tsvStream) {
+			return csv.toTsvStream(csvSimple).then(function(tsvStream) {
 				var endDefer = when.defer()
 				, data = '';
 
@@ -52,7 +56,7 @@ describe('csv', function() {
 
 		it('should convert a simple CSV file into a PGSQL stream', function() {
 
-			return csv.csvToPgSqlStream(csvSimple, options).then(function(pgsqlStream) {
+			return csv.toPgSqlStream(csvSimple, options).then(function(pgsqlStream) {
 				var endDefer = when.defer()
 				, data = '';
 

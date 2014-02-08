@@ -74,42 +74,27 @@ function convertAndGetInfo(filePath, sheetNumbersToGrab) {
 }
 
 // Takes an xls & converts it into a single tsv stream.
-exports.toTsvStream = function(filePath, sheetNumbersToGrab) {
+exports.getTsvStream = function(filePath, sheetNumbersToGrab) {
 	return convertAndGetInfo(filePath, sheetNumbersToGrab).then(function(info) {
+		var ts = new stream.Transform();
 
-		var currSheet = 0
-		, currTsvStream = fs.createReadStream(info.files[currSheet].path)
-		, readReady = when.defer();
+		ts._transform = function(chunk, encoding, callback) {
+			ts.push(chunk);
+			callback();
+		};
 
-		currTsvStream.on('readable', readReady.resolve);
-		return readReady.promise.then(function() {
-
-			var rs = new stream.Readable();
-
-			rs._read = function() {
-				var chunk = currTsvStream.read();
-
-				if (chunk === null && ++currSheet < info.files.length) {
-					currTsvStream = fs.createReadStream(info.files[currSheet].path);
-					return rs._read();
-				}
-
-				rs.push(chunk);
-			};
-
-			// cleanup the tmp dir
-			rs.on('end', function() {
-				fse.remove(info.tempDir);
-			});
-
-			return rs;
+		info.files.forEach(function(file) {
+			fs.createReadStream(file.path).pipe(ts);
 		});
 
+		return ts;
 	});
 };
 
-exports.toPgSqlStream = function(filePath, options) {
+exports.toPgSql = function(filePath, options) {
 	options = helper.getOptions(options);
-	var tsvStream = exports.toTsvStream(filePath, options.xlsSheetNumbers);
-	return tsv.toPgsqlStream(tsvStream, options);
+	return exports.getTsvStream(filePath, options.xlsSheetNumbers)
+	.then(function(tsvStream) {
+		return tsv.toPgsqlStream(tsvStream, options);
+	});
 };

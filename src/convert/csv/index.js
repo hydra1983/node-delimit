@@ -5,7 +5,7 @@ var tsv = require('../tsv')
 , helper = require('../../helper')
 , spawn = require('child_process').spawn;
 
-exports.csvToTsvStream = function(filePathOrStream) {
+exports.toTsvStream = function(filePathOrStream) {
 	return helper.getReadableStream(filePathOrStream).then(function(csvStream) {
 		var csvToTsv = spawn(path.join(__dirname, 'csvToTsvStreamer.py'));
 		csvStream.pipe(csvToTsv.stdin);
@@ -13,8 +13,8 @@ exports.csvToTsvStream = function(filePathOrStream) {
 	});
 };
 
-exports.csvToPgSqlStream = function(filePathOrStream, options) {
-	return exports.csvToTsvStream(filePathOrStream).then(function(tsvStream) {
-		return tsv.tsvToPgsqlStream(tsvStream, options);
+exports.toPgSqlStream = function(filePathOrStream, options) {
+	return exports.toTsvStream(filePathOrStream).then(function(tsvStream) {
+		return tsv.toPgsqlStream(tsvStream, options);
 	});
 };

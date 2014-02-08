@@ -79,7 +79,7 @@ exports.getOptions = function(givenOpts) {
 	addOption('headerRow', 'H', false
 	, 'What row contains header information?'
 	, (givenOpts.headerRow = typeof givenOpts.headerRow === 'undefined'
-		? 0 : givenOpts.headerRow));
+		? 1 : givenOpts.headerRow));
 
 	addOption('ignoreEmptyHeaders', 'e', true
 	, 'Should we ignore columns in data with empty headers?'
