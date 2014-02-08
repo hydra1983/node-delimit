@@ -18,7 +18,6 @@
   "dependencies": {
     "when": "~2.7.0",
     "lodash": "~2.4.1",
-    "byline": "~4.1.1",
     "temp": "~0.6.0",
     "main": "0.0.21",
     "split": "~0.3.0",
