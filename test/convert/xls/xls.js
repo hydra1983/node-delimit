@@ -23,10 +23,10 @@ describe('xls', function() {
 	, xlsTwoSheets = __dirname + '/files/xlsTwoSheets.xls'
 	, xlsInvalid = __dirname + '/files/xlsInvalid.xls';
 
-	describe('#toPgSql()', function() {
+	describe('#toPgSqlStream()', function() {
 
 		it('should convert an XLS file into PGSQL (one sheet)', function() {
-			return xls.toPgSql(xlsSimple).then(function(pgsqlStream) {
+			return xls.toPgSqlStream(xlsSimple).then(function(pgsqlStream) {
 				var endDefer = when.defer()
 				, data = '';
 
@@ -55,7 +55,7 @@ describe('xls', function() {
 		});
 
 		it('should convert an XLS file into PGSQL (two sheets, ONLY SHEET 1)', function() {
-			return xls.toPgSql(xlsTwoSheets, {
+			return xls.toPgSqlStream(xlsTwoSheets, {
 				xlsSheetNumbers: [ 0 ]
 			})
 			.then(function(pgsqlStream) {
@@ -87,7 +87,7 @@ describe('xls', function() {
 		});
 
 		it('should convert an XLS file into PGSQL (two sheets, ONLY SHEET 2)', function() {
-			return xls.toPgSql(xlsTwoSheets, {
+			return xls.toPgSqlStream(xlsTwoSheets, {
 				xlsSheetNumbers: [ 1 ]
 			})
 			.then(function(pgsqlStream) {

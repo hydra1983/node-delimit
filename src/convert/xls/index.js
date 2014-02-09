@@ -91,7 +91,7 @@ exports.getTsvStream = function(filePath, sheetNumbersToGrab) {
 	});
 };
 
-exports.toPgSql = function(filePath, options) {
+exports.toPgSqlStream = function(filePath, options) {
 	options = helper.getOptions(options);
 	return exports.getTsvStream(filePath, options.xlsSheetNumbers)
 	.then(function(tsvStream) {

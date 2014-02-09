@@ -4,7 +4,6 @@ var when = require('when')
 , xls = require('./src/convert/xls')
 , tsv = require('./src/convert/tsv')
 , csv = require('./src/convert/csv')
-, json = require('./src/convert/json')
 , helper = require('./src/helper');
 
 exports.toPgSql = function(convertFrom, fileOrStream, options) {
@@ -15,21 +14,15 @@ exports.toPgSql = function(convertFrom, fileOrStream, options) {
 	switch (convertFrom.toLowerCase()) {
 		case 'xls':
 		case 'xlsx':
-			pgsqlStreamPromise = xls.xlsToPgSqlStream(fileOrStream, options);
+			pgsqlStreamPromise = xls.toPgSqlStream(fileOrStream, options);
 			break;
 
 		case 'tsv':
-			pgsqlStreamPromise = tsv.tsvToPgsqlStream(fileOrStream, options);
+			pgsqlStreamPromise = tsv.toPgsqlStream(fileOrStream, options);
 			break;
 
 		case 'csv':
-			pgsqlStreamPromise = csv.csvToPgSqlStream(fileOrStream, options);
-			break;
-
-		case 'json':
-			pgsqlStreamPromise = json.readJson(fileOrStream).then(function(jsonObj) {
-				return json.jsonToPgSql(jsonObj, options);
-			});
+			pgsqlStreamPromise = csv.toPgSqlStream(fileOrStream, options);
 			break;
 
 		default:
@@ -57,12 +50,7 @@ exports.toTsv = function(convertFrom, fileOrStream, options) {
 			break;
 
 		case 'csv':
-			tsvStreamPromise = csv.csvToTsvStream(fileOrStream);
-			break;
-
-		case 'json':
-			tsvStreamPromise = when.reject(new Error(
-				'Can not convert JSON to TSV at the moment.'));
+			tsvStreamPromise = csv.toTsvStream(fileOrStream);
 			break;
 
 		default:
