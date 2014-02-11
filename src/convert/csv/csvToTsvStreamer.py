@@ -5,15 +5,13 @@ import csv
 import io
 
 '''
-Holy hell what an adventure this was.
-
 Takes CSV from standard input, and outputs it in TSV format
 '''
 
-# What? Why python why!!
 # http://stackoverflow.com/a/16865106/586621
 from signal import signal, SIGPIPE, SIG_DFL
-#Ignore SIG_PIPE and don't throw exceptions on it... (http://docs.python.org/library/signal.html)
+# Ignore SIG_PIPE and don't throw exceptions on it...
+# http://docs.python.org/library/signal.html
 signal(SIGPIPE, SIG_DFL)
 
 
@@ -62,8 +60,8 @@ except:
     sys.exit(1)
 
 # Convert the sample data into TSV format first
-with io.BytesIO(bytearray(sample_data)) as damnit_python_why:
-    output_tsv(damnit_python_why, dialect)
+with io.BytesIO(bytearray(sample_data)) as io_stream:
+    output_tsv(io_stream, dialect)
 
 # Convert the rest of standard input to TSV format
 output_tsv(sys.stdin, dialect)
