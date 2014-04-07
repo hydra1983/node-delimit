@@ -1,6 +1,6 @@
 {
   "name": "delimit",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Convert delimited files from one format to another",
   "main": "index.js",
   "directories": {

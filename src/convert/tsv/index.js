@@ -57,7 +57,6 @@ exports.toPgsqlStream = function(tsvStream, options) {
 			// if we are only creating header information, there isn't a
 			// need to go further. kill the stream here.
 			if (options.createOnly) {
-				pgStream.push(null);
 				return callback();
 			}
 
@@ -80,6 +79,7 @@ exports.toPgsqlStream = function(tsvStream, options) {
 			}
 
 			pgStream.push(pgsql.getFooterSql(name));
+			pgStream.push(null);
 			return callback();
 		};
 

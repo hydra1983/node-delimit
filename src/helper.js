@@ -184,7 +184,7 @@ exports.getOptions = function(givenOpts) {
 };
 
 exports.getReadableStream = function(filePathOrStream) {
-	if (filePathOrStream instanceof stream.Readable) {
+	if (typeof filePathOrStream !== 'string') {
 		return when.resolve(filePathOrStream);
 	}
 
