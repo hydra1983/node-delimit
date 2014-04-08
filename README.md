@@ -1,4 +1,4 @@
-# delimit
+# node-delimit
 
 Convert delimited files (csv, tsv, xls, etc) into other formats. Currently supported formats:
 
@@ -69,20 +69,16 @@ You also need to have Python 2 in your path along with the [xlrd](https://pypi.p
 ### Basic Usage
 
 ```javascript
-#!/usr/bin/env node
-"use strict";
+var delimit = require('delimit');
 
-var delimit = require('../index.js');
-
-delimit.convertStream('csv', 'pgsql', __dirname + '/files/csvSimple.csv')
-.then(function(pgsqlStream) {
+delimit.convertStream('csv', 'pgsql', 'csvFile.csv').then(function(pgsqlStream) {
     pgsqlStream.pipe(process.stdout);
 });
 ```
 
 ### Exposed Functions
 
-#### **`delimit.convertStream(convertFrom, convertTo, filePath [, options])`**
+#### delimit.convertStream(convertFrom, convertTo, filePath [, options])
 
 Converts one file format into another. The input data can be in the form of a file path or a stream. This function will return a stream that that contains the converted output.
 
@@ -152,5 +148,9 @@ For usage information
     ./delimit -h
 
 ## Tests
+
+```
+npm test
+```
 
 mocha-as-promised must be installed.
