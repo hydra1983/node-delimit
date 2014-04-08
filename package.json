@@ -12,6 +12,10 @@
   "bin": {
     "delimit": "./bin/delimit.js"
   },
+  "repository" : {
+    "type": "git",
+    "url": "http://github.com/npm/npm.git"
+  },
   "author": "Trevor Senior <trevor@tsenior.com> (http://tsenior.com/)",
   "license": "MIT",
   "readmeFilename": "README.md",
