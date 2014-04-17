@@ -186,13 +186,13 @@ exports.getOptions = function(givenOpts) {
 	return retOpts;
 };
 
-exports.isStream = function(fileOrStream) {
+exports.isStream = function(filePathOrStream) {
 	// bad check, but good enough for now.
 	return typeof filePathOrStream !== 'string';
 };
 
 exports.getReadableStream = function(filePathOrStream) {
-	if (exports.isStream()) {
+	if (exports.isStream(filePathOrStream)) {
 		return when.resolve(filePathOrStream);
 	}
 
@@ -206,7 +206,7 @@ exports.getReadableStream = function(filePathOrStream) {
 };
 
 exports.getFilePath = function(filePathOrStream) {
-	if (!exports.isStream()) {
+	if (!exports.isStream(filePathOrStream)) {
 		return when.resolve(filePathOrStream);
 	}
 
