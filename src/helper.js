@@ -1,10 +1,13 @@
 "use strict";
 
-var defines = require('./defines')
-, fs = require('fs')
+var fs = require('fs')
+, path = require('path')
+, stream = require('stream')
 , when = require('when')
 , callbacks = require('when/callbacks')
-, stream = require('stream');
+, temp = require('temp').track()
+, defines = require('./defines');
+
 
 exports.normalizeString = function(string) {
 	string = '' + string; // turn into a string
@@ -183,8 +186,13 @@ exports.getOptions = function(givenOpts) {
 	return retOpts;
 };
 
+exports.isStream = function(fileOrStream) {
+	// bad check, but good enough for now.
+	return typeof filePathOrStream !== 'string';
+};
+
 exports.getReadableStream = function(filePathOrStream) {
-	if (typeof filePathOrStream !== 'string') {
+	if (exports.isStream()) {
 		return when.resolve(filePathOrStream);
 	}
 
@@ -194,5 +202,25 @@ exports.getReadableStream = function(filePathOrStream) {
 				'File ' + filePathOrStream + ' does not exist'));
 		}
 		return when.resolve(fs.createReadStream(filePathOrStream));
+	});
+};
+
+exports.getFilePath = function(filePathOrStream) {
+	if (!exports.isStream()) {
+		return when.resolve(filePathOrStream);
+	}
+
+	return when.promise(function(resolve, reject) {
+		temp.mkdir('delimit-getFilePath', function(error, tempDir) {
+			var filepath = path.join(tempDir, path.basename(filePathOrStream));
+			var ws = fs.createWriteStream(filepath);
+
+			filePathOrStream.pipe(ws);
+			filePathOrStream.on('error', reject);
+			ws.on('error', reject);
+			ws.on('finished', function() {
+				return resolve(filepath);
+			});
+		});
 	});
 };
