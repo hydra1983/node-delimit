@@ -1,6 +1,6 @@
 {
   "name": "delimit",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Convert delimited files from one format to another",
   "main": "index.js",
   "directories": {
@@ -12,9 +12,9 @@
   "bin": {
     "delimit": "./bin/delimit.js"
   },
-  "repository" : {
+  "repository": {
     "type": "git",
-    "url": "http://github.com/npm/npm.git"
+    "url": "https://github.com/trevorsenior/node-delimit.git"
   },
   "author": "Trevor Senior <trevor@tsenior.com> (http://tsenior.com/)",
   "license": "MIT",
@@ -22,10 +22,10 @@
   "dependencies": {
     "when": "~2.7.0",
     "lodash": "~2.4.1",
-    "temp": "~0.6.0",
     "main": "0.0.21",
     "split": "~0.3.0",
-    "fs-extra": "~0.8.1"
+    "fs-extra": "~0.8.1",
+    "temp": "^0.7.0"
   },
   "devDependencies": {
     "chai": "~1.8.1",
